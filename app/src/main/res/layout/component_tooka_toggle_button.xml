@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:viewBindingIgnore="true"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  app:cardElevation="@dimen/elev0">
+
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/toggle_button_background">
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:id="@+id/firstChoice"
+      android:background="?selectableItemBackground"
+      android:clickable="true"
+      android:focusable="true">
+
+      <ImageView
+        android:layout_width="@dimen/size16"
+        android:layout_height="@dimen/size16"
+        app:srcCompat="@drawable/ic_baseline_arrow_upward_24"
+        android:id="@+id/imgFirst"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp" />
+
+      <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtFirst"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginEnd="@dimen/margin16"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+        android:textSize="12sp" />
+    </LinearLayout>
+
+    <ImageView
+      android:layout_width="2dp"
+      android:layout_height="match_parent"
+      android:background="@color/gray_500" />
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:id="@+id/secondChoice"
+      android:background="?selectableItemBackground"
+      android:clickable="true"
+      android:focusable="true">
+
+      <ImageView
+        android:layout_width="@dimen/size16"
+        android:layout_height="@dimen/size16"
+        app:srcCompat="@drawable/ic_baseline_arrow_downward_24"
+        android:id="@+id/imgSecond"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp" />
+
+      <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtSecond"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginEnd="@dimen/margin16"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+        android:textSize="12sp" />
+    </LinearLayout>
+  </LinearLayout>
+</androidx.cardview.widget.CardView>

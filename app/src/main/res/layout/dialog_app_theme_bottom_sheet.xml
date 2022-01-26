@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+  <ir.tdaapp.tooka.components.TookaCustomTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin16"
+    app:customTextViewIcon="@drawable/ic_lightmode"
+    app:customTextViewTitleText="@string/light"
+    app:customTextViewIconVisible="true"
+    app:customTextViewSubtitleVisible="false"
+    android:id="@+id/ctvLightMode"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+  </ir.tdaapp.tooka.components.TookaCustomTextView>
+
+  <ir.tdaapp.tooka.components.TookaCustomTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:customTextViewIcon="@drawable/ic_nightmode"
+    app:customTextViewTitleText="@string/dark"
+    app:customTextViewIconVisible="true"
+    app:customTextViewSubtitleVisible="false"
+    android:id="@+id/ctvNightMode"
+    android:layout_marginBottom="@dimen/margin16"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true" />
+
+</LinearLayout>

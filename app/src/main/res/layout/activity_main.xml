@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:forceDarkAllowed="true"
+  tools:context=".MainActivity"
+  tools:ignore="UnusedAttribute">
+
+  <com.google.android.material.bottomnavigation.BottomNavigationView
+    android:id="@+id/bottomNav"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin4"
+    android:theme="@style/Base.Widget.BottomNavigationView"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:menu="@menu/bottom_menu" />
+
+  <fragment
+    android:id="@+id/fragmentContainerView"
+    android:name="androidx.navigation.fragment.NavHostFragment"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:defaultNavHost="true"
+    app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:navGraph="@navigation/nav_main"
+    android:keepScreenOn="false" />
+
+  <androidx.cardview.widget.CardView
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_marginEnd="16dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_marginStart="16dp"
+    android:layout_marginBottom="72dp"
+    android:id="@+id/cardToast"
+    android:visibility="gone">
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center_vertical">
+
+      <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="@dimen/size8"
+        android:layout_height="match_parent"
+        android:background="@color/red_200"
+        android:id="@+id/toastSidebar"></LinearLayout>
+
+      <ImageButton
+        android:layout_width="@dimen/size16"
+        android:layout_height="@dimen/size16"
+        app:srcCompat="@drawable/ic_clear"
+        android:id="@+id/imgClearToast"
+        android:layout_marginStart="@dimen/margin16"
+        android:clickable="true"
+        android:background="?selectableItemBackgroundBorderless" />
+
+      <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginBottom="@dimen/margin8"
+        android:layout_weight="1"
+        android:layout_marginStart="@dimen/margin16">
+
+        <TextView
+          android:text="عنوان خطا"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtToastTitle"
+          android:textAppearance="@style/TextAppearance.MyTheme.NewsTitle" />
+
+        <TextView
+          android:text="توضیحات خطا"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtToastDesc"
+          android:textAppearance="@style/TextAppearance.MyTheme.NewsSubtitle" />
+      </LinearLayout>
+
+      <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnToastRetry"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:textColor="@color/blue_200"
+        android:text="@string/retry"
+        android:textAppearance="@style/TextAppearance.MyTheme.TabTextAppearance" />
+    </LinearLayout>
+  </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

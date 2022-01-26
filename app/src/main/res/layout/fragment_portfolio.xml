@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+
+        <androidx.appcompat.widget.Toolbar
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:theme="?attr/actionBarTheme"
+          android:minHeight="?attr/actionBarSize"
+          android:id="@+id/toolbar"
+          android:layout_alignParentTop="true"
+          app:menu="@menu/home_toolbar_items" />
+
+        <LinearLayout
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_below="@id/toolbar">
+
+          <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:gravity="center">
+
+            <LinearLayout
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center">
+
+              <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtCapitalTMN"
+                android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+                android:textSize="16sp" />
+
+              <ImageButton
+                android:layout_width="@dimen/size16"
+                android:layout_height="@dimen/size16"
+                app:srcCompat="@drawable/ic_visibility"
+                android:id="@+id/imgVisibility"
+                android:layout_marginStart="@dimen/margin8"
+                android:scaleType="centerInside"
+                app:tint="@color/gray_400" />
+            </LinearLayout>
+
+            <TextView
+              android:text="TextView"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/txtCapitalUSD"
+              android:textAppearance="@style/TextAppearance.MyTheme.Price2"
+              android:textColor="@color/dark_blue_900"
+              android:layout_marginTop="8dp" />
+          </LinearLayout>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.github.mikephil.charting.charts.PieChart
+              android:layout_width="match_parent"
+              android:layout_height="150dp"
+              android:id="@+id/lineChart" />
+
+          </LinearLayout>
+
+          <TextView
+            android:text="@string/my_capital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView14"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_marginStart="@dimen/margin16"
+            android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle" />
+
+          <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/portfolioCoinsList"
+            android:padding="4dp" />
+        </LinearLayout>
+
+      </RelativeLayout>
+    </LinearLayout>
+  </ScrollView>
+
+  <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:id="@+id/fabPortfolioAdd"
+    android:layout_marginEnd="@dimen/margin16"
+    android:layout_marginBottom="@dimen/margin16"
+    app:icon="@drawable/ic_baseline_add_24"
+    android:text="@string/add_crypto"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentEnd="true" />
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone">
+
+    <com.airbnb.lottie.LottieAnimationView
+      android:layout_width="142dp"
+      android:layout_height="142dp"
+      app:lottie_speed="0.5"
+      app:lottie_autoPlay="true"
+      app:lottie_rawRes="@raw/portfolio"
+      app:lottie_repeatCount="0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:id="@+id/lottieAnimationView" />
+
+    <androidx.cardview.widget.CardView
+      android:layout_width="wrap_content"
+      android:layout_height="@dimen/size48"
+      app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView"
+      android:layout_marginTop="16dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:cardBackgroundColor="?colorPrimary"
+      app:cardElevation="@dimen/elev0"
+      android:id="@+id/addToPortfolio">
+
+      <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <TextView
+          android:text="@string/add_to_portfolio"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+          android:textColor="@color/white"
+          android:layout_marginStart="@dimen/margin24"
+          android:layout_marginEnd="@dimen/margin24" />
+      </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

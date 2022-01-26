@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <declare-styleable name="TookaCustomTextView">
+
+    <attr name="customTextViewTitleText" format="string"/>
+    <attr name="customTextViewTitleTextAppearance" format="reference"/>
+
+    <attr name="customTextViewSubtitleText" format="string"/>
+    <attr name="customTextViewSubtitleTextAppearance" format="reference"/>
+
+    <attr name="customTextViewIconVisible" format="boolean"/>
+    <attr name="customTextViewSubtitleVisible" format="boolean"/>
+
+    <attr name="customTextViewIcon" format="reference"/>
+
+  </declare-styleable>
+
+</resources>

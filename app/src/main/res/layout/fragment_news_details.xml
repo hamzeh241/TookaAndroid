@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical" >
+
+      <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:minHeight="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        app:menu="@menu/news_fragment_dismiss_menu">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+          <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/chipsList" />
+        </LinearLayout>
+      </androidx.appcompat.widget.Toolbar>
+
+      <TextView
+        android:text="موجودی استیبل کوین ها در صرافی ها به بالاترین میزان رسید"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtNewsTitle"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+        android:layout_marginTop="@dimen/margin16"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginEnd="@dimen/margin16" />
+
+      <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginEnd="@dimen/margin16"
+        android:layout_marginTop="@dimen/margin16">
+
+        <TextView
+          android:text="خرداد 1380"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtDate"
+          android:textAppearance="@style/TextAppearance.MyTheme.NewsDetails" />
+
+        <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginStart="@dimen/margin8">
+
+          <TextView
+            android:text="@string/written_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MyTheme.NewsDetails" />
+
+          <TextView
+            android:text="اول مانی"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtWriter"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/margin8"
+            android:textAppearance="@style/TextAppearance.MyTheme.NewsDetails" />
+
+          <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+          <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_share"
+            android:id="@+id/imageButton2"
+            android:layout_marginEnd="@dimen/margin8"
+            app:tint="@color/black_200" />
+
+          <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_bookmark_filled"
+            android:id="@+id/imageButton"
+            app:tint="@color/black_200" />
+        </LinearLayout>
+      </LinearLayout>
+
+      <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="152dp"
+        tools:srcCompat="@tools:sample/avatars"
+        android:id="@+id/imageView2"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginEnd="@dimen/margin16" />
+
+    </LinearLayout>
+  </ScrollView>
+
+</LinearLayout>

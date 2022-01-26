@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <com.google.android.material.appbar.AppBarLayout
+    android:id="@+id/appbar"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+      android:layout_height="?attr/actionBarSize"
+      android:layout_width="match_parent"
+      app:layout_scrollFlags="scroll|enterAlways"
+      android:id="@+id/toolbar">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
+
+        <ImageButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:srcCompat="@drawable/ic_arrow_back"
+          android:id="@+id/imgBack"
+          android:layout_marginStart="@dimen/margin8" />
+
+        <ImageView
+          android:layout_width="@dimen/size24"
+          android:layout_height="@dimen/size24"
+          app:srcCompat="@drawable/ic_btc"
+          android:id="@+id/icon"
+          android:layout_marginStart="@dimen/margin16" />
+
+        <TextView
+          android:text="TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/title"
+          android:textAppearance="@style/TextAppearance.MyTheme.AlternateToolbarTitle"
+          android:layout_marginStart="@dimen/margin8" />
+
+        <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"></LinearLayout>
+
+        <ImageButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:srcCompat="@drawable/ic_candlestick_chart"
+          android:id="@+id/imgToggleChart"
+          android:layout_marginEnd="@dimen/margin16"
+          android:tint="@color/black_200" />
+
+        <ImageButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:srcCompat="@drawable/ic_baseline_star_outline_24"
+          android:id="@+id/imgFavorite"
+          android:layout_marginEnd="@dimen/margin16" />
+      </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.google.android.material.tabs.TabLayout
+      android:id="@+id/tabs"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      app:tabMode="scrollable"
+      tools:ignore="SpeakableTextPresentCheck"
+      app:tabTextAppearance="@style/TextAppearance.MyTheme.TabTextAppearance"
+      app:tabIndicatorColor="@color/dark_blue_900" />
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+    android:id="@+id/nestedScrollView">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+      <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:saveEnabled="false"
+        tools:ignore="SpeakableTextPresentCheck" />
+    </LinearLayout>
+
+  </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

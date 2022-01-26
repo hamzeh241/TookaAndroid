@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/topCoinsList"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutAnimation="@anim/slide_in_animator"
+    android:visibility="gone" />
+
+  <com.airbnb.lottie.LottieAnimationView
+    android:id="@+id/topCoinsLoading"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:lottie_rawRes="@raw/crypto_loading"
+    app:lottie_autoPlay="true"
+    app:lottie_speed="0.6"
+    app:lottie_loop="true" />
+</RelativeLayout>

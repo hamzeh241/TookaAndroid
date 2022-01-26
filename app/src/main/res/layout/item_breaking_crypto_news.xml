@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:gravity="center_vertical"
+  android:layout_marginTop="@dimen/margin8"
+  android:clickable="false">
+
+  <androidx.cardview.widget.CardView
+    android:layout_width="@dimen/size64"
+    android:layout_height="@dimen/size64"
+    app:cardElevation="@dimen/margin0"
+    android:layout_marginStart="@dimen/margin16">
+
+    <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:srcCompat="@tools:sample/avatars"
+      android:id="@+id/image"
+      android:scaleType="centerCrop" />
+  </androidx.cardview.widget.CardView>
+
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/margin16"
+    android:layout_marginEnd="@dimen/margin16">
+
+    <TextView
+      android:text="رشد ۱۰۰ درصدی فلوکی اینو با انتشار تصویر سگ شیبا اینو"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/txtNewsTitle"
+      android:textAppearance="@style/TextAppearance.MyTheme.NewsTitle"
+      android:layout_weight="1" />
+
+    <TextView
+      android:text="اول مانی • ۳ روز پیش"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/txtNewsSubtitle"
+      android:textAppearance="@style/TextAppearance.MyTheme.NewsSubtitle"
+      android:fontFamily="@font/iran_yekan_reqular_mobile_fa_num"
+      android:textStyle="bold"
+      android:textSize="12sp" />
+  </LinearLayout>
+</LinearLayout>

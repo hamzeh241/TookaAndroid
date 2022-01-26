@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="@dimen/size64"
+  android:layout_height="@dimen/size72"
+  android:clickable="true"
+  android:background="?selectableItemBackgroundBorderless"
+  android:gravity="bottom|center_vertical"
+  tools:ignore="SpeakableTextPresentCheck"
+  app:cardElevation="@dimen/elev4"
+  app:cardCornerRadius="@dimen/radius8">
+
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <TextView
+      android:text="30"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/txtTimeFrameNum"
+      android:gravity="center"
+      android:fontFamily="@font/iranyekan_black"
+      android:textColor="@color/black"
+      android:textSize="20sp" />
+
+    <TextView
+      android:text="@string/minutes"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/txtTimeFrameCaption"
+      android:layout_marginTop="@dimen/margin8"
+      android:gravity="center"
+      android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+      android:textSize="12sp" />
+  </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

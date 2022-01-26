@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="144dp"
+  android:layout_height="160dp"
+  app:cardElevation="@dimen/elev2"
+  app:cardCornerRadius="@dimen/radius8">
+
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="@dimen/size32"
+        android:layout_height="@dimen/size32"
+        android:gravity="center"
+        android:background="@drawable/market_coins_background"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginStart="@dimen/margin8">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+          android:layout_width="@dimen/size24"
+          android:layout_height="@dimen/size24"
+          android:src="@drawable/ic_btc"
+          android:id="@+id/imgCoin" />
+      </LinearLayout>
+
+      <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin8">
+
+        <TextView
+          android:id="@+id/txtCoinName"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/margin8"
+          android:text="بیت کوین"
+          android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+          android:textSize="12sp"
+          android:requiresFadingEdge="horizontal"
+          android:fadingEdgeLength="20dp"
+          android:ellipsize="marquee"
+          android:singleLine="true" />
+
+        <TextView
+          android:id="@+id/txtCoinSymbol"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="BTC"
+          android:textAppearance="@style/TextAppearance.MyTheme.Price2"
+          android:layout_marginStart="@dimen/margin8" />
+      </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center_vertical">
+
+      <TextView
+        android:id="@+id/txtCapital"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin8"
+        android:text="0.264 BTC"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+        android:textSize="12sp"
+        android:requiresFadingEdge="horizontal"
+        android:fadingEdgeLength="20dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:fontFamily="@font/iranyekan_regular" />
+
+      <TextView
+        android:id="@+id/txtPriceTMN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="1,354,648,354"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:layout_marginStart="@dimen/margin8"
+        android:fontFamily="@font/iranyekan_regular" />
+
+      <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/chart"
+        android:layout_marginStart="-16dp"
+        android:layout_marginEnd="-16dp"
+        android:layout_marginBottom="-16dp" />
+    </LinearLayout>
+  </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

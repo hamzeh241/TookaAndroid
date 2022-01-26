@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+  <ir.tdaapp.tooka.components.TookaCustomTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:customTextViewIcon="@drawable/ic_automatic"
+    app:customTextViewIconVisible="true"
+    app:customTextViewTitleText="@string/automatic"
+    app:customTextViewTitleTextAppearance="@style/TextAppearance.MyTheme.Headline6"
+    app:customTextViewSubtitleTextAppearance="@style/TextAppearance.MyTheme.Price2"
+    app:customTextViewSubtitleText="@string/automatic_add_subtitle"
+    android:id="@+id/automaticChoice"
+    android:layout_marginTop="@dimen/margin16"
+    app:customTextViewSubtitleVisible="true"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true" />
+
+  <ir.tdaapp.tooka.components.TookaCustomTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:customTextViewIcon="@drawable/ic_manual"
+    app:customTextViewIconVisible="true"
+    app:customTextViewTitleText="@string/manual"
+    app:customTextViewTitleTextAppearance="@style/TextAppearance.MyTheme.Headline6"
+    app:customTextViewSubtitleTextAppearance="@style/TextAppearance.MyTheme.Price2"
+    app:customTextViewSubtitleText="@string/manual_add_subtitle"
+    android:id="@+id/manualChoice"
+    android:layout_marginBottom="@dimen/margin16"
+    app:customTextViewSubtitleVisible="true"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true" />
+</LinearLayout>

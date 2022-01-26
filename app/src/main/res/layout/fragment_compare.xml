@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <com.google.android.material.appbar.AppBarLayout
+    android:id="@+id/appbar"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+      android:layout_height="?attr/actionBarSize"
+      android:layout_width="match_parent"
+      app:layout_scrollFlags="scroll|enterAlways"
+      android:id="@+id/toolbar"
+      style="@style/Base.Widget.AlternateToolbar" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:tabMode="scrollable"
+      android:background="@color/white"
+      android:gravity="center">
+
+      <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginEnd="@dimen/margin16"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?selectableItemBackground"
+        android:id="@+id/firstCoin">
+
+        <ImageView
+          android:layout_width="@dimen/size32"
+          android:layout_height="@dimen/size32"
+          app:srcCompat="@drawable/ic_btc"
+          android:id="@+id/imgCoin1"
+          android:layout_marginTop="@dimen/margin8"
+          android:layout_marginBottom="@dimen/margin8" />
+
+        <LinearLayout
+          android:orientation="vertical"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/margin8"
+          android:layout_marginStart="@dimen/margin8"
+          android:layout_marginBottom="@dimen/margin8">
+
+          <TextView
+            android:text="بیت کوین"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCoin1Name"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline6" />
+
+          <TextView
+            android:text="BTC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCoin1Symbol"
+            android:textAppearance="@style/TextAppearance.MyTheme.NewsDetails"
+            android:textColor="@color/white_900" />
+        </LinearLayout>
+      </LinearLayout>
+
+      <TextView
+        android:text="vs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle" />
+
+      <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_marginEnd="@dimen/margin8"
+        android:layout_marginStart="@dimen/margin16"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?selectableItemBackground"
+        android:id="@+id/secondCoin">
+
+        <ImageView
+          android:layout_width="@dimen/size32"
+          android:layout_height="@dimen/size32"
+          app:srcCompat="@drawable/ic_btc"
+          android:id="@+id/imgCoin2"
+          android:layout_marginTop="@dimen/margin8"
+          android:layout_marginBottom="@dimen/margin8" />
+
+        <LinearLayout
+          android:orientation="vertical"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/margin8"
+          android:layout_marginStart="@dimen/margin8"
+          android:layout_marginBottom="@dimen/margin8">
+
+          <TextView
+            android:text="بیت کوین"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCoin2Name"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline6" />
+
+          <TextView
+            android:text="BTC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCoin2Symbol"
+            android:textAppearance="@style/TextAppearance.MyTheme.NewsDetails"
+            android:textColor="@color/white_900" />
+        </LinearLayout>
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+    tools:ignore="SpeakableTextPresentCheck"
+    android:id="@+id/nestedScrollView">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <com.airbnb.lottie.LottieAnimationView
+          android:id="@+id/breakingNewsLoading2"
+          android:layout_width="@dimen/size64"
+          android:layout_height="@dimen/size64"
+          app:lottie_rawRes="@raw/loading"
+          app:lottie_autoPlay="true"
+          app:lottie_loop="true"
+          app:lottie_speed="0.6"
+          android:layout_centerInParent="true" />
+
+        <ir.tdaapp.tooka.components.TookaLineChart
+          android:layout_width="match_parent"
+          android:layout_height="200dp"
+          android:id="@+id/chart"
+          android:visibility="gone">
+
+        </ir.tdaapp.tooka.components.TookaLineChart>
+      </RelativeLayout>
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/timeFrameList" />
+
+      <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/content_fragment_compare_stats"
+        android:id="@+id/includeStats" />
+
+    </LinearLayout>
+
+  </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:orientation="vertical">
+
+  <com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:strokeColor="@color/black_900"
+    app:strokeWidth="1dp"
+    android:layout_margin="@dimen/margin16">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="?selectableItemBackground"
+        android:id="@+id/coinWhitepaper">
+
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:srcCompat="@drawable/ic_google_docs"
+          android:layout_marginTop="@dimen/margin16"
+          android:layout_marginBottom="@dimen/margin16" />
+
+        <TextView
+          android:text="وایت پیپر"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+          android:layout_marginStart="@dimen/margin16"
+          android:layout_marginTop="@dimen/margin16"
+          android:layout_marginBottom="@dimen/margin16" />
+      </LinearLayout>
+
+      <ImageView
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/divider_gradient"
+        android:layout_marginTop="@dimen/margin16"
+        android:layout_marginBottom="@dimen/margin16" />
+
+      <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="?selectableItemBackground"
+        android:id="@+id/myCapital">
+
+        <TextView
+          android:text="@string/my_capital"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:layout_marginStart="@dimen/margin16"
+          android:layout_marginEnd="@dimen/margin16"
+          android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+          android:layout_marginTop="@dimen/margin16"
+          android:layout_marginBottom="@dimen/margin16" />
+      </LinearLayout>
+    </LinearLayout>
+  </com.google.android.material.card.MaterialCardView>
+
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin8">
+
+    <TextView
+      android:text="@string/related_news"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+      android:layout_marginStart="@dimen/margin16" />
+
+    <TextView
+      android:text="@string/see_more"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/txtSeeMoreNews"
+      style="@style/Base.Widget.HyperlinkTextView"
+      android:layout_marginEnd="@dimen/margin16"
+      android:paddingStart="@dimen/margin4"
+      android:paddingEnd="@dimen/margin4" />
+  </LinearLayout>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="96dp">
+
+    <ir.tdaapp.tooka.components.TookaRecyclerView
+      android:id="@+id/relatedNewsList"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone" />
+
+    <com.airbnb.lottie.LottieAnimationView
+      android:id="@+id/loading"
+      android:layout_width="@dimen/size64"
+      android:layout_height="@dimen/size64"
+      app:lottie_rawRes="@raw/loading"
+      app:lottie_autoPlay="true"
+      app:lottie_loop="true"
+      app:lottie_speed="0.6"
+      android:layout_centerInParent="true" />
+  </RelativeLayout>
+
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin8">
+
+    <TextView
+      android:text="@string/related_coins"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+      android:layout_marginStart="@dimen/margin16" />
+
+    <TextView
+      android:text="@string/see_more"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/txtSeeMoreCoins"
+      style="@style/Base.Widget.HyperlinkTextView"
+      android:layout_marginEnd="@dimen/margin16"
+      android:paddingStart="@dimen/margin4"
+      android:paddingEnd="@dimen/margin4" />
+  </LinearLayout>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="112dp">
+
+  <ir.tdaapp.tooka.components.TookaRecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/relatedCoinsList"
+    android:visibility="gone"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+      android:id="@+id/coinLoading"
+      android:layout_width="@dimen/size64"
+      android:layout_height="@dimen/size64"
+      app:lottie_rawRes="@raw/loading"
+      app:lottie_autoPlay="true"
+      app:lottie_loop="true"
+      app:lottie_speed="0.6"
+      android:layout_centerInParent="true" />
+  </RelativeLayout>
+
+</LinearLayout>

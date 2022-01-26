@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/cardTopCoin"
+  android:layout_width="136dp"
+  android:layout_height="104dp"
+  app:cardCornerRadius="@dimen/radius16">
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <com.github.mikephil.charting.charts.LineChart
+      android:id="@+id/chart"
+      android:layout_width="match_parent"
+      android:layout_height="88dp"
+      android:layout_alignParentBottom="true"
+      android:layout_marginStart="-16dp"
+      android:layout_marginEnd="-16dp" />
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="#E6FFFFFF"
+      android:layout_alignParentTop="true"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentStart="true"></LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/topCoinRoot"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:visibility="visible">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <ImageView
+          android:id="@+id/imgCoin"
+          android:layout_width="@dimen/size32"
+          android:layout_height="@dimen/size32"
+          android:layout_marginStart="@dimen/margin8"
+          android:src="@drawable/ic_btc"
+          android:scaleType="centerCrop"
+          android:layout_marginTop="@dimen/margin8" />
+
+        <LinearLayout
+          android:orientation="vertical"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="10"
+          android:layout_marginTop="@dimen/margin8">
+
+          <TextView
+            android:id="@+id/txtCoinName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin8"
+            android:text="بیت کوین"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+            android:textSize="12sp"
+            android:requiresFadingEdge="horizontal"
+            android:fadingEdgeLength="20dp"
+            android:ellipsize="marquee"
+            android:singleLine="true"/>
+
+          <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/margin8"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/elev4"
+            android:paddingEnd="@dimen/elev4">
+
+            <TextView
+              android:id="@+id/txtCoinPercentage"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/iran_yekan_reqular_mobile_fa_num"
+              android:text="2.31 %"
+              android:textSize="12sp"
+              android:textStyle="bold"
+              android:textColor="@color/green_400"
+              android:layout_marginEnd="@dimen/margin8" />
+
+            <ImageView
+              android:id="@+id/imgAscend"
+              android:layout_width="@dimen/size8"
+              android:layout_height="@dimen/size8"
+              app:srcCompat="@drawable/ic_ascend"
+              app:tint="@color/green_400" />
+
+          </LinearLayout>
+        </LinearLayout>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:layout_marginStart="@dimen/margin8"
+          android:layout_marginEnd="@dimen/margin8">
+
+          <TextView
+            android:id="@+id/txtPriceTMN"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="1,354,648,354"
+            android:textAppearance="@style/TextAppearance.MyTheme.Price1" />
+
+          <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin8"
+            android:fontFamily="@font/iran_yekan_reqular_mobile_fa_num"
+            android:gravity="center"
+            android:text="تومان"
+            android:textColor="@color/dark_blue_900"
+            android:textSize="12sp"
+            android:layout_marginStart="@dimen/margin8" />
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          android:layout_marginStart="@dimen/margin8"
+          android:layout_marginEnd="@dimen/margin8">
+
+          <TextView
+            android:id="@+id/txtPriceUSD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="44,354"
+            android:textAppearance="@style/TextAppearance.MyTheme.Price2" />
+
+          <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/iran_yekan_reqular_mobile_fa_num"
+            android:gravity="center"
+            android:text="دلار"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"
+            android:layout_marginStart="@dimen/margin8" />
+        </LinearLayout>
+
+      </LinearLayout>
+    </LinearLayout>
+  </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

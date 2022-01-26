@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+  <TextView
+    android:text="@string/app_settings"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+    android:layout_marginTop="@dimen/margin16"
+    android:layout_marginStart="@dimen/margin16" />
+
+  <androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_marginTop="@dimen/margin16"
+    android:layout_marginStart="@dimen/margin16"
+    android:layout_marginEnd="@dimen/margin16"
+    style="@style/Base.Widget.SettingsCardView">
+
+    <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/vg_app_theme">
+
+        <TextView
+          android:text="@string/app_main_theme"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+          android:layout_marginStart="@dimen/margin16" />
+
+        <View
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1" />
+
+        <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:layout_marginEnd="@dimen/margin16">
+
+          <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_lightmode"
+            android:layout_weight="1"
+            app:tint="@color/black"
+            android:id="@+id/imgTheme" />
+
+          <TextView
+            android:text="@string/light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtTheme"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/margin8"
+            android:textAppearance="@style/TextAppearance.MyTheme.NewsTitle" />
+
+        </LinearLayout>
+      </LinearLayout>
+
+      <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_500"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginEnd="@dimen/margin16" />
+
+      <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/vg_customize_home">
+
+        <TextView
+          android:text="@string/customize_home_page"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/margin16"
+          android:textAppearance="@style/TextAppearance.MyTheme.Price1" />
+
+        <View
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1" />
+
+        <ImageView
+          android:layout_width="@dimen/size16"
+          android:layout_height="@dimen/size16"
+          app:srcCompat="@drawable/ic_arrow_forward"
+          android:id="@+id/imageView4"
+          android:layout_marginEnd="@dimen/margin16"
+          app:tint="@color/black" />
+      </LinearLayout>
+    </LinearLayout>
+  </androidx.cardview.widget.CardView>
+</LinearLayout>

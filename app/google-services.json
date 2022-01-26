@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "125262998222",
+    "project_id": "tooka-7d3a4",
+    "storage_bucket": "tooka-7d3a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125262998222:android:f568865177e6fc9704be9f",
+        "android_client_info": {
+          "package_name": "ir.tdaapp.tooka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "125262998222-2ao2cncddcvcbip2b1sq9samoh41equn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdICOAK9-YafTi0xcpFHS2OzjrvDUjQxo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "125262998222-2ao2cncddcvcbip2b1sq9samoh41equn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

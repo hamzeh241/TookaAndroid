@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent">
+
+      <TextView
+        android:text="@string/stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginStart="@dimen/margin16"
+        android:fontFamily="@font/iranyekan_medium"
+        android:textSize="16sp" />
+
+      <TextView
+        android:text="@string/dollars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textColor="#818181"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textSize="12sp" />
+
+      <TextView
+        android:text="@string/toomans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textColor="#818181"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textSize="12sp" />
+
+      <TextView
+        android:text="@string/vol_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textColor="#818181"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textSize="12sp" />
+
+      <TextView
+        android:text="@string/market_cap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textColor="#818181"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textSize="12sp" />
+
+      <TextView
+        android:text="@string/max_supply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textColor="#818181"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textSize="12sp" />
+
+      <TextView
+        android:text="@string/circulating_supply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textColor="#818181"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textSize="12sp" />
+
+      <TextView
+        android:text="@string/total_supply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textColor="#818181"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textSize="12sp" />
+
+      <TextView
+        android:text="@string/rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textColor="#818181"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:gravity="center_horizontal">
+
+      <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginEnd="@dimen/margin8"
+        android:gravity="center">
+
+        <ImageView
+          android:layout_width="@dimen/size8"
+          android:layout_height="@dimen/size8"
+          android:background="@drawable/first_coin_indicator" />
+
+        <TextView
+          android:text="بیت کوین"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtCoin1Name"
+          android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+          android:textSize="16sp"
+          android:gravity="center"
+          android:layout_marginStart="@dimen/margin8" />
+      </LinearLayout>
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin1Price"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:layout_marginEnd="@dimen/margin8"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin1PriceTooman"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:layout_marginEnd="@dimen/margin8"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin1Vol24"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:layout_marginEnd="@dimen/margin8"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin1MarketCap"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:layout_marginEnd="@dimen/margin8"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin1MaxSupply"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:layout_marginEnd="@dimen/margin8"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin1CircSupply"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:layout_marginEnd="@dimen/margin8"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin1TotalSupply"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:layout_marginEnd="@dimen/margin8"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin1Rank"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:layout_marginEnd="@dimen/margin8"
+        android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:gravity="center_horizontal">
+
+      <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginEnd="@dimen/margin8"
+        android:gravity="center">
+
+        <ImageView
+          android:layout_width="@dimen/size8"
+          android:layout_height="@dimen/size8"
+          android:background="@drawable/second_coin_indicator" />
+
+        <TextView
+          android:text="بیت کوین"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtCoin2Name"
+          android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+          android:textSize="16sp"
+          android:gravity="center"
+          android:layout_marginStart="@dimen/margin8" />
+      </LinearLayout>
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin2Price"
+        android:layout_marginEnd="@dimen/margin8"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin2PriceTooman"
+        android:layout_marginEnd="@dimen/margin8"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin2Vol24"
+        android:layout_marginEnd="@dimen/margin8"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin2MarketCap"
+        android:layout_marginEnd="@dimen/margin8"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin2MaxSupply"
+        android:layout_marginEnd="@dimen/margin8"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin2CircSupply"
+        android:layout_marginEnd="@dimen/margin8"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin2TotalSupply"
+        android:layout_marginEnd="@dimen/margin8"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textSize="12sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoin2Rank"
+        android:layout_marginEnd="@dimen/margin8"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin4"
+        android:layout_marginBottom="@dimen/margin4"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textSize="12sp" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</LinearLayout>

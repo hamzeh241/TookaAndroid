@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <androidx.appcompat.widget.Toolbar
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
+    android:id="@+id/toolbar"
+    android:elevation="@dimen/elev4"
+    style="@style/Base.Widget.AlternateToolbar" />
+
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:layout_marginTop="@dimen/margin16"
+    android:id="@+id/firstCoinLayout">
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:clickable="true"
+      android:background="?selectableItemBackground"
+      android:focusable="true"
+      android:id="@+id/firstCoin">
+
+      <ImageView
+        android:layout_width="@dimen/size48"
+        android:layout_height="@dimen/size48"
+        app:srcCompat="@drawable/ic_btc"
+        android:id="@+id/imgCoin1"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginBottom="@dimen/margin8" />
+
+      <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginBottom="@dimen/margin8">
+
+        <TextView
+          android:text="بیت کوین"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtCoin1Name"
+          android:textAppearance="@style/TextAppearance.MyTheme.Headline6" />
+
+        <TextView
+          android:text="BTC"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtCoin1Symbol"
+          android:textAppearance="@style/TextAppearance.MyTheme.NewsDetails"
+          android:textColor="@color/white_900" />
+      </LinearLayout>
+    </LinearLayout>
+
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:id="@+id/txtCoin1Price"
+      android:layout_marginEnd="@dimen/margin16"
+      android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+      android:textColor="@color/white_900"
+      android:layout_weight="1"
+      android:gravity="center_vertical|end" />
+  </LinearLayout>
+
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:layout_marginTop="@dimen/margin16"
+    android:id="@+id/secondCoinLayout">
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:clickable="true"
+      android:background="?selectableItemBackground"
+      android:focusable="true"
+      android:id="@+id/secondCoin">
+
+      <ImageView
+        android:layout_width="@dimen/size48"
+        android:layout_height="@dimen/size48"
+        app:srcCompat="@drawable/ic_btc"
+        android:id="@+id/imgCoin"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginBottom="@dimen/margin8" />
+
+      <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginBottom="@dimen/margin8">
+
+        <TextView
+          android:text="بیت کوین"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtCoin2Name"
+          android:textAppearance="@style/TextAppearance.MyTheme.Headline6" />
+
+        <TextView
+          android:text="BTC"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtCoin2Symbol"
+          android:textAppearance="@style/TextAppearance.MyTheme.NewsDetails"
+          android:textColor="@color/white_900" />
+      </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:id="@+id/txtCoin2Price"
+      android:layout_marginEnd="@dimen/margin16"
+      android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+      android:textColor="@color/white_900"
+      android:layout_weight="1"
+      android:gravity="center_vertical|end" />
+  </LinearLayout>
+
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/margin16"
+    android:id="@+id/numbersLayout">
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:id="@+id/from1To3">
+
+      <TextView
+        android:text="۳"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/txt3"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="?selectableItemBackgroundBorderless" />
+
+      <TextView
+        android:text="۲"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/txt2"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="?selectableItemBackgroundBorderless" />
+
+      <TextView
+        android:text="۱"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/txt1"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="?selectableItemBackgroundBorderless" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:id="@+id/from4To6">
+
+      <TextView
+        android:text="۶"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/txt6"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="?selectableItemBackgroundBorderless" />
+
+      <TextView
+        android:text="۵"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/txt5"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="?selectableItemBackgroundBorderless" />
+
+      <TextView
+        android:text="۴"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/txt4"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="?selectableItemBackgroundBorderless" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:id="@+id/from7To9">
+
+      <TextView
+        android:text="۹"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/txt9"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="?selectableItemBackgroundBorderless" />
+
+      <TextView
+        android:text="۸"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/txt8"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="?selectableItemBackgroundBorderless" />
+
+      <TextView
+        android:text="۷"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/txt7"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="?selectableItemBackgroundBorderless" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:id="@+id/misc">
+
+      <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/imgDelete"
+        android:layout_weight="1"
+        android:src="@drawable/ic_delete" />
+
+      <TextView
+        android:text="۰"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/txt0"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="?selectableItemBackgroundBorderless" />
+
+      <TextView
+        android:text="."
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/txtPoint"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="?selectableItemBackgroundBorderless" />
+    </LinearLayout>
+  </LinearLayout>
+</LinearLayout>

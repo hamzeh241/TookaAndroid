@@ -1,0 +1,156 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+  <!--Top level DayNight theme to be used in AndroidManifest.xml-->
+  <style name="Theme.MyApp" parent="Base.Theme.MyApp" />
+  <!--Base custom theme which will be shared between both light and dark theme variants-->
+  <style name="Base.Theme.MyApp" parent="Base.Theme.Tooka">
+    <!--Material color attributes (light theme) -->
+    <!--colorPrimary colors map to components and elements, such as app bars and buttons. -->
+    <!--colorSecondary colors are most often used as accents on components, such as FABs and -->
+    <!--selection controls.-->
+    <item name="colorPrimary">@color/black_800</item>
+    <item name="colorPrimaryVariant">@color/black_900</item>
+    <item name="colorSecondary">@color/white_300</item>
+    <item name="colorSecondaryVariant">@color/white</item>
+    <item name="android:textColorPrimary">@color/black_900</item>
+
+    <item name="android:windowEnableSplitTouch">false</item>
+    <item name="android:splitMotionEvents">false</item>
+    <!--colorBackground appears behind scrollable content and is used for the default window-->
+    <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->
+    <!--and menus. colorError is used to indicate an error state for components such as-->
+    <!--text fields.-->
+    <item name="android:colorBackground">@color/white</item>
+    <item name="colorSurface">@color/white</item>
+    <item name="colorError">@color/red_600</item>
+
+    <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
+    <!--on which they appear.-->
+    <item name="colorOnPrimary">@color/white</item>
+    <item name="colorOnSecondary">@color/black_900</item>
+    <item name="colorOnBackground">@color/black_900</item>
+    <item name="colorOnSurface">@color/black_900</item>
+    <item name="colorOnError">@color/white</item>
+    <!--Material type attributes-->
+    <item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1</item>
+    <item name="textAppearanceHeadline2">@style/TextAppearance.MyTheme.Headline2</item>
+    <item name="textAppearanceHeadline3">@style/TextAppearance.MyTheme.Headline3</item>
+    <item name="textAppearanceHeadline4">@style/TextAppearance.MyTheme.Headline4</item>
+    <item name="textAppearanceHeadline5">@style/TextAppearance.MyTheme.Headline5</item>
+    <item name="textAppearanceHeadline6">@style/TextAppearance.MyTheme.Headline6</item>
+    <item name="textAppearanceSubtitle1">@style/TextAppearance.MyTheme.Subtitle1</item>
+    <item name="textAppearanceSubtitle2">@style/TextAppearance.MyTheme.Subtitle2</item>
+    <item name="textAppearanceBody1">@style/TextAppearance.MyTheme.Body1</item>
+    <item name="textAppearanceBody2">@style/TextAppearance.MyTheme.Body2</item>
+    <item name="textAppearanceButton">@style/TextAppearance.MyTheme.Button</item>
+    <item name="textAppearanceCaption">@style/TextAppearance.MyTheme.Caption</item>
+    <item name="textAppearanceOverline">@style/TextAppearance.MyTheme.Overline</item>
+    <!--Material shape attributes-->
+    <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent
+    </item>
+    <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MyTheme.MediumComponent
+    </item>
+    <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MyTheme.LargeComponent
+    </item>
+    <!--Component styles-->
+    <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert
+    </item>
+    <!--        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.MyTheme.BottomSheetDialog</item>-->
+    <!--        <item name="navigationViewStyle">@style/Widget.MyTheme.NavigationView</item>-->
+    <item name="toolbarStyle">@style/Base.Widget.Toolbar</item>
+    <item name="imageButtonStyle">@style/Base.Widget.ImageButton</item>
+    <item name="cardViewStyle">@style/Base.Widget.CardView</item>
+    <item name="extendedFloatingActionButtonStyle">@style/Base.Widget.ExtendedFAB</item>
+  </style>
+
+  <style name="Base.Theme.Tooka" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <item name="android:statusBarColor" tools:ignore="NewApi">?attr/colorSurface</item>
+    <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+    <item name="android:navigationBarColor" tools:ignore="NewApi">
+      ?android:attr/colorBackground
+    </item>
+    <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
+    <item name="android:navigationBarDividerColor" tools:ignore="NewApi">
+      ?attr/colorControlHighlight
+    </item>
+  </style>
+
+  <style name="Base.Widget.Toolbar" parent="Widget.AppCompat.Toolbar">
+    <item name="fontFamily">@font/iranyekan_black</item>
+    <item name="android:background">@color/white</item>
+
+    <item name="titleTextAppearance">@style/TextAppearance.MyTheme.ToolbarTitle</item>
+    <item name="titleTextColor">?android:attr/textColorPrimary</item>
+    <item name="subtitleTextAppearance">?attr/textAppearanceSubtitle1</item>
+    <item name="subtitleTextColor">?android:attr/textColorSecondary</item>
+    <!-- Overrides minimum height in landscape to avoid headline6 and subtitle1 height concerns. -->
+    <item name="android:minHeight">@dimen/mtrl_toolbar_default_height</item>
+    <item name="maxButtonHeight">@dimen/mtrl_toolbar_default_height</item>
+  </style>
+
+  <style name="Base.Widget.AlternateToolbar" parent="Widget.AppCompat.Toolbar">
+    <item name="fontFamily">@font/iranyekan_medium</item>
+    <item name="android:fontFamily">@font/iranyekan_medium</item>
+    <item name="android:background">@color/white</item>
+
+    <item name="titleTextAppearance">@style/TextAppearance.MyTheme.AlternateToolbarTitle</item>
+    <item name="titleTextColor">?android:attr/textColorPrimary</item>
+    <item name="subtitleTextAppearance">?attr/textAppearanceSubtitle1</item>
+    <item name="subtitleTextColor">?android:attr/textColorSecondary</item>
+    <!-- Overrides minimum height in landscape to avoid headline6 and subtitle1 height concerns. -->
+    <item name="android:minHeight">@dimen/mtrl_toolbar_default_height</item>
+    <item name="maxButtonHeight">@dimen/mtrl_toolbar_default_height</item>
+  </style>
+
+  <style name="Base.Widget.TabLayout" parent="Widget.MaterialComponents.TabLayout">
+    <item name="fontFamily">@font/iranyekan_bold</item>
+    <item name="android:fontFamily">@font/iranyekan_bold</item>
+  </style>
+
+  <style name="Base.Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+    <item name="fontFamily">@font/iranyekan_medium</item>
+    <item name="itemIconTint">@drawable/bottom_nav_tint</item>
+    <item name="itemTextColor">@drawable/bottom_nav_tint</item>
+  </style>
+
+  <style name="Base.Widget.ImageButton" parent="Widget.AppCompat.ImageButton">
+    <item name="android:background">?selectableItemBackgroundBorderless</item>
+  </style>
+
+  <style name="Base.Widget.CardView" parent="Widget.MaterialComponents.CardView">
+    <item name="cardCornerRadius">@dimen/radius8</item>
+    <item name="cardElevation">@dimen/elev4</item>
+  </style>
+
+  <style name="Base.Widget.SettingsCardView" parent="Widget.MaterialComponents.CardView">
+    <item name="cardCornerRadius">@dimen/radius16</item>
+    <item name="cardElevation">@dimen/elev0</item>
+    <item name="cardBackgroundColor">@color/white_100</item>
+  </style>
+
+  <style name="Base.Widget.AlertDialogButtons" parent="Widget.MaterialComponents.Button">
+    <item name="android:textColor">@color/black_200</item>
+    <item name="android:textAppearance">@style/TextAppearance.MyTheme.Headline6</item>
+    <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+    <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+  </style>
+
+  <style name="Base.AlertDialog" parent="@style/Theme.MaterialComponents.Dialog">
+    <item name="dialogCornerRadius">16dp</item>
+  </style>
+
+  <style name="Base.Widget.ExtendedFAB" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+    <item name="android:textAppearance">@style/TextAppearance.MyTheme.Headline6</item>
+    <item name="iconTint">@color/white</item>
+    <item name="backgroundTint">@color/dark_blue_900</item>
+    <item name="android:backgroundTint">@color/dark_blue_900</item>
+    <item name="android:textColor">@color/white</item>
+  </style>
+
+  <style name="Base.Widget.HyperlinkTextView" parent="Widget.AppCompat.TextView">
+    <item name="android:textColor">@color/purple_500</item>
+    <item name="android:textAppearance">@style/TextAppearance.MyTheme.Headline6</item>
+    <item name="background">?selectableItemBackground</item>
+    <item name="android:background">?selectableItemBackground</item>
+    <item name="android:clickable">true</item>
+  </style>
+</resources>
