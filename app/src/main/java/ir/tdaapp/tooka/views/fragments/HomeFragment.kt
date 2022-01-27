@@ -155,18 +155,20 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
 
     viewModel.livePrice.observe(viewLifecycleOwner, {
       if (it != null) {
-        launch(Dispatchers.IO) {
+//        launch(Dispatchers.IO) {
           topCoinsAdapter.models.singleOrNull { model ->
             model.id == it.id
           }.let { model ->
             model?.priceUSD = it.priceUSD
             val position = topCoinsAdapter.models.indexOf(model)
 
-            withContext(Dispatchers.Main) {
+//            withContext(Dispatchers.Main) {
               topCoinsAdapter.notifyItemChanged(position)
-            }
+
+              toast("${it.id} updated")
+//            }
           }
-        }
+//        }
       }
     })
 

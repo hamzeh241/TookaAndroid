@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionState
@@ -145,15 +146,15 @@ class HomeViewModel(val applicationClass: Application): AndroidViewModel(applica
         hubConnection.send("SubscribeToLivePrice")
       }
     }
-
     hubConnection.on("LivePrice", { param1 ->
 
-      val response = convertResponse<LivePriceListResponse>(param1!!)
-      if (response.status)
-        _livePrice.postValue(response.result)
-      else {
-        _error.postValue(detectError(response as ResponseModel<Any>))
-      }
+      Log.i("TOOKATAG", "subscribeToLivePrice: $param1")
+
+      val collectionType = object: TypeToken<LivePriceListResponse?>() {}.type
+      val response: LivePriceListResponse =
+        GsonInstance.getInstance().fromJson(param1, collectionType)
+//      val response = convertResponse<LivePriceListResponse>(param1!!)
+      _livePrice.postValue(response)
 
     }, String::class.java)
   }
