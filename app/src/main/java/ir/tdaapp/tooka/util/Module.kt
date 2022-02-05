@@ -17,8 +17,6 @@ import org.koin.dsl.module
 val appModule = module {
   single { RetrofitClient() }
   single { ContextUtils(androidContext()) }
-  single { HomeViewModel(get()) }
-  single { MarketsViewModel(get()) }
   single { NewsViewModel(get()) }
   factory { CoinDetailsViewModel(get()) }
   single { RelatedNewsViewModel(get()) }

@@ -1,5 +1,6 @@
 package ir.tdaapp.tooka.views.fragments
 
+import android.annotation.SuppressLint
 import android.graphics.Canvas
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,16 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import androidx.viewbinding.ViewBinding
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.adapters.TookaAdapter
 import ir.tdaapp.tooka.adapters.MarketCoinsViewHolder
+import ir.tdaapp.tooka.adapters.MarketsAdapter
 import ir.tdaapp.tooka.adapters.SortOptionsViewHolder
 import ir.tdaapp.tooka.databinding.FragmentMarketsBinding
 import ir.tdaapp.tooka.databinding.ItemMarketCoinsFlatBinding
@@ -27,51 +27,70 @@ import ir.tdaapp.tooka.models.SortModel
 import ir.tdaapp.tooka.views.fragments.base.BaseFragment
 
 import ir.tdaapp.tooka.util.*
+import ir.tdaapp.tooka.viewmodels.HomeViewModel
 import ir.tdaapp.tooka.viewmodels.MarketsViewModel
 import ir.tdaapp.tooka.viewmodels.SharedViewModel
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import java.lang.Exception
+import kotlin.coroutines.CoroutineContext
 
 
-class MarketsFragment: BaseFragment(), View.OnClickListener {
+class MarketsFragment: BaseFragment(), View.OnClickListener, CoroutineScope {
 
   lateinit var binding: FragmentMarketsBinding
 
-  lateinit var adapter: TookaAdapter<Coin>
+  lateinit var adapter: MarketsAdapter
   lateinit var sortAdapter: TookaAdapter<SortModel>
-  lateinit var linearManager: LinearLayoutManager
-  lateinit var gridManager: GridLayoutManager
 
   var selectedSort: SortModel? = null
+
+  val verticalDecoration by lazy {
+    val decor = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+    decor.setDrawable(resources.getDrawable(R.drawable.divider_item_decoration))
+    decor
+  }
+
+  val horizontalDecoration by lazy {
+    val decor = DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL)
+    decor.setDrawable(resources.getDrawable(R.drawable.divider_item_decoration))
+    decor
+  }
 
   var listVisibility: Boolean
     get() = if (binding.includeMarketsCoinList.marketCoinsList.visibility == View.VISIBLE) true else false
     set(value) {
       if (value) {
-        binding.includeMarketsCoinList.loading.pauseAnimation()
-        binding.includeMarketsCoinList.loading.visibility = View.GONE
+        binding.includeMarketsCoinList.loading.apply {
+          pauseAnimation()
+          visibility = View.GONE
+        }
         binding.includeMarketsCoinList.marketCoinsList.visibility = View.VISIBLE
       } else {
-        binding.includeMarketsCoinList.loading.playAnimation()
-        binding.includeMarketsCoinList.loading.visibility = View.VISIBLE
+        binding.includeMarketsCoinList.loading.apply {
+          playAnimation()
+          visibility = View.VISIBLE
+        }
         binding.includeMarketsCoinList.marketCoinsList.visibility = View.GONE
       }
     }
 
-  val viewModel: MarketsViewModel by inject()
-  private val sharedViewModel: SharedViewModel by inject()
+  private val viewModel: MarketsViewModel by lazy {
+    val viewModelFactory = ViewModelFactory()
+    ViewModelProvider(this, viewModelFactory).get(MarketsViewModel::class.java)
+  }
 
   override fun init() {
+    initAdapters()
     initMarketCoinsList()
     initSortList()
     initSwipeGesture()
+    initSwipeRefreshLayout()
 
-    sharedViewModel.error.observe(viewLifecycleOwner, {
-      Log.i("TAG", "markets: $it")
-    })
-
-    viewModel.getSortOptions()
+    lifecycleScope.launchWhenStarted {
+      viewModel.getSortOptions()
+    }
   }
 
   override fun initTransitions() = Unit
@@ -83,26 +102,8 @@ class MarketsFragment: BaseFragment(), View.OnClickListener {
   override fun initListeners(view: View) {
     binding.includeMarketsSort.imgGridList.setOnClickListener(this)
     binding.includeMarketsSort.imgLinearList.setOnClickListener(this)
-    adapter.callback = coinListener
+//    adapter.callback = coinListener
     sortAdapter.callback = sortListener
-  }
-
-  private val coinListener = TookaAdapter.Callback<Coin> { vm, position ->
-    findNavController().navigate(
-      MarketsFragmentDirections.actionMarketsToCoinDetailsFragment(
-        vm.id,
-        "asdasd",
-        when (getCurrentLocale(requireContext())) {
-          "fa" -> {
-            if (vm.persianName != null)
-              vm.persianName!!
-            else vm.name
-          }
-          else -> vm.name
-        },
-        vm.icon
-      )
-    )
   }
 
   private val sortListener = TookaAdapter.Callback<SortModel> { vm, position ->
@@ -128,14 +129,24 @@ class MarketsFragment: BaseFragment(), View.OnClickListener {
   }
 
   override fun initObservables() {
-    viewModel.coinsList.observe(viewLifecycleOwner, {
-      if (it.size > 0) {
-        listVisibility = true
-        adapter.models = it as ArrayList<Coin>
-        adapter.notifyDataSetChanged()
+    viewModel.coinsList.observe(viewLifecycleOwner) {
+      listVisibility = true
+      val isGrid = adapter.differ.currentList.any { it.viewType == VIEW_TYPE_GRID }
+      it as ArrayList<Coin>
+      if (isGrid) {
+        it.forEach { coin -> coin.viewType = VIEW_TYPE_GRID }
       }
-    })
-    viewModel.sortList.observe(viewLifecycleOwner, {
+
+      adapter.differ.submitList(it)
+      binding.swipeRefreshLayout.isRefreshing = false
+    }
+
+    viewModel.livePrice.observe(viewLifecycleOwner) {
+      launch(Dispatchers.IO) {
+        adapter.notifyChanges(it)
+      }
+    }
+    viewModel.sortList.observe(viewLifecycleOwner) {
       if (!it.isNullOrEmpty()) {
         sortAdapter.models = it as ArrayList<SortModel>
         binding.includeMarketsSort.sortOptionList.visibility = View.VISIBLE
@@ -153,55 +164,37 @@ class MarketsFragment: BaseFragment(), View.OnClickListener {
           else viewModel.getData(false, 1)
         }
       }
-    })
-    binding.includeMarketsCoinList.marketCoinsList.layoutManager = linearManager
-    binding.includeMarketsCoinList.marketCoinsList.adapter = adapter
+    }
+  }
+
+  private fun initSwipeRefreshLayout() {
+    binding.swipeRefreshLayout.setOnRefreshListener {
+      listVisibility = false
+//          initAdapters()
+//          initMarketCoinsList()
+
+      viewModel.getSortOptions()
+    }
   }
 
   private fun initSwipeGesture() {
-    val callback = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-      override fun onMove(
-        p0: RecyclerView,
-        p1: RecyclerView.ViewHolder,
-        p2: RecyclerView.ViewHolder
-      ): Boolean = false
+    val callback = TookaSwipeCallback(ItemTouchHelper.LEFT, { viewHolder, direction ->
 
+      val position = viewHolder.adapterPosition
+      val coin = adapter.differ.currentList[position]
+      coin.isWatchlist = true
+      adapter.notifyItemChanged(position)
+      viewModel.addToWatchlist(2, coin.id)
 
-      override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        val position = viewHolder.adapterPosition
+    }, { decorator ->
 
-        val coin = adapter.models[position]
-        coin.isWatchlist = true
-
-        adapter.notifyItemChanged(position)
-//        viewModel.addToWatchlist(2, coin.id)
+      decorator.apply {
+        addSwipeLeftBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gold_300))
+        addSwipeLeftActionIcon(R.drawable.ic_star_outline)
+        create().decorate()
       }
 
-      override fun onChildDraw(
-        c: Canvas,
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        dX: Float,
-        dY: Float,
-        actionState: Int,
-        isCurrentlyActive: Boolean
-      ) {
-        RecyclerViewSwipeDecorator.Builder(
-          c,
-          recyclerView,
-          viewHolder,
-          dX,
-          dY,
-          actionState,
-          isCurrentlyActive
-        )
-          .addSwipeLeftBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gold_300))
-          .addSwipeLeftActionIcon(R.drawable.ic_star_outline)
-          .create()
-          .decorate()
-        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-      }
-    }
+    })
     val touchHelper = ItemTouchHelper(callback)
     touchHelper.attachToRecyclerView(binding.includeMarketsCoinList.marketCoinsList)
   }
@@ -230,29 +223,33 @@ class MarketsFragment: BaseFragment(), View.OnClickListener {
     return binding
   }
 
-  private fun initMarketCoinsList() {
-    adapter = object: TookaAdapter<Coin>() {
-      override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == VIEW_TYPE_LINEAR)
-          return MarketCoinsViewHolder(
-            ItemMarketCoinsFlatBinding.inflate(
-              LayoutInflater.from(context),
-              parent,
-              false
-            )
-          )
-        else return MarketCoinsViewHolder(
-          ItemMarketCoinsGridBinding.inflate(
-            LayoutInflater.from(context),
-            parent,
-            false
-          )
+  private fun initAdapters() {
+    adapter = MarketsAdapter { item, pos ->
+      findNavController().navigate(
+        MarketsFragmentDirections.actionMarketsToCoinDetailsFragment(
+          item.id,
+          "asdasd",
+          getName(requireContext(), item),
+          item.icon
         )
-      }
+      )
     }
+  }
 
-    linearManager = LinearLayoutManager(requireContext())
-    gridManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+  private val linearManager by lazy {
+    LinearLayoutManager(requireContext())
+  }
+
+  private val gridManager by lazy {
+    GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+  }
+
+  private fun initMarketCoinsList() {
+    binding.includeMarketsCoinList.marketCoinsList.apply {
+      layoutManager = linearManager
+      adapter = this@MarketsFragment.adapter
+      addItemDecoration(verticalDecoration)
+    }
   }
 
   private fun initSortList() {
@@ -260,28 +257,48 @@ class MarketsFragment: BaseFragment(), View.OnClickListener {
       override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         SortOptionsViewHolder(ItemSortOptionBinding.inflate(layoutInflater, parent, false))
     }
-    val sortManager = LinearLayoutManager(requireContext())
-    sortManager.orientation = LinearLayoutManager.HORIZONTAL
-    sortManager.reverseLayout = true
+    val sortManager = LinearLayoutManager(requireContext()).apply {
+      orientation = LinearLayoutManager.HORIZONTAL
+      reverseLayout = true
+    }
 
-    binding.includeMarketsSort.sortOptionList.layoutManager = sortManager
-    binding.includeMarketsSort.sortOptionList.adapter = sortAdapter
+    binding.includeMarketsSort.sortOptionList.apply {
+      layoutManager = sortManager
+      adapter = sortAdapter
+    }
   }
 
   override fun onClick(v: View?) {
     when (v?.id) {
       R.id.imgGridList -> {
-        binding.includeMarketsCoinList.marketCoinsList.layoutManager = gridManager
-        adapter.changeViewType(VIEW_TYPE_GRID)
+        binding.includeMarketsCoinList.marketCoinsList.apply {
+          layoutManager = gridManager
+          addItemDecoration(horizontalDecoration)
+        }
+        launch(Dispatchers.Main) {
+          listVisibility = false
+          adapter.changeViewType(VIEW_TYPE_GRID)
+          listVisibility = true
+        }
         binding.includeMarketsSort.imgGridList.setColorFilter(resources.getColor(R.color.black))
         binding.includeMarketsSort.imgLinearList.setColorFilter(resources.getColor(R.color.gray_400))
       }
       R.id.imgLinearList -> {
-        binding.includeMarketsCoinList.marketCoinsList.layoutManager = linearManager
-        adapter.changeViewType(VIEW_TYPE_LINEAR)
+        binding.includeMarketsCoinList.marketCoinsList.apply {
+          layoutManager = linearManager
+          removeItemDecoration(horizontalDecoration)
+        }
+        launch(Dispatchers.Main) {
+          listVisibility = false
+          adapter.changeViewType(VIEW_TYPE_LINEAR)
+          listVisibility = true
+        }
         binding.includeMarketsSort.imgGridList.setColorFilter(resources.getColor(R.color.gray_400))
         binding.includeMarketsSort.imgLinearList.setColorFilter(resources.getColor(R.color.black))
       }
     }
   }
+
+  override val coroutineContext: CoroutineContext
+    get() = Dispatchers.IO + CoroutineName("MarketsFragmentJob")
 }

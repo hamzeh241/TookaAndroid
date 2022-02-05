@@ -35,5 +35,8 @@ class SearchViewModel(val appClass: Application): AndroidViewModel(appClass) {
     })
   }
 
-  fun cancel() = call.cancel()
+  fun cancel() {
+    if (call != null)
+      call.cancel()
+  }
 }

@@ -19,6 +19,43 @@ data class Coin(
   var viewType: Int,
   var isStarred: Boolean
 ) {
+
+  override fun equals(other: Any?): Boolean {
+    if (javaClass != other?.javaClass)
+      return false
+
+    other as Coin
+
+    if (id != other.id)
+      return false
+    else if(name != other.name)
+      return false
+    else if(persianName != other.persianName)
+      return false
+    else if(priceUSD != other.priceUSD)
+      return false
+    else if(priceTMN != other.priceTMN)
+      return false
+    else if(symbol != other.symbol)
+      return false
+    else if(nobitexId != other.nobitexId)
+      return false
+    else if(icon != other.icon)
+      return false
+    else if(ohlc != other.ohlc)
+      return false
+    else if(rank != other.rank)
+      return false
+    else if(percentage != other.percentage)
+      return false
+    else if(isWatchlist != other.isWatchlist)
+      return false
+    else if(isStarred != other.isStarred)
+      return false
+
+    return true
+  }
+
   override fun toString(): String {
     return when (persianName != null) {
       true -> StringBuilder(name)

@@ -1,0 +1,177 @@
+package ir.tdaapp.tooka.adapters
+
+import android.graphics.Color
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import ir.tdaapp.tooka.R
+import ir.tdaapp.tooka.databinding.ItemSecondTopCoinBinding
+import ir.tdaapp.tooka.models.Coin
+import ir.tdaapp.tooka.models.LivePriceListResponse
+import ir.tdaapp.tooka.models.PriceChange
+import ir.tdaapp.tooka.util.*
+import ir.tdaapp.tooka.util.api.RetrofitClient
+import kotlinx.coroutines.*
+import java.lang.StringBuilder
+import kotlinx.coroutines.async
+
+class TopCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
+  RecyclerView.Adapter<TopCoinsAdapter.ViewHolder>() {
+
+  class ViewHolder private constructor(val binding: ItemSecondTopCoinBinding):
+    RecyclerView.ViewHolder(binding.root) {
+
+    companion object {
+      fun from(parent: ViewGroup): ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ItemSecondTopCoinBinding.inflate(layoutInflater, parent, false)
+        return ViewHolder(binding)
+      }
+    }
+  }
+
+  val differ = AsyncListDiffer(this, DiffCallback())
+
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+    ViewHolder.from(parent)
+
+  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    val data = differ.currentList[position]
+
+    holder.binding.root.setOnClickListener {
+      action.invoke(data, position)
+    }
+
+    setCorrectMargins(
+      holder.binding.cardTopCoin,
+      holder.binding.root.context,
+      position,
+      differ.currentList.size - 1
+    )
+
+    holder.binding.topCoinRoot.setOnClickListener {
+      action.invoke(data, position)
+    }
+
+    holder.binding.txtCoinName.text =
+      when (ContextUtils.getLocale(holder.binding.root.context).toString()) {
+        "en" -> data.name
+        "fa" -> data.persianName
+        else -> data.name
+      }
+
+    holder.binding.txtPriceTMN.text =
+      StringBuilder(separatePrice(data.priceTMN.toFloat())).toString()
+    holder.binding.txtPriceUSD.text =
+      StringBuilder(separatePrice(data.priceUSD.toInt().toFloat())).toString()
+    holder.binding.txtCoinPercentage.text =
+      StringBuilder(data.percentage.toString())
+        .append(" ")
+        .append("%")
+        .toString()
+
+    if (data.percentage > 0) {
+      holder.binding.txtCoinPercentage.setTextColor(holder.binding.root.resources.getColor(R.color.green_400))
+      holder.binding.imgAscend.setColorFilter(holder.binding.root.resources.getColor(R.color.green_400))
+      holder.binding.imgAscend.setImageResource(R.drawable.ic_ascend)
+    } else if (data.percentage < 0) {
+      holder.binding.txtCoinPercentage.setTextColor(holder.binding.root.resources.getColor(R.color.red_600))
+      holder.binding.imgAscend.setColorFilter(holder.binding.root.resources.getColor(R.color.red_600))
+      holder.binding.imgAscend.setImageResource(R.drawable.ic_descend)
+    } else {
+      holder.binding.txtCoinPercentage.setTextColor(holder.binding.root.resources.getColor(R.color.white_900))
+      holder.binding.imgAscend.setColorFilter(holder.binding.root.resources.getColor(R.color.white_900))
+      holder.binding.imgAscend.setImageResource(R.drawable.ic_remove)
+    }
+
+    val imageUrl = RetrofitClient.COIN_IMAGES + data.icon
+
+    Glide.with(holder.binding.root.context)
+      .load(imageUrl)
+      .placeholder(R.drawable.ic_baseline_circle_24)
+      .into(holder.binding.imgCoin)
+
+    setMiniChart(holder.binding.chart, data.ohlc.reversed())
+  }
+
+  override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+    if (payloads.isNullOrEmpty())
+      super.onBindViewHolder(holder, position, payloads)
+
+    if (payloads.any { it is PriceChange }) {
+      val item = differ.currentList[position]
+
+
+      if ((payloads.last() as PriceChange).ascend) {
+        holder.binding.txtPriceUSD.setPrice(item.priceUSD)
+        holder.binding.txtPriceUSD.animateColor(
+          holder.binding.root.resources.getColor(R.color.gray_400),
+          Color.GREEN,
+          1000L
+        )
+
+        holder.binding.txtPriceTMN.setPrice(item.priceTMN)
+        holder.binding.txtPriceTMN.animateColor(
+          holder.binding.root.resources.getColor(R.color.dark_blue_900),
+          Color.GREEN,
+          1000L
+        )
+      } else {
+        holder.binding.txtPriceUSD.setPrice(item.priceUSD)
+        holder.binding.txtPriceUSD.animateColor(
+          holder.binding.root.resources.getColor(R.color.gray_400),
+          Color.RED,
+          1000L
+        )
+
+            holder.binding.txtPriceTMN.setPrice(item.priceTMN)
+            holder.binding.txtPriceTMN.animateColor(
+              holder.binding.root.resources.getColor(R.color.dark_blue_900),
+              Color.RED,
+              1000L
+            )
+      }
+    }
+  }
+
+  @DelicateCoroutinesApi
+  suspend fun notifyChanges(livePrice: LivePriceListResponse) =
+    withContext(Dispatchers.IO) {
+      val position = async {
+        differ.currentList.singleOrNull { it.id == livePrice.id }.let { coin ->
+          differ.currentList.indexOf(coin)
+        }
+      }
+
+      with(position.await()) {
+        if (this >= 0) {
+          val ascend = differ.currentList[this].priceUSD < livePrice.priceUSD
+
+          also {
+            differ.currentList[it].priceUSD = livePrice.priceUSD
+            differ.currentList[it].priceTMN = livePrice.priceTMN!!
+
+            withContext(Dispatchers.Main) {
+              notifyItemChanged(this@with, PriceChange(ascend))
+            }
+          }
+        }
+      }
+    }
+
+
+  override fun getItemCount(): Int = differ.currentList.size
+}
+
+private class DiffCallback: DiffUtil.ItemCallback<Coin>() {
+
+  override fun areItemsTheSame(oldItem: Coin, newItem: Coin): Boolean = oldItem.id == newItem.id
+
+  override fun areContentsTheSame(oldItem: Coin, newItem: Coin): Boolean = oldItem == newItem
+}

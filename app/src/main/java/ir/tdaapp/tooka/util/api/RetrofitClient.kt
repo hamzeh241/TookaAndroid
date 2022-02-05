@@ -17,6 +17,8 @@ class RetrofitClient {
     const val NEWS_IMAGES: String = "https://www.razhashop.ir/Images/News/"
     const val COIN_IMAGES: String = "https://www.razhashop.ir/Images/Coins/"
 
+    const val NEWS_URL: String = "https://ws.razhashop.ir/News/"
+
 
     const val SERVER_ERROR: Int = 500
     const val BAD_REQUEST: Int = 400

@@ -9,7 +9,6 @@
     android:id="@+id/topCoinsList"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layoutAnimation="@anim/slide_in_animator"
     android:visibility="gone" />
 
   <com.airbnb.lottie.LottieAnimationView

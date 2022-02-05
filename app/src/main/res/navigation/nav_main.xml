@@ -42,6 +42,9 @@
       app:destination="@id/newsDetailsDialog"
       app:popUpTo="@id/news"
       app:popUpToInclusive="true" />
+    <action
+      android:id="@+id/action_news_to_newsDetailsFragment"
+      app:destination="@id/newsDetailsFragment" />
   </fragment>
   <fragment
     android:id="@+id/settings"
@@ -89,6 +92,9 @@
       android:id="@+id/action_home_to_notificationFragment"
       app:destination="@id/notificationFragment"
       app:popUpTo="@id/home" />
+    <action
+      android:id="@+id/action_home_to_newsDetailsFragment"
+      app:destination="@id/newsDetailsFragment" />
   </fragment>
   <fragment
     android:id="@+id/converterFragment"
@@ -135,4 +141,13 @@
     android:id="@+id/notificationFragment"
     android:name="ir.tdaapp.tooka.views.fragments.NotificationFragment"
     android:label="NotificationFragment" />
+  <fragment
+    android:id="@+id/newsDetailsFragment"
+    android:name="ir.tdaapp.tooka.views.fragments.NewsDetailsFragment"
+    android:label="NewsDetailsFragment" >
+    <argument
+      android:name="newsId"
+      app:argType="integer"
+      android:defaultValue="0" />
+  </fragment>
 </navigation>

@@ -1,6 +1,8 @@
 package ir.tdaapp.tooka.util
 
 import ContextUtils
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
 import android.view.ViewGroup
@@ -21,7 +23,9 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Looper
 import android.widget.Toast
+import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat.getColor
+import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
 import com.github.mikephil.charting.charts.CandleStickChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.YAxis
@@ -50,6 +54,31 @@ fun maskTextView(textView: TextView) {
   textView.text = string.toString()
 }
 
+fun TextView.animateColor(
+  fromColor: Int,
+  toColor: Int,
+  animDuration: Long = 300L,
+  onEnd: (animator: ObjectAnimator)->Unit? = {}
+) {
+  val valueAnimator: ValueAnimator = ObjectAnimator.ofInt(
+    this,
+    "textColor",
+    fromColor,
+    toColor
+  )
+  valueAnimator.apply {
+    setEvaluator(ArgbEvaluator())
+    duration = animDuration
+    repeatCount = 1
+    repeatMode = ValueAnimator.REVERSE
+    start()
+    doOnEnd {
+      onEnd.invoke(this as ObjectAnimator)
+    }
+  }
+}
+
+
 fun String.separatePrice(price: Float): String {
   val decim = DecimalFormat("#,###.##")
   return decim.format(price)
@@ -61,7 +90,7 @@ fun random(start: Int, end: Int): Int {
 }
 
 inline fun <reified T: Any> convertResponse(json: String): ResponseModel<T> {
-  val collectionType = object: TypeToken<ResponseModel<T>?>() {}.type
+  val collectionType = object: TypeToken<ResponseModel<T>>() {}.type
   val response: ResponseModel<T> =
     GsonInstance.getInstance().fromJson(json, collectionType)
 
@@ -181,6 +210,17 @@ fun isMainThread(): Boolean = if (Looper.getMainLooper() == Looper.myLooper()) t
 
 fun getCurrentLocale(context: Context): String? {
   return ContextUtils.getLocale(context).toString()
+}
+
+fun getName(context: Context,coin: Coin): String {
+  return when (getCurrentLocale(context)) {
+    "fa" -> {
+      if (coin.persianName != null)
+        coin.persianName!!
+      else coin.name
+    }
+    else -> coin.name
+  }
 }
 
 fun setCandleChart(
@@ -657,7 +697,7 @@ fun setMiniChart(lineChart: LineChart, priceList: List<Double>) {
       getLegend().setEnabled(false)
       getDescription().setEnabled(false)
       setTouchEnabled(false)
-      animateXY(1500, 1000)
+//      animateXY(1500, 1000)
       val yAxis = lineChart.getAxis(YAxis.AxisDependency.RIGHT)
       yAxis.isEnabled = false
 

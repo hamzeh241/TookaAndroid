@@ -2,9 +2,7 @@ package ir.tdaapp.tooka.viewmodels
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.microsoft.signalr.Action1
@@ -15,7 +13,7 @@ import ir.tdaapp.tooka.util.*
 import ir.tdaapp.tooka.util.signalr.SignalR
 import kotlinx.coroutines.*
 
-class HomeViewModel(val applicationClass: Application): AndroidViewModel(applicationClass) {
+class HomeViewModel: ViewModel() {
 
   private val _breakingNewsList = MutableLiveData<List<News>>()
   val breakingNewsList: LiveData<List<News>>
@@ -49,7 +47,7 @@ class HomeViewModel(val applicationClass: Application): AndroidViewModel(applica
   var hubConnection: HubConnection = SignalR.hubConnection
 
   @DelicateCoroutinesApi
-  suspend fun getData() {
+  suspend fun getData() = withContext(Dispatchers.IO) {
     /*
 
     val retrofit: RetrofitClient by applicationClass.inject()
@@ -75,32 +73,33 @@ class HomeViewModel(val applicationClass: Application): AndroidViewModel(applica
      */
 
     if (hubConnection.connectionState == HubConnectionState.CONNECTED) {
-      GlobalScope.launch(Dispatchers.IO) {
-        if (topCoins.isNullOrEmpty())
-          hubConnection.send("GetTopCoins")
+      if (topCoins.isNullOrEmpty())
+        hubConnection.send("GetTopCoins")
 
-        if (news.isNullOrEmpty())
-          hubConnection.send("GetHomeNews")
+      if (news.isNullOrEmpty())
+        hubConnection.send("GetHomeNews")
 
-        if (gainersLosers.isNullOrEmpty())
-          hubConnection.send("GetGainersLosersCoins")
+      if (gainersLosers.isNullOrEmpty())
+        hubConnection.send("GetGainersLosersCoins")
 
-        if (watchlist.isNullOrEmpty())
-          hubConnection.send("GetWatchlistCoins")
-      }
+      if (watchlist.isNullOrEmpty())
+        hubConnection.send("GetWatchlistCoins")
     } else _error.postValue(NetworkErrors.NETWORK_ERROR)
 
-    hubConnection.on("TopCoins", object: Action1<String> {
-      override fun invoke(param1: String?) {
-        val response = convertResponse<List<Coin>>(param1!!)
+    hubConnection.on("TopCoins", { param1 ->
 
-        topCoins = response.result as ArrayList<Coin>
-        if (response.status)
-          _topCoinsList.postValue(response.result)
-        else {
-          _error.postValue(detectError(response as ResponseModel<Any>))
+      val response = convertResponse<List<Coin>>(param1!!)
+
+      topCoins = response.result as ArrayList<Coin>
+      if (response.status) {
+        viewModelScope.launch {
+          subscribeToLivePrice()
         }
+        _topCoinsList.postValue(response.result!!)
+      } else {
+        _error.postValue(detectError(response as ResponseModel<Any>))
       }
+
     }, String::class.java)
     hubConnection.on("HomeNews", object: Action1<String> {
       override fun invoke(param1: String?) {
@@ -140,22 +139,17 @@ class HomeViewModel(val applicationClass: Application): AndroidViewModel(applica
     }, String::class.java)
   }
 
-  fun subscribeToLivePrice() {
+  private suspend fun subscribeToLivePrice() = withContext(Dispatchers.IO) {
     if (hubConnection.connectionState == HubConnectionState.CONNECTED) {
-      GlobalScope.launch(Dispatchers.IO) {
-        hubConnection.send("SubscribeToLivePrice")
-      }
-    }
+      hubConnection.send("SubscribeToLivePrice")
+    } else _error.postValue(NetworkErrors.NETWORK_ERROR)
     hubConnection.on("LivePrice", { param1 ->
-
-      Log.i("TOOKATAG", "subscribeToLivePrice: $param1")
 
       val collectionType = object: TypeToken<LivePriceListResponse?>() {}.type
       val response: LivePriceListResponse =
         GsonInstance.getInstance().fromJson(param1, collectionType)
-//      val response = convertResponse<LivePriceListResponse>(param1!!)
-      _livePrice.postValue(response)
 
+      _livePrice.postValue(response)
     }, String::class.java)
   }
 }

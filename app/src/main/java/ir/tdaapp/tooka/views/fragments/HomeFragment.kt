@@ -1,6 +1,5 @@
 package ir.tdaapp.tooka.views.fragments
 
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -8,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,10 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.AlternateCoinsViewHolder
-import ir.tdaapp.tooka.adapters.TookaAdapter
-import ir.tdaapp.tooka.adapters.ImportantNewsViewHolder
-import ir.tdaapp.tooka.adapters.TopCoinViewHolder
+import ir.tdaapp.tooka.adapters.*
 import ir.tdaapp.tooka.databinding.*
 import ir.tdaapp.tooka.models.Coin
 import ir.tdaapp.tooka.models.News
@@ -28,25 +25,17 @@ import ir.tdaapp.tooka.viewmodels.SharedViewModel
 import ir.tdaapp.tooka.views.fragments.base.BaseFragment
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
-import org.koin.core.module.Module
-import java.time.Duration
-import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.concurrent.thread
 import kotlin.coroutines.CoroutineContext
-import kotlin.reflect.KProperty
 
 class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClickListener,
   CoroutineScope {
 
   private lateinit var homeBinding: FragmentHomeBinding
 
-  private val topCoinsAdapter by lazy {
-    object: TookaAdapter<Coin>() {
-      override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        TopCoinViewHolder(ItemSecondTopCoinBinding.inflate(layoutInflater, parent, false))
-    }
-  }
+  private lateinit var topCoinAdapter: TopCoinsAdapter
+  private lateinit var gainersLosersAdapter: AlternateCoinsAdapter
+  private lateinit var watchlistAdapter: AlternateCoinsAdapter
 
   private val importantNewsAdapter by lazy {
     object: TookaAdapter<News>() {
@@ -56,37 +45,9 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
         )
     }
   }
-  private val gainersLosersAdapter by lazy {
-    object: TookaAdapter<Coin>() {
-      override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return AlternateCoinsViewHolder(
-          ItemAlternateCoinsBinding.inflate(layoutInflater, parent, false)
-        )
-      }
-    }
-  }
-  private val watchlistAdapter by lazy {
-    object: TookaAdapter<Coin>() {
-      override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return AlternateCoinsViewHolder(
-          ItemAlternateCoinsBinding.inflate(
-            layoutInflater,
-            parent,
-            false
-          )
-        )
-      }
-    }
-  }
 
-  private val viewModel: HomeViewModel by inject()
+  private lateinit var viewModel: HomeViewModel
   private val sharedViewModel: SharedViewModel by inject()
-
-  private var isTopCoinsLoaded = false
-    set(value) {
-      if (value) initLivePrice()
-      field = value
-    }
 
   override val coroutineContext: CoroutineContext
     get() = Dispatchers.Main + handler
@@ -97,7 +58,14 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
 
   override fun init() {
     setHasOptionsMenu(true)
+    val viewModelFactory = ViewModelFactory()
+    viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
+    initializeAdapters()
     initializeLists()
+
+    lifecycleScope.launchWhenStarted {
+      viewModel.getData()
+    }
 
     homeBinding.toolbar.setOnMenuItemClickListener(this)
   }
@@ -108,111 +76,40 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
     homeBinding.toolbar.title = getString(R.string.app_name_translatable)
   }
 
-  private fun initLivePrice() = viewModel.subscribeToLivePrice()
-
   override fun initListeners(view: View) {
-    topCoinsAdapter.callback = TookaAdapter.Callback { coin, models ->
-      findNavController().navigate(
-        HomeFragmentDirections.actionHomeToCoinDetailsFragment(
-          coin.id,
-          "asdasda",
-          when (getCurrentLocale(requireContext())) {
-            "fa" -> if (coin.persianName != null) coin.persianName as String else coin.name
-            else -> coin.name
-          },
-          coin.icon
-        )
-      )
-    }
 
     importantNewsAdapter.callback = TookaAdapter.Callback { vm, position -> }
-
-    gainersLosersAdapter.callback = TookaAdapter.Callback { vm, position -> }
-
-    watchlistAdapter.callback = TookaAdapter.Callback { vm, position -> }
 
     homeBinding.includeHomeMisc.converter.setOnClickListener(this)
     homeBinding.includeHomeMisc.compare.setOnClickListener(this)
   }
 
+  @DelicateCoroutinesApi
   override fun initObservables() {
     viewModel.topCoinsList.observe(viewLifecycleOwner, {
-      if (it.size > 0) {
-
-        launch(Dispatchers.IO) {
-          topCoinsAdapter.models = it as ArrayList<Coin>
-          withContext(Dispatchers.Main) {
-            homeBinding.includeTopCoins.topCoinsList.visibility = View.VISIBLE
-            homeBinding.includeTopCoins.topCoinsLoading.visibility = View.GONE
-          }
-          withContext(Dispatchers.Main) {
-            homeBinding.includeTopCoins.topCoinsLoading.pauseAnimation()
-          }
-          isTopCoinsLoaded = true
-        }
-      }
+      showTopList()
+      topCoinAdapter.differ.submitList(it)
     })
 
-    viewModel.livePrice.observe(viewLifecycleOwner, {
-      if (it != null) {
-//        launch(Dispatchers.IO) {
-          topCoinsAdapter.models.singleOrNull { model ->
-            model.id == it.id
-          }.let { model ->
-            model?.priceUSD = it.priceUSD
-            val position = topCoinsAdapter.models.indexOf(model)
-
-//            withContext(Dispatchers.Main) {
-              topCoinsAdapter.notifyItemChanged(position)
-
-              toast("${it.id} updated")
-//            }
-          }
-//        }
+    viewModel.livePrice.observe(viewLifecycleOwner, { livePrice ->
+      launch(Dispatchers.IO) {
+        topCoinAdapter.notifyChanges(livePrice)
+        gainersLosersAdapter.notifyChanges(livePrice)
+        watchlistAdapter.notifyChanges(livePrice)
       }
     })
 
     viewModel.breakingNewsList.observe(viewLifecycleOwner, {
-      if (it.size > 0) {
-        launch(Dispatchers.IO) {
-          importantNewsAdapter.models = it as ArrayList<News>
-          withContext(Dispatchers.Main) {
-            homeBinding.includeImportantNews.importantNewsList.visibility = View.VISIBLE
-            homeBinding.includeImportantNews.breakingNewsLoading.visibility = View.GONE
-          }
-          withContext(Dispatchers.Main) {
-            homeBinding.includeImportantNews.breakingNewsLoading.pauseAnimation()
-          }
-        }
-      }
+      importantNewsAdapter.models = it as ArrayList<News>
+      showNewsList()
     })
     viewModel.gainersLosersList.observe(viewLifecycleOwner, {
-      if (it.size > 0) {
-        launch(Dispatchers.IO) {
-          gainersLosersAdapter.models = it as ArrayList<Coin>
-          withContext(Dispatchers.Main) {
-            homeBinding.includeGainersLosers.gainersLosersList.visibility = View.VISIBLE
-            homeBinding.includeGainersLosers.breakingNewsLoading.visibility = View.GONE
-          }
-          withContext(Dispatchers.Main) {
-            homeBinding.includeGainersLosers.breakingNewsLoading.pauseAnimation()
-          }
-        }
-      }
+      gainersLosersAdapter.differ.submitList(it)
+      showGainersList()
     })
     viewModel.watchList.observe(viewLifecycleOwner, {
-      if (it.size > 0) {
-        launch(Dispatchers.IO) {
-          watchlistAdapter.models = it as ArrayList<Coin>
-          withContext(Dispatchers.Main) {
-            homeBinding.includeWatchlist.watchlistList.visibility = View.VISIBLE
-            homeBinding.includeWatchlist.breakingNewsLoading.visibility = View.GONE
-          }
-          withContext(Dispatchers.Main) {
-            homeBinding.includeWatchlist.breakingNewsLoading.pauseAnimation()
-          }
-        }
-      }
+      watchlistAdapter.differ.submitList(it)
+      showWatchlist()
     })
   }
 
@@ -292,17 +189,25 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
     LinearLayoutManager(requireContext())
   }
 
-  private fun initializeLists() {
-    launch(Dispatchers.IO) {
-      viewModel.getData()
-    }
+  private fun initializeAdapters() {
+    topCoinAdapter = TopCoinsAdapter { clicked, position ->
 
+    }
+    gainersLosersAdapter = AlternateCoinsAdapter { clicked, position ->
+
+    }
+    watchlistAdapter = AlternateCoinsAdapter { clicked, position ->
+
+    }
+  }
+
+  private fun initializeLists() {
     homeBinding.includeImportantNews.importantNewsList.layoutManager = newsLayoutManager
     homeBinding.includeImportantNews.importantNewsList.adapter = importantNewsAdapter
 
     topCoinsLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
     homeBinding.includeTopCoins.topCoinsList.layoutManager = topCoinsLayoutManager
-    homeBinding.includeTopCoins.topCoinsList.adapter = topCoinsAdapter
+    homeBinding.includeTopCoins.topCoinsList.adapter = topCoinAdapter
 
     gainersLosersManager.orientation = LinearLayoutManager.HORIZONTAL
     homeBinding.includeGainersLosers.gainersLosersList.layoutManager = gainersLosersManager
@@ -334,5 +239,35 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
       }
     }
     return true
+  }
+
+  private fun showTopList() {
+    homeBinding.includeTopCoins.topCoinsList.visibility = View.VISIBLE
+    homeBinding.includeTopCoins.topCoinsLoading.visibility = View.GONE
+    homeBinding.includeTopCoins.topCoinsLoading.pauseAnimation()
+  }
+
+  private fun showNewsList() {
+    homeBinding.includeImportantNews.importantNewsList.visibility = View.VISIBLE
+    homeBinding.includeImportantNews.breakingNewsLoading.apply {
+      visibility = View.GONE
+      pauseAnimation()
+    }
+  }
+
+  private fun showGainersList() {
+    homeBinding.includeGainersLosers.gainersLosersList.visibility = View.VISIBLE
+    homeBinding.includeGainersLosers.breakingNewsLoading.apply {
+      visibility = View.GONE
+      pauseAnimation()
+    }
+  }
+
+  private fun showWatchlist() {
+    homeBinding.includeWatchlist.watchlistList.visibility = View.VISIBLE
+    homeBinding.includeWatchlist.breakingNewsLoading.apply {
+      visibility = View.GONE
+      pauseAnimation()
+    }
   }
 }

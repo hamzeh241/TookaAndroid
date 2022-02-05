@@ -7,12 +7,14 @@
   app:cardCornerRadius="@dimen/radius16">
 
   <RelativeLayout
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
 
     <com.github.mikephil.charting.charts.LineChart
       android:id="@+id/chart"
+      data="@{coin.ohlc}"
       android:layout_width="match_parent"
       android:layout_height="88dp"
       android:layout_alignParentBottom="true"
@@ -47,7 +49,6 @@
           android:layout_width="@dimen/size32"
           android:layout_height="@dimen/size32"
           android:layout_marginStart="@dimen/margin8"
-          android:src="@drawable/ic_btc"
           android:scaleType="centerCrop"
           android:layout_marginTop="@dimen/margin8" />
 
@@ -63,13 +64,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin8"
-            android:text="بیت کوین"
             android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
             android:textSize="12sp"
             android:requiresFadingEdge="horizontal"
             android:fadingEdgeLength="20dp"
             android:ellipsize="marquee"
-            android:singleLine="true"/>
+            android:singleLine="true" />
 
           <LinearLayout
             android:layout_width="wrap_content"
@@ -85,10 +85,8 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:fontFamily="@font/iran_yekan_reqular_mobile_fa_num"
-              android:text="2.31 %"
               android:textSize="12sp"
               android:textStyle="bold"
-              android:textColor="@color/green_400"
               android:layout_marginEnd="@dimen/margin8" />
 
             <ImageView
@@ -120,7 +118,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="1,354,648,354"
             android:textAppearance="@style/TextAppearance.MyTheme.Price1" />
 
           <TextView
@@ -148,7 +145,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="44,354"
             android:textAppearance="@style/TextAppearance.MyTheme.Price2" />
 
           <TextView

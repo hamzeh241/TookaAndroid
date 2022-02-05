@@ -1,9 +1,10 @@
 package ir.tdaapp.tooka.views.fragments
 
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.content.Context
+import android.view.*
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -11,13 +12,12 @@ import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.adapters.BreakingAndCryptoNewsViewHolder
 import ir.tdaapp.tooka.adapters.MarketCoinsViewHolder
 import ir.tdaapp.tooka.adapters.TookaAdapter
-import ir.tdaapp.tooka.components.TookaSearchView
 import ir.tdaapp.tooka.databinding.FragmentSearchBinding
 import ir.tdaapp.tooka.databinding.ItemBreakingCryptoNewsBinding
 import ir.tdaapp.tooka.databinding.ItemMarketCoinsFlatBinding
 import ir.tdaapp.tooka.models.Coin
 import ir.tdaapp.tooka.models.News
-import ir.tdaapp.tooka.util.toast
+import ir.tdaapp.tooka.util.InputManagerHelper
 import ir.tdaapp.tooka.viewmodels.SearchViewModel
 import ir.tdaapp.tooka.views.fragments.base.BaseFragment
 import org.koin.android.ext.android.inject
@@ -29,6 +29,8 @@ class SearchFragment: BaseFragment() {
   private lateinit var coinAdapter: TookaAdapter<Coin>
   private lateinit var newsAdapter: TookaAdapter<News>
 
+  private lateinit var manager: InputMethodManager
+
   private val viewModel: SearchViewModel by inject()
 
   override fun init() {
@@ -38,6 +40,9 @@ class SearchFragment: BaseFragment() {
     initRecyclerViews()
 
     binding.edtSearch.requestFocus()
+    manager = InputManagerHelper.getManager(requireContext())
+//    manager.showSoftInput(binding.edtSearch, InputMethodManager.SHOW_IMPLICIT);
+    manager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
   }
 
   private fun initSearchBar() = binding.edtSearch.setOnKeyListener(object: View.OnKeyListener {
@@ -79,6 +84,10 @@ class SearchFragment: BaseFragment() {
   override fun initToolbar() {
     (requireActivity() as MainActivity).setSupportActionBar(binding.toolbar)
     (requireActivity() as MainActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    (requireActivity() as MainActivity).supportActionBar!!.setDisplayShowHomeEnabled(true)
+    binding.toolbar.setNavigationOnClickListener {
+      findNavController().popBackStack()
+    }
   }
 
   override fun initListeners(view: View) {
@@ -119,6 +128,7 @@ class SearchFragment: BaseFragment() {
 
   override fun onDestroy() {
     (requireActivity() as MainActivity).bottomNavVisibility = true
+    manager.hideSoftInputFromWindow(binding.coinsSection.getWindowToken(), 0);
     super.onDestroy()
   }
 }

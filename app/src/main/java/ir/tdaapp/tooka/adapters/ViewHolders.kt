@@ -12,6 +12,7 @@ import ContextUtils
 import android.content.res.ColorStateList
 import android.view.View
 import androidx.annotation.DrawableRes
+import androidx.cardview.widget.CardView
 import ir.tdaapp.tooka.models.*
 import ir.tdaapp.tooka.util.api.RetrofitClient
 import java.math.BigDecimal
@@ -27,7 +28,7 @@ class AlternateCoinsViewHolder(val binding: ItemAlternateCoinsBinding):
     models: ArrayList<Coin>,
     position: Int
   ) {
-    setCorrectMargins(binding.root, binding.root.context, position, models.size - 1)
+    setCorrectMargins(binding.root as CardView, binding.root.context, position, models.size - 1)
 
     binding.txtCoinName.text = when (ContextUtils.getLocale(binding.root.context).toString()) {
       "en" -> data.name

@@ -261,7 +261,6 @@ class MainActivity: BaseActivity(), NavigationBarView.OnItemSelectedListener,
   }
 
   override fun onConnected() {
-    Log.i(TAG, "onConnected: ping")
   }
 
   /**
