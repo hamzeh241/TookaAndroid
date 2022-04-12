@@ -10,10 +10,11 @@
     <item name="colorPrimary">@color/black_800</item>
     <item name="colorPrimaryVariant">@color/black_900</item>
     <item name="colorSecondary">@color/white</item>
-    <item name="colorSecondaryVariant">@color/white_transparent</item>
+    <item name="colorSecondaryVariant">@color/white_300</item>
 
     <item name="colorGray">@color/white_100</item>
     <item name="subtitleTextColor">@color/gray_400</item>
+    <item name="hyperLinkColor">@color/purple_500</item>
     <item name="android:textColorPrimary">@color/black_900</item>
 
     <item name="android:windowEnableSplitTouch">false</item>

@@ -30,9 +30,6 @@
     android:label="PortfolioFragment"
     tools:layout="@layout/fragment_portfolio" >
     <action
-      android:id="@+id/action_portfolioFragment_to_coinFragment2"
-      app:destination="@id/coinFragment2" />
-    <action
       android:id="@+id/action_portfolioFragment_to_notificationFragment3"
       app:destination="@id/notificationFragment3" />
     <action

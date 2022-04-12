@@ -64,7 +64,7 @@
   </style>
 
   <style name="Base.Widget.HyperlinkTextView" parent="Widget.AppCompat.TextView">
-    <item name="android:textColor">@color/purple_500</item>
+    <item name="android:textColor">?hyperLinkColor</item>
     <item name="android:textAppearance">@style/TextAppearance.MyTheme.Subtitle2</item>
     <item name="background">?selectableItemBackground</item>
     <item name="android:background">?selectableItemBackground</item>

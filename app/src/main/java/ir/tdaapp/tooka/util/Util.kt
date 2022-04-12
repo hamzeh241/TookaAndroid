@@ -3,8 +3,10 @@ package ir.tdaapp.tooka.util
 import ContextUtils
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.Paint
@@ -132,6 +134,16 @@ fun TextView.animateColor(
   }
 }
 
+fun setLocale(activity: Activity, languageCode: String) {
+  val locale = Locale(languageCode)
+  Locale.setDefault(locale)
+  val resources = activity.resources
+  val config: Configuration = resources.configuration
+  config.setLocale(locale)
+  config.setLayoutDirection(locale)
+  resources.updateConfiguration(config, resources.displayMetrics)
+  activity.recreate()
+}
 
 fun String.separatePrice(price: Float): String {
   val decim = DecimalFormat("#,###.##")

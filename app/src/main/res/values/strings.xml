@@ -155,6 +155,9 @@
   <string name="add_to_watchlist">Add to your watchlist</string>
   <string name="scan_qr">Wallet QR code</string>
   <string name="change_lang">Change Language</string>
+  <string name="persian">فارسی</string>
+  <string name="english">English</string>
+  <string name="lang_change_message">Language will change the next time you enter the app</string>
 
 
 </resources>

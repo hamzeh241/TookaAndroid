@@ -1,6 +1,7 @@
 package ir.tdaapp.tooka.application
 
 import android.app.Application
+import android.content.res.Configuration
 import android.util.Log
 import com.flurry.android.FlurryAgent
 import com.flurry.android.FlurryPerformance
@@ -11,6 +12,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import timber.log.Timber
+import java.util.*
 
 class App: Application() {
 
@@ -20,8 +22,13 @@ class App: Application() {
 
   private val DEFAULT_PREFERENCES = "default_preferences"
 
+  val langPreferences = LanguagePreferences()
+
   override fun onCreate() {
     super.onCreate()
+
+    LocaleHelper.setLocale(Locale(langPreferences.getLang(this)!!))
+    LocaleHelper.updateConfig(this, getBaseContext().getResources().getConfiguration())
 
     if (BuildConfig.DEBUG)
       Timber.plant(Timber.DebugTree())
@@ -45,5 +52,10 @@ class App: Application() {
         listOf(appModule, viewModelModule, fragmentModule, networkModule)
       )
     }
+  }
+
+  override fun onConfigurationChanged(newConfig: Configuration) {
+    super.onConfigurationChanged(newConfig)
+    LocaleHelper.updateConfig(this, newConfig);
   }
 }

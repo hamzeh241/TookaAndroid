@@ -21,6 +21,7 @@
   <attr name="colorStrokeColor" format="color" />
 
   <attr name="colorGray" format="color"/>
+  <attr name="hyperLinkColor" format="color"/>
 
   <!--Label view attributes-->
   <declare-styleable name="LabelLinkView">

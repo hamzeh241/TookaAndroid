@@ -16,11 +16,14 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationBarView
 import ir.tdaapp.tooka.application.App
 import ir.tdaapp.tooka.databinding.ActivityMainBinding
+import ir.tdaapp.tooka.util.LanguagePreferences
+import ir.tdaapp.tooka.util.LocaleHelper
 import ir.tdaapp.tooka.util.UserPreferences
 import ir.tdaapp.tooka.util.signalr.SignalR
 import ir.tdaapp.tooka.viewmodels.MainActivityViewModel
 import ir.tdaapp.tooka.viewmodels.SharedViewModel
 import org.koin.android.ext.android.inject
+import java.util.*
 
 class MainActivity: AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
   NavigationBarView.OnItemReselectedListener, SignalR.OnSignalRCallback {
@@ -31,10 +34,16 @@ class MainActivity: AppCompatActivity(), NavigationBarView.OnItemSelectedListene
     private const val TAG = "MainActivity"
   }
 
+  init {
+    LocaleHelper.updateConfig(this)
+  }
+
   private lateinit var binding: ActivityMainBinding
   lateinit var userPrefs: UserPreferences
   private val viewModel: MainActivityViewModel by inject()
   private val sharedViewModel: SharedViewModel by inject()
+
+  private val langPreference = LanguagePreferences()
 
   /*Set kardane Visibility 'BottomNavigationBar'*/
   var bottomNavVisibility: Boolean = true

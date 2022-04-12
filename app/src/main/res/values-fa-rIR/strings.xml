@@ -131,4 +131,7 @@
   <string name="add_to_watchlist">افزودن ارز</string>
   <string name="scan_qr">کیوآر کد کیف پول</string>
   <string name="change_lang">تغییر زبان برنامه</string>
+  <string name="persian">فارسی</string>
+  <string name="english">English</string>
+  <string name="lang_change_message">زبان برنامه در ورود بعدی شما تغییر خواهد کرد</string>
 </resources>

@@ -1,18 +1,17 @@
 package ir.tdaapp.tooka.views.activities.base
 
-import ContextUtils
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.transition.TransitionManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import ir.tdaapp.tooka.application.App
+import ir.tdaapp.tooka.util.LanguagePreferences
 import java.util.*
+
 
 abstract class BaseActivity: AppCompatActivity() {
 
-  val preferenceRepository = App.preferenceHelper
+  private val langPreference = LanguagePreferences()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -21,11 +20,6 @@ abstract class BaseActivity: AppCompatActivity() {
     initToolbar()
     initTransitions()
     initTheme()
-  }
-
-  override fun attachBaseContext(newBase: Context?) {
-    ContextUtils.updateLocale(newBase!!, Locale("fa"))
-    super.attachBaseContext(newBase)
   }
 
   fun getCurrentLocale(): Locale? {

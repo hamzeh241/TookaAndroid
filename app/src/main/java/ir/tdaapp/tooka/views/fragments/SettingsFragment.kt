@@ -1,16 +1,25 @@
 package ir.tdaapp.tooka.views.fragments
 
+import android.content.res.Resources
+import android.graphics.Typeface
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorInt
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.material.snackbar.Snackbar
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.application.App
+import ir.tdaapp.tooka.components.TookaSnackBar
 import ir.tdaapp.tooka.databinding.FragmentSettingsBinding
+import ir.tdaapp.tooka.util.LanguagePreferences
 import ir.tdaapp.tooka.util.toast
+import ir.tdaapp.tooka.views.dialogs.AppLanguageBottomSheetDialog
+import ir.tdaapp.tooka.views.dialogs.AppLanguageBottomSheetDialog.Language.ENGLISH
+import ir.tdaapp.tooka.views.dialogs.AppLanguageBottomSheetDialog.Language.PERSIAN
 import ir.tdaapp.tooka.views.dialogs.AppThemeBottomSheetDialog
 import ir.tdaapp.tooka.views.fragments.base.BaseFragment
 
@@ -18,8 +27,7 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
   AppThemeBottomSheetDialog.AppThemeBottomSheetCallback {
 
   private lateinit var binding: FragmentSettingsBinding
-
-  private lateinit var mGoogleSignInClient: GoogleSignInClient
+  private lateinit var langPrefs: LanguagePreferences
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -28,14 +36,16 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
   ): View =
     if (this::binding.isInitialized)
       binding.root
-    else{
-      binding = FragmentSettingsBinding.inflate(inflater,container,false)
+    else {
+      binding = FragmentSettingsBinding.inflate(inflater, container, false)
       binding.root
     }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     binding.toolbar.title = getString(R.string.app_name_translatable)
+
+    langPrefs = LanguagePreferences()
     initListeners()
     initObservables()
     if ((requireActivity() as MainActivity).userPrefs.hasAccount(requireContext())) {
@@ -49,6 +59,7 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
 
   private fun initListeners() {
     binding.includeAppSettings.vgAppTheme.setOnClickListener(this)
+    binding.includeAppSettings.vgChangeLang.setOnClickListener(this)
     binding.includeUserSettings.cardUserSettings.setOnClickListener(this)
   }
 
@@ -69,12 +80,43 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
       }
       R.id.cardUserSettings -> {
         if ((requireActivity() as MainActivity).userPrefs.hasAccount(requireContext())) {
-          toast(requireContext(),"user is signed in")
+          toast(requireContext(), "user is signed in")
         } else {
           findNavController().navigate(
             SettingsFragmentDirections.actionSettingsFragmentToLoginActivity()
           )
         }
+      }
+      R.id.vg_change_lang -> {
+        val dialog = AppLanguageBottomSheetDialog {
+          when (it) {
+            ENGLISH -> {
+              langPrefs.add(requireContext(), "en")
+            }
+
+            PERSIAN -> {
+              langPrefs.add(requireContext(), "fa")
+            }
+          }
+
+          val typedValue = TypedValue()
+          val theme: Resources.Theme = binding.root.context.theme
+          theme.resolveAttribute(R.attr.colorOnSurface, typedValue, true)
+          @ColorInt val colorOnSurface = typedValue.data
+          TookaSnackBar(
+            binding.root,
+            getString(R.string.lang_change_message),
+            Snackbar.LENGTH_LONG
+          ).textConfig { textView ->
+            textView.typeface = Typeface.createFromAsset(
+              requireActivity().assets,
+              "iranyekan_medium.ttf"
+            )
+//            textView.setTextColor(colorOnSurface)
+          }.show()
+        }
+        dialog.show(requireActivity().supportFragmentManager, AppLanguageBottomSheetDialog.TAG)
+
       }
     }
   }

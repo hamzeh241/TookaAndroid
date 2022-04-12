@@ -294,9 +294,14 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
       chartLoading = true
       binding.includeCoinChart.timeFramesList.isEnabled = false
 
+      var selectedPos = 0
       val deselctorJob = launch(Dispatchers.IO) {
-        for (item in timeFrameAdapter.differ.currentList)
-          item.isSelected = false
+        timeFrameAdapter.differ.currentList.forEachIndexed { index, timeFrameModel ->
+          if (timeFrameModel.isSelected) {
+            selectedPos = index
+            timeFrameModel.isSelected = false
+          }
+        }
       }
 
       deselctorJob.invokeOnCompletion {
@@ -305,7 +310,9 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
         launch {
           if (it == null) {
             withContext(Dispatchers.Main) {
-              timeFrameAdapter.notifyDataSetChanged()
+//              timeFrameAdapter.notifyDataSetChanged()
+              timeFrameAdapter.notifyItemChanged(position)
+              timeFrameAdapter.notifyItemChanged(selectedPos)
             }
           }
         }

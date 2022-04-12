@@ -15,6 +15,7 @@
     <item name="colorSecondaryVariant">@color/black_transparent</item>
     <item name="colorGray">@color/black_800</item>
     <item name="subtitleTextColor">@color/white_400</item>
+    <item name="hyperLinkColor">@color/purple_200</item>
     <item name="android:colorBackground">@color/black_900</item>
     <item name="android:textColorPrimary">@color/white_300</item>
     <item name="colorSurface">@color/black_800</item>
