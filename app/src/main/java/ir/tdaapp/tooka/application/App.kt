@@ -4,12 +4,13 @@ import android.app.Application
 import android.util.Log
 import com.flurry.android.FlurryAgent
 import com.flurry.android.FlurryPerformance
-import ir.tdaapp.tooka.util.PreferenceHelper
-import ir.tdaapp.tooka.util.appModule
+import ir.tdaapp.tooka.BuildConfig
+import ir.tdaapp.tooka.util.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
+import timber.log.Timber
 
 class App: Application() {
 
@@ -21,6 +22,9 @@ class App: Application() {
 
   override fun onCreate() {
     super.onCreate()
+
+    if (BuildConfig.DEBUG)
+      Timber.plant(Timber.DebugTree())
 
     FlurryAgent.Builder()
       .withCaptureUncaughtExceptions(true)
@@ -38,7 +42,7 @@ class App: Application() {
       androidLogger(Level.DEBUG)
       androidContext(this@App)
       modules(
-        listOf(appModule)
+        listOf(appModule, viewModelModule, fragmentModule, networkModule)
       )
     }
   }

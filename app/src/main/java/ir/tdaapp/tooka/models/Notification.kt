@@ -17,5 +17,9 @@ data class Notification(
     @SerializedName("title_fa")
     val titleFa: String,
     @SerializedName("url")
-    val url: String
+    val url: String,
+    @SerializedName("is_public")
+    var isPublic:Boolean,
+    @SerializedName("create_date")
+    var createDate:String
 )

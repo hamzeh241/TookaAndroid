@@ -1,11 +1,10 @@
 package ir.tdaapp.tooka.views.fragments
 
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.palette.graphics.Palette
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -13,23 +12,25 @@ import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.adapters.PortfolioCoinsViewHolder
 import ir.tdaapp.tooka.adapters.TookaAdapter
 import ir.tdaapp.tooka.databinding.FragmentPortfolioBinding
 import ir.tdaapp.tooka.databinding.ItemPortfolioBalanceCoinBinding
 import ir.tdaapp.tooka.models.PortfolioInfo
-import ir.tdaapp.tooka.models.PostPortfolioResponse
 import ir.tdaapp.tooka.util.separatePrice
+import ir.tdaapp.tooka.viewmodels.AutomaticBottomSheetViewModel
+import ir.tdaapp.tooka.viewmodels.ManualBottomSheetViewModel
 import ir.tdaapp.tooka.viewmodels.PortfolioViewModel
 import ir.tdaapp.tooka.views.dialogs.AutomaticPortfolioBottomSheetDialog
 import ir.tdaapp.tooka.views.dialogs.ManualPortfolioBottomSheetDialog
 import ir.tdaapp.tooka.views.dialogs.PortfolioChoiceBottomSheetDialog
-import ir.tdaapp.tooka.views.fragments.base.BaseFragment
+import ir.tdaapp.tooka.views.fragments.base.BaseFragmentSecond
 import org.koin.android.ext.android.inject
 
 
-class PortfolioFragment: BaseFragment(), View.OnClickListener,
+class PortfolioFragment: BaseFragmentSecond(), View.OnClickListener,
   PortfolioChoiceBottomSheetDialog.PortfolioChoiceBottomSheetCallback {
 
   lateinit var binding: FragmentPortfolioBinding
@@ -42,7 +43,13 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
   override fun init() {
     initPortfolioCoins()
 
-    viewModel.getAllBalances("samanapikey")
+    lifecycleScope.launchWhenStarted {
+      viewModel.getAllBalances(
+        (requireActivity() as MainActivity).userPrefs.getUserId(
+          requireContext()
+        )
+      )
+    }
   }
 
   private fun showPieChart(models: PortfolioInfo) {
@@ -169,8 +176,12 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
   override fun onAutomaticSelected() {
     val dialog = AutomaticPortfolioBottomSheetDialog()
     dialog.callback = object: AutomaticPortfolioBottomSheetDialog.AutomaticPortfolioCallback {
-      override fun onResult(response: PostPortfolioResponse) {
+      override fun onResult() {
+        toast("onResult")
+      }
 
+      override fun onError(error: AutomaticBottomSheetViewModel.PortfolioErrors) {
+        toast("onError")
       }
     }
     dialog.show(requireActivity().supportFragmentManager, AutomaticPortfolioBottomSheetDialog.TAG)
@@ -180,6 +191,10 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
     val dialog = ManualPortfolioBottomSheetDialog()
     dialog.callback = object: ManualPortfolioBottomSheetDialog.ManualPortfolioDialogCallback {
       override fun onResult() {
+      }
+
+      override fun onError(error: ManualBottomSheetViewModel.ManualPortfolioErrors) {
+
       }
 
     }

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/Base.Widget.SettingsCardView"
+    app:layout_constraintTop_toBottomOf="@+id/textView15"
+    android:layout_marginTop="16dp"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:id="@+id/cardView3">
+
+    <RelativeLayout
+      android:id="@+id/numberLayout"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size64"
+      android:background="?selectableItemBackground"
+      android:clickable="true"
+      android:focusable="true"
+      android:gravity="center_vertical">
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_dialpad"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        app:tint="@color/gray_500" />
+
+      <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/edtPhone"
+        android:paddingStart="@dimen/size48"
+        android:paddingEnd="@dimen/margin16"
+        android:background="#00ffffff"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+        android:hint="@string/phone_number"
+        android:gravity="center" />
+    </RelativeLayout>
+
+  </androidx.cardview.widget.CardView>
+
+  <ImageView
+    android:layout_width="@dimen/size48"
+    android:layout_height="@dimen/size48"
+    app:srcCompat="@drawable/ic_btc"
+    android:id="@+id/imgLogo"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp" />
+
+  <TextView
+    android:text="@string/welcome_title"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/textView8"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/imgLogo"
+    android:layout_marginTop="16dp"
+    android:fontFamily="@font/iranyekan_black"
+    android:textSize="24sp"
+    android:textColor="@color/dark_blue_800"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp" />
+
+  <TextView
+    android:text="@string/welcome_desc"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/textView15"
+    app:layout_constraintTop_toBottomOf="@+id/textView8"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+    android:layout_marginEnd="16dp"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+  <androidx.cardview.widget.CardView
+    android:layout_width="0dp"
+    android:layout_height="@dimen/size48"
+    app:cardBackgroundColor="@color/green_100"
+    app:cardElevation="@dimen/elev0"
+    android:layout_weight="1"
+    android:clickable="true"
+    android:background="?selectableItemBackground"
+    android:focusable="true"
+    android:id="@+id/submit"
+    app:layout_constraintTop_toBottomOf="@+id/cardView3"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp">
+
+    <TextView
+      android:text="@string/submit"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:textAppearance="@style/TextAppearance.MyTheme.TabTextAppearance"
+      android:textColor="@color/white"
+      android:layout_margin="@dimen/margin8"
+      android:gravity="center"
+      android:layout_gravity="center"
+      android:id="@+id/txtSubmit" />
+
+  </androidx.cardview.widget.CardView>
+
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_marginTop="16dp"
+    app:layout_constraintTop_toBottomOf="@+id/submit"
+    android:gravity="center_vertical"
+    android:id="@+id/linearLayout4"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp">
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="1dp"
+      android:id="@+id/imageView9"
+      android:layout_weight="1"
+      android:background="@color/gray_500" />
+
+    <TextView
+      android:text="@string/or"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/textView16"
+      android:layout_marginStart="@dimen/margin8"
+      android:layout_marginEnd="@dimen/margin8"
+      android:textAppearance="@style/TextAppearance.MyTheme.Price2" />
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="1dp"
+      android:id="@+id/imageView7"
+      android:layout_weight="1"
+      android:background="@color/gray_500" />
+
+  </LinearLayout>
+
+  <androidx.cardview.widget.CardView
+    android:layout_width="0dp"
+    android:layout_height="@dimen/size48"
+    app:cardBackgroundColor="@color/red_google"
+    android:layout_weight="1"
+    app:cardElevation="@dimen/elev0"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?selectableItemBackground"
+    android:id="@+id/googleSubmit"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp">
+
+      <TextView
+        android:text="@string/login_with_google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MyTheme.TabTextAppearance"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_gravity="center"
+        app:drawableStartCompat="@drawable/ic_google_plus"
+        app:drawableTint="@color/white"
+        android:drawablePadding="@dimen/margin8"/>
+
+  </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

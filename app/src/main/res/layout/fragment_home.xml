@@ -7,6 +7,15 @@
   android:layout_height="match_parent"
   android:id="@+id/homeRoot">
 
+  <androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="end"
+    android:minHeight="?attr/actionBarSize"
+    android:theme="?attr/actionBarTheme"
+    app:menu="@menu/home_toolbar_items" />
+
   <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,15 +26,6 @@
       android:layout_height="wrap_content"
       android:orientation="vertical"
       android:id="@+id/scrollRoot">
-
-      <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:menu="@menu/home_toolbar_items" />
 
       <include
         android:id="@+id/includeTopCoins"

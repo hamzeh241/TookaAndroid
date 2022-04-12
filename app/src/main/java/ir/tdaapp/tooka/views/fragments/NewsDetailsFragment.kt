@@ -3,22 +3,37 @@ package ir.tdaapp.tooka.views.fragments
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.viewbinding.ViewBinding
+import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.databinding.FragmentNewsDetailsBinding
 import ir.tdaapp.tooka.util.api.RetrofitClient
-import ir.tdaapp.tooka.views.fragments.base.BaseFragment
-import java.lang.StringBuilder
+import ir.tdaapp.tooka.util.getCurrentLocale
+import ir.tdaapp.tooka.views.fragments.base.BaseFragmentSecond
 
-class NewsDetailsFragment: BaseFragment() {
+class NewsDetailsFragment: BaseFragmentSecond() {
 
   private lateinit var binding: FragmentNewsDetailsBinding
 
   override fun init() {
+    (requireActivity() as MainActivity).bottomNavVisibility = false
     val newsId = NewsDetailsFragmentArgs.fromBundle(requireArguments()).newsId
-    if (newsId > 0) {
-      val url = StringBuilder(RetrofitClient.NEWS_URL).append(newsId)
-      binding.webView.loadUrl(url.toString())
+    val url = StringBuilder(RetrofitClient.NEWS_URL)
+      .append("?newsId=")
+      .append(newsId)
+      .append("&lang=${getCurrentLocale(requireContext())}")
+    binding.webView.webViewClient = object: WebViewClient() {
+      override fun onPageFinished(view: WebView?, url: String?) {
+        super.onPageFinished(view, url)
+        binding.loading.apply {
+          pauseAnimation()
+          visibility = View.GONE
+        }
+        binding.webView.visibility = View.VISIBLE
+      }
     }
+    binding.webView.loadUrl(url.toString())
   }
 
   override fun initTransitions() = Unit
@@ -34,5 +49,10 @@ class NewsDetailsFragment: BaseFragment() {
   override fun getLayout(inflater: LayoutInflater, container: ViewGroup?): ViewBinding {
     binding = FragmentNewsDetailsBinding.inflate(inflater, container, false)
     return binding
+  }
+
+  override fun onDestroy() {
+    (requireActivity() as MainActivity).bottomNavVisibility = true
+    super.onDestroy()
   }
 }

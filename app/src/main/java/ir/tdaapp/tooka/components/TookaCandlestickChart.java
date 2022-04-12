@@ -45,6 +45,12 @@ public class TookaCandlestickChart extends CandleStickChart {
       case MotionEvent.AXIS_SCROLL:
         getParent().requestDisallowInterceptTouchEvent(true);
         break;
+      case MotionEvent.ACTION_DOWN:
+        getParent().requestDisallowInterceptTouchEvent(true);
+        break;
+      case MotionEvent.ACTION_UP:
+        getParent().requestDisallowInterceptTouchEvent(true);
+        break;
     }
     return super.dispatchTouchEvent(ev);
   }

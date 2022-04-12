@@ -114,6 +114,47 @@
   <string name="unknown_error_desc">An unknown error has occured. Please be patient and wait for our support team to contact you</string>
   <string name="server_error_title">Tooka is not responding</string>
   <string name="server_error_desc">Tooka is currently not accepting any calls from you. Please be patient and try again in a couple of minutes</string>
+  <string name="login_or_signup">Login or Signup</string>
+  <string name="submit">Submit</string>
+  <string name="login_with_google">Log in with Google</string>
+  <string name="phone_number">Phone number</string>
+  <string name="verification_code">Verification code</string>
+  <string name="user_database_error">An unexpected error occured, please try again in a few moments</string>
+  <string name="sms_not_sent">Sms was not sent, please try again in a few moments</string>
+  <string name="invalid_verification_code">Provided verification code is incorrect, enter the correct code</string>
+  <string name="alerts">Price Alerts</string>
+  <string name="alert_not_found">Specified alert was not found</string>
+  <string name="alert_submitted">Alert added successfully</string>
+  <string name="coin_not_found">Specified coin was not found</string>
+  <string name="alert_not_saved">Alert was not saved, please try again</string>
+  <string name="login_success">You successfully logged in</string>
+  <string name="google_login_failed_unknown">Google login failed with unknown issue</string>
+  <string name="user_info_not_found">User information was not found, please try again</string>
+  <string name="no">No</string>
+  <string name="yes">Yes</string>
+  <string name="do_you_confirm">Do you confirm?</string>
+  <string name="phone_number_confirm_1">Are you sure that you want to use</string>
+  <string name="phone_number_confirm_2">to login to Tooka?</string>
+  <string name="user_confirms_phone">I\'m sure</string>
+  <string name="user_doesnt_confirm_phone">No, change it</string>
+  <string name="welcome_title">Dear user,\nWelcome to Tooka :)</string>
+  <string name="welcome_desc">Enter your number and enjoy Tooka\'s amazing trading tips and tools :)</string>
+  <string name="or">Or</string>
+  <string name="verify_your_number">Verify your number</string>
+  <string name="verify_your_number_desc">Please wait while Tooka identifies the text message containing your verification code...</string>
+  <string name="enter_code_manually">You can enter the code yourself</string>
+  <string name="resend_sms">Resend SMS</string>
+  <string name="code_too_early_to_send">5 minutes should pass before requesting for a new code</string>
+  <string name="code_was_resent">Verification code was sent to your phone</string>
+  <string name="platform">Platform</string>
+  <string name="select_coin">Select a coin</string>
+  <string name="specify_capital">Specify capital</string>
+  <string name="specify_platform">Specify a platform</string>
+  <string name="specify_wallet">Enter your wallet address</string>
+  <string name="no_watchlist">You don\'t have any coins in your watchlist</string>
+  <string name="add_to_watchlist">Add to your watchlist</string>
+  <string name="scan_qr">Wallet QR code</string>
+  <string name="change_lang">Change Language</string>
 
 
 </resources>

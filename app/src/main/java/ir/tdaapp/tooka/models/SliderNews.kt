@@ -7,5 +7,6 @@ data class SliderNews(
   @SerializedName("title_en") var titleEn: String,
   @SerializedName("title_fa") var titleFa: String,
   @SerializedName("news_kind") val newsKind: Int,
+  @SerializedName("url") val newsUrl: String,
   @SerializedName("image_url") var imageUrl: String
 )

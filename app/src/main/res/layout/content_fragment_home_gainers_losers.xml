@@ -3,7 +3,8 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  android:id="@+id/gainersLosersRoot">
 
   <TextView
     android:layout_width="match_parent"
@@ -12,17 +13,19 @@
     android:layout_marginTop="@dimen/margin8"
     android:layout_marginBottom="@dimen/margin8"
     android:text="@string/gainers_losers"
-    android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle" />
+    android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+    android:id="@+id/gainersLosersTitle" />
 
   <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="112dp">
+    android:layout_height="112dp"
+    android:id="@+id/gainersLosersSubRoot">
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/gainersLosersList"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:visibility="gone"/>
+      android:visibility="visible" />
 
     <com.airbnb.lottie.LottieAnimationView
       android:id="@+id/breakingNewsLoading"

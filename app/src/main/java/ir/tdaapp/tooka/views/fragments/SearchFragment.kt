@@ -1,43 +1,62 @@
 package ir.tdaapp.tooka.views.fragments
 
-import android.content.Context
-import android.view.*
+import android.os.Bundle
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
+import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import ir.tdaapp.tooka.MainActivity
-import ir.tdaapp.tooka.adapters.BreakingAndCryptoNewsViewHolder
-import ir.tdaapp.tooka.adapters.MarketCoinsViewHolder
-import ir.tdaapp.tooka.adapters.TookaAdapter
+import ir.tdaapp.tooka.R
+import ir.tdaapp.tooka.adapters.MarketsAdapter
+import ir.tdaapp.tooka.adapters.NewsAdapter
 import ir.tdaapp.tooka.databinding.FragmentSearchBinding
-import ir.tdaapp.tooka.databinding.ItemBreakingCryptoNewsBinding
-import ir.tdaapp.tooka.databinding.ItemMarketCoinsFlatBinding
-import ir.tdaapp.tooka.models.Coin
-import ir.tdaapp.tooka.models.News
+import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.util.InputManagerHelper
+import ir.tdaapp.tooka.util.NetworkErrors
 import ir.tdaapp.tooka.viewmodels.SearchViewModel
 import ir.tdaapp.tooka.views.fragments.base.BaseFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
+import kotlin.coroutines.CoroutineContext
 
-class SearchFragment: BaseFragment() {
+class SearchFragment: BaseFragment(), CoroutineScope {
 
   private lateinit var binding: FragmentSearchBinding
 
-  private lateinit var coinAdapter: TookaAdapter<Coin>
-  private lateinit var newsAdapter: TookaAdapter<News>
+  private lateinit var coinAdapter: MarketsAdapter
+  private lateinit var newsAdapter: NewsAdapter
 
   private lateinit var manager: InputMethodManager
 
   private val viewModel: SearchViewModel by inject()
 
-  override fun init() {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    binding = FragmentSearchBinding.inflate(inflater, container, false)
+    return binding.root
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     (requireActivity() as MainActivity).bottomNavVisibility = false
-    initSearchBar()
+    initToolbar()
     initAdapters()
     initRecyclerViews()
+    initSearchBar()
+    initSwipeRefresh()
+
+    initObservables()
 
     binding.edtSearch.requestFocus()
     manager = InputManagerHelper.getManager(requireContext())
@@ -50,23 +69,35 @@ class SearchFragment: BaseFragment() {
       if ((event?.getAction() == KeyEvent.ACTION_DOWN) &&
         (keyCode == KeyEvent.KEYCODE_ENTER)
       ) {
-        viewModel.getData(binding.edtSearch.text.toString())
+        launch {
+          withContext(Dispatchers.Main) {
+            binding.swipeRefreshLayout.isRefreshing = true
+          }
+          viewModel.getData(binding.edtSearch.text.toString())
+        }
         return true
       }
       return false
     }
   })
 
-  private fun initAdapters() {
-    coinAdapter = object: TookaAdapter<Coin>() {
-      override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        MarketCoinsViewHolder(ItemMarketCoinsFlatBinding.inflate(layoutInflater, parent, false))
+  private fun initSwipeRefresh() =
+    binding.swipeRefreshLayout.setOnRefreshListener {
+      launch {
+        withContext(Dispatchers.Main) {
+          binding.swipeRefreshLayout.isRefreshing = true
+        }
+        viewModel.getData(binding.edtSearch.text.toString())
+      }
     }
-    newsAdapter = object: TookaAdapter<News>() {
-      override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        BreakingAndCryptoNewsViewHolder(
-          ItemBreakingCryptoNewsBinding.inflate(layoutInflater, parent, false)
-        )
+
+
+  private fun initAdapters() {
+    coinAdapter = MarketsAdapter { clicked, position ->
+
+    }
+    newsAdapter = NewsAdapter { clicked, position ->
+
     }
   }
 
@@ -78,10 +109,7 @@ class SearchFragment: BaseFragment() {
     binding.newsList.adapter = newsAdapter
   }
 
-  override fun initTransitions() {
-  }
-
-  override fun initToolbar() {
+  private fun initToolbar() {
     (requireActivity() as MainActivity).setSupportActionBar(binding.toolbar)
     (requireActivity() as MainActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     (requireActivity() as MainActivity).supportActionBar!!.setDisplayShowHomeEnabled(true)
@@ -90,40 +118,65 @@ class SearchFragment: BaseFragment() {
     }
   }
 
-  override fun initListeners(view: View) {
-    coinAdapter.callback = TookaAdapter.Callback { vm, pos -> }
+  private fun initObservables() {
+    viewModel.result.observe(viewLifecycleOwner) {
+      binding.swipeRefreshLayout.isRefreshing = false
+      if (it.news.size <= 0)
+        binding.newsSection.visibility = View.GONE
+      else {
+        binding.newsSection.visibility = View.VISIBLE
+        newsAdapter.differ.submitList(it.news)
+      }
 
-    newsAdapter.callback = TookaAdapter.Callback { vm, pos -> }
-  }
+      if (it.coins.size <= 0)
+        binding.coinsSection.visibility = View.GONE
+      else {
+        binding.coinsSection.visibility = View.VISIBLE
+        coinAdapter.differ.submitList(it.coins)
+      }
+    }
 
-  override fun initObservables() {
-    viewModel.result.observe(viewLifecycleOwner, {
-      if (it != null) {
-        if (it.news.size <= 0)
-          binding.newsSection.visibility = View.GONE
-        else {
-          binding.newsSection.visibility = View.VISIBLE
-          newsAdapter.models = it.news as ArrayList<News>
-          newsAdapter.notifyDataSetChanged()
+    viewModel.error.observe(viewLifecycleOwner) {
+      binding.swipeRefreshLayout.isRefreshing = false
+      val message: String
+      @DrawableRes val icon: Int
+      when (it) {
+        NetworkErrors.NETWORK_ERROR -> {
+          message = getString(R.string.network_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
         }
-
-        if (it.coins.size <= 0)
-          binding.coinsSection.visibility = View.GONE
-        else {
-          binding.coinsSection.visibility = View.VISIBLE
-          coinAdapter.models = it.coins as ArrayList<Coin>
-          coinAdapter.notifyDataSetChanged()
+        NetworkErrors.CLIENT_ERROR -> {
+          message = getString(R.string.unknown_error_desc)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+        }
+        NetworkErrors.NOT_FOUND_ERROR -> {
+          message = getString(R.string.coin_not_found)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+          requireActivity().onBackPressed()
+        }
+        NetworkErrors.SERVER_ERROR -> {
+          message = getString(R.string.server_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.UNAUTHORIZED_ERROR -> {
+          message = getString(R.string.network_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.UNKNOWN_ERROR -> {
+          message = getString(R.string.unknown_error_desc)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
         }
       }
-    })
-  }
 
-  override fun initErrors() {
-  }
-
-  override fun getLayout(inflater: LayoutInflater, container: ViewGroup?): ViewBinding {
-    binding = FragmentSearchBinding.inflate(inflater, container, false)
-    return binding
+      Toast(requireContext()).apply {
+        setDuration(Toast.LENGTH_LONG)
+        setView(ToastLayoutBinding.inflate(layoutInflater).apply {
+          this.message.text = message
+          image.setImageResource(icon)
+        }.root)
+        show()
+      }
+    }
   }
 
   override fun onDestroy() {
@@ -131,4 +184,7 @@ class SearchFragment: BaseFragment() {
     manager.hideSoftInputFromWindow(binding.coinsSection.getWindowToken(), 0);
     super.onDestroy()
   }
+
+  override val coroutineContext: CoroutineContext
+    get() = Dispatchers.IO
 }

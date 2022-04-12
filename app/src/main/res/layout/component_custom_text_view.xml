@@ -28,7 +28,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:id="@+id/txtTitle"
-      android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+      android:textAppearance="@style/TextAppearance.MyTheme.Subtitle1"
       android:layout_marginStart="@dimen/margin16"
       android:layout_marginEnd="@dimen/margin16" />
 
@@ -39,7 +39,7 @@
       android:id="@+id/txtSubtitle"
       android:layout_marginStart="@dimen/margin16"
       android:layout_marginEnd="@dimen/margin16"
-      android:textAppearance="@style/TextAppearance.MyTheme.NewsSubtitle" />
+      android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2" />
   </LinearLayout>
 
 </LinearLayout>

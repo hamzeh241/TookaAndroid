@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/news"
+  app:startDestination="@id/newsFragment">
+
+  <fragment
+    android:id="@+id/newsFragment"
+    android:name="ir.tdaapp.tooka.views.fragments.NewsFragment"
+    android:label="NewsFragment" >
+    <action
+      android:id="@+id/action_newsFragment_to_newsDetailsFragment2"
+      app:destination="@id/newsDetailsFragment2" />
+    <action
+      android:id="@+id/action_newsFragment_to_notificationFragment4"
+      app:destination="@id/notificationFragment4" />
+    <action
+      android:id="@+id/action_newsFragment_to_searchFragment4"
+      app:destination="@id/searchFragment4" />
+  </fragment>
+  <fragment
+    android:id="@+id/newsDetailsFragment2"
+    android:name="ir.tdaapp.tooka.views.fragments.NewsDetailsFragment"
+    android:label="NewsDetailsFragment" >
+    <argument
+      android:name="newsId"
+      app:argType="integer" />
+  </fragment>
+  <fragment
+    android:id="@+id/notificationFragment4"
+    android:name="ir.tdaapp.tooka.views.fragments.NotificationFragment"
+    android:label="NotificationFragment" />
+  <fragment
+    android:id="@+id/searchFragment4"
+    android:name="ir.tdaapp.tooka.views.fragments.SearchFragment"
+    android:label="SearchFragment" />
+</navigation>

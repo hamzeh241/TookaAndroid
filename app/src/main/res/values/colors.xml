@@ -58,17 +58,19 @@
   <color name="red_600">#b00020</color> <!--Color error (light)-->
 
   <color name="red_100">#EF5350</color>
+  <color name="red_google">#E74133</color>
 
   <!--Color surface (light), color on error (light), -->
   <!--color on surface (dark), color on surface (dark)-->
   <color name="white_100">#EBEBEB</color>
-  <color name="white_300">#D3D3D3</color>
+  <color name="white_transparent">#E6FFFFFF</color>
+  <color name="white_300">#E6D3D3D3</color>
   <color name="white_400">#D3D3D3</color>
-  <color name="white_900">#7F899C</color>
+  <color name="white_900">#667F899C</color>
 
 
   <color name="black_200">#262626</color>
-  <color name="black_800">#121212</color> <!--Color surface (dark)-->
+  <color name="black_800">#1F1F1F</color> <!--Color surface (dark)-->
   <!--Color on secondary (light), color on background (light),-->
   <!--color on surface (light)-->
   <color name="black_900">#000000</color>
@@ -84,6 +86,7 @@
   <color name="teal_200">#FF03DAC5</color>
   <color name="teal_700">#FF018786</color>
   <color name="black">#FF000000</color>
+  <color name="black_transparent">#000000</color>
   <color name="white">#FFFFFFFF</color>
 
   <color name="gold_300">#FFFFE335</color>

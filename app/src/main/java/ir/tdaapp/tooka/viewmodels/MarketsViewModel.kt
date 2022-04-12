@@ -1,25 +1,19 @@
 package ir.tdaapp.tooka.viewmodels
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.*
-import com.google.gson.reflect.TypeToken
-import com.microsoft.signalr.Action1
-import com.microsoft.signalr.HubConnectionState
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import ir.tdaapp.tooka.models.Coin
-import ir.tdaapp.tooka.models.LivePriceListResponse
 import ir.tdaapp.tooka.models.ResponseModel
 import ir.tdaapp.tooka.models.SortModel
-import ir.tdaapp.tooka.util.GsonInstance
-import ir.tdaapp.tooka.util.api.RetrofitClient
-import ir.tdaapp.tooka.util.convertResponse
-import ir.tdaapp.tooka.util.signalr.SignalR
-import kotlinx.coroutines.Dispatchers
+import ir.tdaapp.tooka.util.NetworkErrors
+import ir.tdaapp.tooka.util.api.ApiService
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.koin.android.ext.android.inject
+import java.io.IOException
 
-class MarketsViewModel: ViewModel() {
+class MarketsViewModel(private val api: ApiService): ViewModel() {
 
   private val _coinsList = MutableLiveData<List<Coin>>()
   val coinsList: LiveData<List<Coin>>
@@ -33,82 +27,116 @@ class MarketsViewModel: ViewModel() {
   val watchList: LiveData<Boolean>
     get() = _watchList
 
-  private val _livePrice = MutableLiveData<LivePriceListResponse>()
-  val livePrice: LiveData<LivePriceListResponse>
-    get() = _livePrice
+  private val _error = MutableLiveData<NetworkErrors>()
+  val error: LiveData<NetworkErrors>
+    get() = _error
 
-  //  val retrofit: RetrofitClient by application.inject()
-  val hubConnection = SignalR.hubConnection
+  private val _watchlistError = MutableLiveData<WatchlistErrors>()
+  val watchlistError: LiveData<WatchlistErrors>
+    get() = _watchlistError
 
-  var isSubscribed = false
+  private var _selectedSort = MutableLiveData<SortModel>()
+  val selectedSort: LiveData<SortModel>
+    get() = _selectedSort
 
-  fun getData(ascend: Boolean, sortOption: Int) {
-    if (hubConnection.connectionState == HubConnectionState.CONNECTED)
-      viewModelScope.launch(Dispatchers.IO) {
-        //bug => should send userid instead of 2
-        hubConnection.send("GetAllCoins", 2, ascend, sortOption)
-      }
+  val viewType = MutableLiveData<ViewType>()
 
-    hubConnection.on("AllCoins", { json ->
-      val response = convertResponse<List<Coin>>(json!!)
+  val lastScrollPosition = MutableLiveData<Int>()
 
-      if (response.status) {
-        _coinsList.postValue(response.result!!)
-        if (!isSubscribed)
-          subscribeLivePrice()
-      }
-    }, String::class.java)
-
+  enum class ViewType {
+    Linear,
+    Grid
   }
 
-  fun subscribeLivePrice() {
-    if (hubConnection.connectionState == HubConnectionState.CONNECTED)
-      viewModelScope.launch(Dispatchers.IO) {
-        hubConnection.send("SubscribeToLivePrice")
-      }
-
-    hubConnection.on("GroupChange", { response ->
-      isSubscribed = true
-    }, String::class.java)
-
-    hubConnection.on("LivePrice", { response ->
-      val collectionType = object: TypeToken<LivePriceListResponse?>() {}.type
-      val model: LivePriceListResponse =
-        GsonInstance.getInstance().fromJson(response, collectionType)
-
-      _livePrice.postValue(model)
-    }, String::class.java)
+  enum class WatchlistErrors {
+    COIN_NOT_FOUND,
+    USER_NOT_FOUND,
+    DATA_NOT_SAVED,
+    INVALID_ARGS,
+    NETWORK_ERROR,
+    SERVER_ERROR,
+    UNKNOWN_ERROR
   }
 
-  fun getSortOptions() {
-    if (hubConnection.connectionState == HubConnectionState.CONNECTED) {
-      hubConnection.send("GetSortOptions")
+  init {
+    viewModelScope.launch {
+      getSortOptions()
     }
-
-    hubConnection.on("SortOptions", object: Action1<String> {
-      override fun invoke(param1: String?) {
-        val collectionType = object: TypeToken<ResponseModel<List<SortModel>>?>() {}.type
-        var response: ResponseModel<List<SortModel>> =
-          GsonInstance.getInstance().fromJson(param1, collectionType)
-        _sortList.postValue(response.result)
-      }
-
-    }, String::class.java)
+    viewType.value = ViewType.Linear
   }
 
-  fun addToWatchlist(userId: Int, coinId: Int) {
-    if (hubConnection.connectionState == HubConnectionState.CONNECTED) {
-      hubConnection.send("AddToWatchlist", userId, coinId)
+  fun setSelected(model: SortModel) = _selectedSort.postValue(model)
+
+  suspend fun getSortOptions() {
+    try {
+      val options = api.sortOptions()
+      if (options.isSuccessful) {
+        val list = options.body()!!.result as ArrayList
+        list[0].isSelected = true
+        _sortList.postValue(list)
+        setSelected(list[0])
+      } else {
+        _error.postValue(NetworkErrors.SERVER_ERROR)
+      }
+    } catch (e: Exception) {
+      if (e is IOException)
+        _error.postValue(NetworkErrors.NETWORK_ERROR)
+      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
     }
-
-    hubConnection.on("AddWatchlist", object: Action1<String> {
-      override fun invoke(param1: String?) {
-        val collectionType = object: TypeToken<ResponseModel<Boolean>?>() {}.type
-        var response: ResponseModel<Boolean> =
-          GsonInstance.getInstance().fromJson(param1, collectionType)
-        _watchList.postValue(response.result)
-      }
-    }, String::class.java)
   }
 
+  suspend fun addToWatchlist(userId: Int, coinId: Int) {
+    try {
+      val result = api.addWatchlist(coinId, userId)
+      if (result.isSuccessful)
+        _watchList.postValue(true)
+      else {
+        val error = Gson().fromJson(
+          result.errorBody()?.string(),
+          ResponseModel
+          ::class.java
+        )
+
+        when (error.code) {
+          -1 -> _watchlistError.postValue(WatchlistErrors.INVALID_ARGS)
+          -2 -> _watchlistError.postValue(WatchlistErrors.DATA_NOT_SAVED)
+          -3 -> _watchlistError.postValue(WatchlistErrors.USER_NOT_FOUND)
+          -4 -> _watchlistError.postValue(WatchlistErrors.COIN_NOT_FOUND)
+          -5 -> _watchlistError.postValue(WatchlistErrors.SERVER_ERROR)
+          else -> _watchlistError.postValue(WatchlistErrors.UNKNOWN_ERROR)
+        }
+      }
+    } catch (e: Exception) {
+      if (e is IOException)
+        _watchlistError.postValue(WatchlistErrors.NETWORK_ERROR)
+      else
+        _watchlistError.postValue(WatchlistErrors.UNKNOWN_ERROR)
+    }
+  }
+
+  suspend fun getCoins(
+    ascend: Boolean,
+    sortOptions: Int,
+    userId: Int = 0
+  ) {
+    try {
+      callCoins(ascend, sortOptions, userId)
+    } catch (e: Exception) {
+      if (e is IOException)
+        _error.postValue(NetworkErrors.NETWORK_ERROR)
+      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+    }
+  }
+
+  private suspend fun callCoins(ascend: Boolean, sortOptions: Int, userId: Int = 0) {
+    val coins = api.allCoins(ascend, userId, sortOptions)
+    if (coins.isSuccessful) {
+      _coinsList.postValue(coins.body()!!.result!!)
+    } else {
+      when (coins.code()) {
+        400 -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+        500 -> _error.postValue(NetworkErrors.SERVER_ERROR)
+      }
+    }
+  }
 }

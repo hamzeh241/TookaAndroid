@@ -1,2 +1,3 @@
 rootProject.name = "Tooka"
 include ':app'
+include ':mylibrary'

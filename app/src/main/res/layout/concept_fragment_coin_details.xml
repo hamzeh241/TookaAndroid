@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/priceDetails"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
+
+
+    <TextView
+      android:text="1,354,758,695"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:id="@+id/txtCoinPriceTMN"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginTop="16dp"
+      android:layout_marginStart="16dp"
+      android:textAppearance="@style/TextAppearance.MyTheme.Subtitle1"
+      app:layout_constraintEnd_toStartOf="@+id/percentageRoot"
+      android:layout_marginEnd="16dp" />
+
+    <TextView
+      android:text="44,568"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:id="@+id/txtCoinPriceUSD"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/txtCoinPriceTMN"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+      app:layout_constraintEnd_toStartOf="@+id/percentageRoot"
+      android:layout_marginEnd="16dp" />
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginEnd="16dp"
+      android:layout_marginTop="16dp"
+      android:id="@+id/percentageRoot"
+      android:background="@drawable/ascending_background">
+
+      <TextView
+        android:text="1.23 %"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCoinPercentage"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Caption"
+        android:layout_margin="@dimen/margin8"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:drawableStart="@drawable/ic_round_arrow_drop_down_24"
+        android:drawablePadding="@dimen/margin8"
+        android:drawableTint="@color/white" />
+    </LinearLayout>
+
+    <TextView
+      android:text="@string/usd"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/txtUsd"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/percentageRoot"
+      android:layout_marginEnd="16dp"
+      android:layout_marginTop="8dp"
+      android:textAppearance="@style/TextAppearance.MyTheme.Button"
+      android:padding="@dimen/margin4" />
+
+    <TextView
+      android:text="@string/irt"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/textView25"
+      app:layout_constraintEnd_toStartOf="@+id/txtUsd"
+      app:layout_constraintTop_toBottomOf="@+id/percentageRoot"
+      android:layout_marginEnd="8dp"
+      android:layout_marginTop="8dp"
+      android:textAppearance="@style/TextAppearance.MyTheme.Button"
+      android:padding="@dimen/margin4" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/candleDetails"
+    android:visibility="gone"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:paddingStart="@dimen/margin8"
+      android:paddingEnd="@dimen/margin8"
+      android:layout_marginTop="@dimen/margin16">
+
+      <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+          android:text="@string/open"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAppearance="@style/TextAppearance.MyTheme.NewsSubtitle" />
+
+        <TextView
+          android:text="TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtCandleDetailsOpen"
+          android:textAppearance="@style/TextAppearance.MyTheme.NewsTitle" />
+      </LinearLayout>
+
+      <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+          android:text="@string/high"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAppearance="@style/TextAppearance.MyTheme.NewsSubtitle" />
+
+        <TextView
+          android:text="TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtCandleDetailsHigh"
+          android:textAppearance="@style/TextAppearance.MyTheme.NewsTitle" />
+      </LinearLayout>
+
+      <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+          android:text="@string/low"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAppearance="@style/TextAppearance.MyTheme.NewsSubtitle" />
+
+        <TextView
+          android:text="TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtCandleDetailsLow"
+          android:textAppearance="@style/TextAppearance.MyTheme.NewsTitle" />
+      </LinearLayout>
+
+      <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+          android:text="@string/close"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAppearance="@style/TextAppearance.MyTheme.NewsSubtitle" />
+
+        <TextView
+          android:text="TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtCandleDetailsClose"
+          android:textAppearance="@style/TextAppearance.MyTheme.NewsTitle" />
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCandleDetailsDate"
+        android:textAppearance="@style/TextAppearance.MyTheme.NewsTitle"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin8" />
+    </LinearLayout>
+  </LinearLayout>
+
+  <RelativeLayout
+    android:layout_width="0dp"
+    android:layout_height="200dp"
+    app:layout_constraintTop_toBottomOf="@+id/priceDetails"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:id="@+id/relativeLayout2">
+
+    <ir.tdaapp.tooka.components.TookaLineChart
+      android:id="@+id/lineChart"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="gone" />
+
+    <ir.tdaapp.tooka.components.TookaCandlestickChart
+      android:id="@+id/candleStickChart"
+      android:layout_height="match_parent"
+      android:layout_width="match_parent"
+      android:visibility="gone" />
+
+    <TextView
+      android:text="@string/app_name_translatable"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_centerVertical="false"
+      android:layout_centerHorizontal="true"
+      android:layout_marginBottom="@dimen/margin8"
+      android:fontFamily="@font/iranyekan_black"
+      android:textColor="#66AAAAAA"
+      android:textSize="16sp" />
+
+    <com.airbnb.lottie.LottieAnimationView
+      android:id="@+id/breakingNewsLoading"
+      android:layout_width="@dimen/size64"
+      android:layout_height="@dimen/size64"
+      app:lottie_rawRes="@raw/loading"
+      app:lottie_autoPlay="true"
+      app:lottie_loop="true"
+      app:lottie_speed="0.6"
+      android:layout_centerInParent="true" />
+
+    <androidx.cardview.widget.CardView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="false"
+      android:layout_alignParentTop="true"
+      app:cardElevation="1dp"
+      android:layout_marginTop="@dimen/margin4"
+      app:cardCornerRadius="@dimen/radius4"
+      android:layout_marginStart="@dimen/margin4"
+      android:layout_alignParentStart="false"
+      android:id="@+id/cardCandleDetails"
+      android:visibility="gone"
+      android:layout_centerHorizontal="true">
+
+      <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+          android:text="TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/txtCandleDetails"
+          android:layout_weight="1"
+          android:layout_margin="@dimen/margin4"
+          android:textColor="@color/dark_blue_900"
+          android:fontFamily="@font/iranyekan_regular"
+          android:textSize="10sp" />
+      </LinearLayout>
+    </androidx.cardview.widget.CardView>
+  </RelativeLayout>
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:layout_width="0dp"
+    android:layout_height="@dimen/size88"
+    android:id="@+id/timeFramesList"
+    android:visibility="gone"
+    tools:ignore="SpeakableTextPresentCheck"
+    app:layout_constraintTop_toBottomOf="@+id/relativeLayout2"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

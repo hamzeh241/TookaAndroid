@@ -6,23 +6,16 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.concurrent.TimeUnit
 
 class RetrofitClient {
 
   companion object {
-    const val BASE_URL: String = "https://www.razhashop.ir/"
+    const val BASE_URL: String = "https://www.razhashop.ir/api/"
 
-    const val NEWS_IMAGES: String = "https://www.razhashop.ir/Images/News/"
-    const val COIN_IMAGES: String = "https://www.razhashop.ir/Images/Coins/"
+    const val NEWS_IMAGES: String = "https://www.razhashop.ir/images/news/"
+    const val COIN_IMAGES: String = "https://www.razhashop.ir/images/coins/"
 
-    const val NEWS_URL: String = "https://ws.razhashop.ir/News/"
-
-
-    const val SERVER_ERROR: Int = 500
-    const val BAD_REQUEST: Int = 400
-    const val NOT_FOUND: Int = 404
+    const val NEWS_URL: String = "https://www.razhashop.ir/news/news"
   }
 
   var logging = HttpLoggingInterceptor()

@@ -1,26 +1,24 @@
 package ir.tdaapp.tooka.adapters
 
+import ContextUtils
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemAlternateCoinsBinding
 import ir.tdaapp.tooka.models.Coin
 import ir.tdaapp.tooka.models.LivePriceListResponse
 import ir.tdaapp.tooka.models.PriceChange
-import ir.tdaapp.tooka.util.animateColor
+import ir.tdaapp.tooka.util.*
 import ir.tdaapp.tooka.util.api.RetrofitClient
-import ir.tdaapp.tooka.util.separatePrice
-import ir.tdaapp.tooka.util.setCorrectMargins
-import ir.tdaapp.tooka.util.setPrice
-import kotlinx.coroutines.*
-import java.lang.StringBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 
 class AlternateCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
   RecyclerView.Adapter<AlternateCoinsAdapter.ViewHolder>() {
@@ -64,7 +62,7 @@ class AlternateCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
       }
 
     holder.binding.txtPriceTMN.text =
-      StringBuilder(separatePrice(data.priceTMN.toFloat())).toString()
+      StringBuilder(separatePrice(data.priceTMN.toInt())).toString()
     holder.binding.txtPriceUSD.text =
       StringBuilder(separatePrice(data.priceUSD.toFloat())).toString()
     holder.binding.txtCoinPercentage.text =
@@ -82,12 +80,7 @@ class AlternateCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
     }
 
     val imageUrl = RetrofitClient.COIN_IMAGES + data.icon
-
-    Glide.with(holder.binding.root.context)
-      .load(imageUrl)
-      .placeholder(R.drawable.ic_baseline_circle_24)
-      .into(holder.binding.imageView)
-
+    holder.binding.imageView glideUrl imageUrl
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {

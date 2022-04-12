@@ -10,7 +10,7 @@
     android:text="@string/app_settings"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+    android:textAppearance="@style/TextAppearance.MyTheme.Body1"
     android:layout_marginTop="@dimen/margin16"
     android:layout_marginStart="@dimen/margin16" />
 
@@ -42,8 +42,9 @@
           android:text="@string/app_main_theme"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textAppearance="@style/TextAppearance.MyTheme.Price1"
-          android:layout_marginStart="@dimen/margin16" />
+          android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+          android:layout_marginStart="@dimen/margin16"
+          android:textColor="?colorOnSurface" />
 
         <View
           android:layout_width="0dp"
@@ -62,7 +63,7 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_lightmode"
             android:layout_weight="1"
-            app:tint="@color/black"
+            app:tint="?colorOnSurface"
             android:id="@+id/imgTheme" />
 
           <TextView
@@ -72,7 +73,8 @@
             android:id="@+id/txtTheme"
             android:layout_weight="1"
             android:layout_marginStart="@dimen/margin8"
-            android:textAppearance="@style/TextAppearance.MyTheme.NewsTitle" />
+            android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+            android:textColor="?colorOnSurface" />
 
         </LinearLayout>
       </LinearLayout>
@@ -80,7 +82,7 @@
       <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray_500"
+        android:background="?colorOnSurface"
         android:layout_marginStart="@dimen/margin16"
         android:layout_marginEnd="@dimen/margin16" />
 
@@ -93,14 +95,15 @@
         android:background="?selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:id="@+id/vg_customize_home">
+        android:id="@+id/vg_change_lang">
 
         <TextView
-          android:text="@string/customize_home_page"
+          android:text="@string/change_lang"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/margin16"
-          android:textAppearance="@style/TextAppearance.MyTheme.Price1" />
+          android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+          android:textColor="?colorOnSurface" />
 
         <View
           android:layout_width="0dp"
@@ -113,7 +116,7 @@
           app:srcCompat="@drawable/ic_arrow_forward"
           android:id="@+id/imageView4"
           android:layout_marginEnd="@dimen/margin16"
-          app:tint="@color/black" />
+          app:tint="?colorOnSurface" />
       </LinearLayout>
     </LinearLayout>
   </androidx.cardview.widget.CardView>

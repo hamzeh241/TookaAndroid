@@ -9,7 +9,7 @@
     android:text="@string/stats"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+    android:textAppearance="@style/TextAppearance.MyTheme.Body1"
     android:layout_marginStart="@dimen/margin16" />
 
   <LinearLayout
@@ -30,7 +30,7 @@
         android:text="@string/market_cap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price2"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="14sp" />
 
       <TextView
@@ -38,13 +38,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtMarketCap"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1" />
+        android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2" />
 
       <TextView
         android:text="@string/circulating_supply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price2"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="14sp"
         android:layout_marginTop="@dimen/margin8" />
 
@@ -53,13 +53,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtCircSupply"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1" />
+        android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2" />
 
       <TextView
         android:text="@string/total_supply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price2"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="14sp"
         android:layout_marginTop="@dimen/margin8" />
 
@@ -68,13 +68,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtTotalSupply"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1" />
+        android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2" />
 
       <TextView
         android:text="@string/rank"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price2"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="14sp"
         android:layout_marginTop="@dimen/margin8" />
 
@@ -83,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtRank"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1" />
+        android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2" />
 
     </LinearLayout>
 
@@ -104,7 +104,7 @@
         android:text="@string/vol_24"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price2"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="14sp" />
 
       <TextView
@@ -112,13 +112,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt24HVolume"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1" />
+        android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2" />
 
       <TextView
         android:text="@string/max_supply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price2"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="14sp"
         android:layout_marginTop="@dimen/margin8" />
 
@@ -127,13 +127,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtMaxSupply"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1" />
+        android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2" />
 
       <TextView
         android:text="@string/roi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price2"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="14sp"
         android:layout_marginTop="@dimen/margin8" />
 
@@ -142,7 +142,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtROI"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1" />
+        android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2" />
 
     </LinearLayout>
   </LinearLayout>

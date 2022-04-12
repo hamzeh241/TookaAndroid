@@ -16,9 +16,7 @@
     android:id="@+id/ctvLightMode"
     android:background="?selectableItemBackground"
     android:clickable="true"
-    android:focusable="true">
-
-  </ir.tdaapp.tooka.components.TookaCustomTextView>
+    android:focusable="true"/>
 
   <ir.tdaapp.tooka.components.TookaCustomTextView
     android:layout_width="match_parent"

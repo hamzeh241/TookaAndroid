@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <androidx.cardview.widget.CardView
+    android:layout_width="0dp"
+    android:layout_height="@dimen/size64"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginStart="@dimen/margin8"
+    android:layout_marginEnd="@dimen/margin8"
+    android:layout_marginBottom="@dimen/margin8"
+    android:id="@+id/cardView"
+    app:cardBackgroundColor="@color/black">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center">
+
+      <TextView
+        android:text="@string/add_alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/margin8" />
+    </LinearLayout>
+  </androidx.cardview.widget.CardView>
+
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:gravity="bottom|end"
+    app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="16dp">
+
+    <TextView
+      android:text="@string/irt"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/txtIrt"
+      android:gravity="center"
+      android:fontFamily="@font/iranyekan_black"
+      android:textColor="@color/gray_400"
+      android:padding="@dimen/margin4"
+      android:clickable="true"
+      android:background="?selectableItemBackground"
+      android:focusable="true" />
+
+    <TextView
+      android:text="@string/usd"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/txtUsd"
+      android:gravity="center"
+      android:layout_marginStart="@dimen/margin16"
+      android:fontFamily="@font/iranyekan_black"
+      android:textColor="@color/black"
+      android:padding="@dimen/margin4"
+      android:clickable="true"
+      android:background="?selectableItemBackground"
+      android:focusable="true" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:gravity="center"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:id="@+id/linearLayout2">
+
+    <EditText
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="number|numberDecimal"
+      android:textIsSelectable="true"
+      android:id="@+id/edtPrice"
+      android:layout_weight="1"
+      android:fontFamily="@font/iranyekan_bold"
+      android:textAlignment="center"
+      android:background="@color/white"
+      android:singleLine="true"
+      android:layout_marginStart="@dimen/margin8"
+      android:layout_marginEnd="@dimen/margin8"
+      android:autoSizeTextType="uniform"
+      android:textSize="34sp"
+      android:textStyle="bold" />
+
+  </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

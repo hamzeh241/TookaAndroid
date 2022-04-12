@@ -1,15 +1,12 @@
 package ir.tdaapp.tooka.adapters
 
+import ContextUtils
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemSecondTopCoinBinding
 import ir.tdaapp.tooka.models.Coin
@@ -17,9 +14,9 @@ import ir.tdaapp.tooka.models.LivePriceListResponse
 import ir.tdaapp.tooka.models.PriceChange
 import ir.tdaapp.tooka.util.*
 import ir.tdaapp.tooka.util.api.RetrofitClient
-import kotlinx.coroutines.*
-import java.lang.StringBuilder
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 
 class TopCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
   RecyclerView.Adapter<TopCoinsAdapter.ViewHolder>() {
@@ -44,6 +41,7 @@ class TopCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
 
+    holder.binding.root.addSpringAnimation()
     holder.binding.root.setOnClickListener {
       action.invoke(data, position)
     }
@@ -61,15 +59,14 @@ class TopCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
 
     holder.binding.txtCoinName.text =
       when (ContextUtils.getLocale(holder.binding.root.context).toString()) {
-        "en" -> data.name
-        "fa" -> data.persianName
+        "fa" -> data.persianName ?: data.name
         else -> data.name
       }
 
     holder.binding.txtPriceTMN.text =
-      StringBuilder(separatePrice(data.priceTMN.toFloat())).toString()
+      formatPrice(toPersianNumbers(separatePrice(data.priceTMN.toInt())), currency = holder.binding.root.context.getString(R.string.toomans))
     holder.binding.txtPriceUSD.text =
-      StringBuilder(separatePrice(data.priceUSD.toInt().toFloat())).toString()
+      formatPrice(toPersianNumbers(separatePrice(data.priceUSD)),currency = holder.binding.root.context.getString(R.string.dollars))
     holder.binding.txtCoinPercentage.text =
       StringBuilder(data.percentage.toString())
         .append(" ")
@@ -91,11 +88,7 @@ class TopCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
     }
 
     val imageUrl = RetrofitClient.COIN_IMAGES + data.icon
-
-    Glide.with(holder.binding.root.context)
-      .load(imageUrl)
-      .placeholder(R.drawable.ic_baseline_circle_24)
-      .into(holder.binding.imgCoin)
+    holder.binding.imgCoin glideUrl imageUrl
 
     setMiniChart(holder.binding.chart, data.ohlc.reversed())
   }
@@ -109,38 +102,41 @@ class TopCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
 
 
       if ((payloads.last() as PriceChange).ascend) {
-        holder.binding.txtPriceUSD.setPrice(item.priceUSD)
+        holder.binding.txtPriceUSD.text =
+          formatPrice(toPersianNumbers(separatePrice(item.priceUSD)), currency = holder.binding.root.context.getString(R.string.dollars))
         holder.binding.txtPriceUSD.animateColor(
           holder.binding.root.resources.getColor(R.color.gray_400),
           Color.GREEN,
           1000L
         )
 
-        holder.binding.txtPriceTMN.setPrice(item.priceTMN)
+        holder.binding.txtPriceTMN.text =
+          formatPrice(toPersianNumbers(separatePrice(item.priceTMN.toInt())), currency = holder.binding.root.context.getString(R.string.toomans))
         holder.binding.txtPriceTMN.animateColor(
           holder.binding.root.resources.getColor(R.color.dark_blue_900),
           Color.GREEN,
           1000L
         )
       } else {
-        holder.binding.txtPriceUSD.setPrice(item.priceUSD)
+        holder.binding.txtPriceUSD.text =
+          formatPrice(toPersianNumbers(separatePrice(item.priceUSD)), currency = holder.binding.root.context.getString(R.string.dollars))
         holder.binding.txtPriceUSD.animateColor(
           holder.binding.root.resources.getColor(R.color.gray_400),
           Color.RED,
           1000L
         )
 
-            holder.binding.txtPriceTMN.setPrice(item.priceTMN)
-            holder.binding.txtPriceTMN.animateColor(
-              holder.binding.root.resources.getColor(R.color.dark_blue_900),
-              Color.RED,
-              1000L
-            )
+        holder.binding.txtPriceTMN.text =
+          formatPrice(toPersianNumbers(separatePrice(item.priceTMN.toInt())), currency = holder.binding.root.context.getString(R.string.toomans))
+        holder.binding.txtPriceTMN.animateColor(
+          holder.binding.root.resources.getColor(R.color.dark_blue_900),
+          Color.RED,
+          1000L
+        )
       }
     }
   }
 
-  @DelicateCoroutinesApi
   suspend fun notifyChanges(livePrice: LivePriceListResponse) =
     withContext(Dispatchers.IO) {
       val position = async {

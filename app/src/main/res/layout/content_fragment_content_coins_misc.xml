@@ -10,7 +10,8 @@
     android:layout_height="wrap_content"
     app:strokeColor="@color/black_900"
     app:strokeWidth="1dp"
-    android:layout_margin="@dimen/margin16">
+    android:layout_margin="@dimen/margin16"
+    app:cardBackgroundColor="?colorSurface">
 
     <LinearLayout
       android:layout_width="match_parent"
@@ -31,16 +32,18 @@
           android:layout_height="wrap_content"
           app:srcCompat="@drawable/ic_google_docs"
           android:layout_marginTop="@dimen/margin16"
-          android:layout_marginBottom="@dimen/margin16" />
+          android:layout_marginBottom="@dimen/margin16"
+          android:tint="?colorOnSurface" />
 
         <TextView
           android:text="وایت پیپر"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+          android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
           android:layout_marginStart="@dimen/margin16"
           android:layout_marginTop="@dimen/margin16"
-          android:layout_marginBottom="@dimen/margin16" />
+          android:layout_marginBottom="@dimen/margin16"
+          android:textColor="?colorOnSurface" />
       </LinearLayout>
 
       <ImageView
@@ -66,9 +69,10 @@
           android:layout_weight="1"
           android:layout_marginStart="@dimen/margin16"
           android:layout_marginEnd="@dimen/margin16"
-          android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+          android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
           android:layout_marginTop="@dimen/margin16"
-          android:layout_marginBottom="@dimen/margin16" />
+          android:layout_marginBottom="@dimen/margin16"
+          android:textColor="?colorOnSurface" />
       </LinearLayout>
     </LinearLayout>
   </com.google.android.material.card.MaterialCardView>
@@ -84,7 +88,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_weight="1"
-      android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+      android:textAppearance="@style/TextAppearance.MyTheme.Body1"
       android:layout_marginStart="@dimen/margin16" />
 
     <TextView
@@ -130,7 +134,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_weight="1"
-      android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+      android:textAppearance="@style/TextAppearance.MyTheme.Body1"
       android:layout_marginStart="@dimen/margin16" />
 
     <TextView

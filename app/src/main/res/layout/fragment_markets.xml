@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_height="match_parent"
   android:layout_width="match_parent">
 
-  <LinearLayout
-    android:orientation="vertical"
+  <com.google.android.material.appbar.AppBarLayout
+    android:id="@+id/appbar"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:background="?colorSurface">
 
     <androidx.appcompat.widget.Toolbar
-      android:id="@+id/toolbar"
+      android:layout_height="?attr/actionBarSize"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:id="@+id/toolbar"
       android:gravity="end"
       android:minHeight="?attr/actionBarSize"
       android:theme="?attr/actionBarTheme"
@@ -23,18 +25,27 @@
       layout="@layout/content_fragment_markets_sort"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:id="@+id/swipeRefreshLayout">
+      android:id="@+id/swipeRefreshLayout"
+      android:visibility="visible">
 
       <include
         android:id="@+id/includeMarketsCoinList"
         layout="@layout/content_fragment_markets_coin_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="visible" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
   </LinearLayout>
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

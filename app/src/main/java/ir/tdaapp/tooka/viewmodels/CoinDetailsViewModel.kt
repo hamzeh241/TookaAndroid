@@ -1,25 +1,21 @@
 package ir.tdaapp.tooka.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.reflect.TypeToken
-import com.microsoft.signalr.Action1
-import com.microsoft.signalr.HubConnectionState
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import ir.tdaapp.tooka.models.*
-import ir.tdaapp.tooka.util.GsonInstance
 import ir.tdaapp.tooka.util.NetworkErrors
-import ir.tdaapp.tooka.util.api.RetrofitClient
+import ir.tdaapp.tooka.util.api.ApiService
 import ir.tdaapp.tooka.util.signalr.SignalR
-import ir.tdaapp.tooka.util.detectError
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.android.ext.android.inject
+import timber.log.Timber
+import java.io.IOException
 
-class CoinDetailsViewModel(appClass: Application): AndroidViewModel(appClass) {
+class CoinDetailsViewModel(private val api: ApiService): ViewModel() {
 
   private val _details = MutableLiveData<CoinDetailsModel>()
   val details: LiveData<CoinDetailsModel>
@@ -37,141 +33,159 @@ class CoinDetailsViewModel(appClass: Application): AndroidViewModel(appClass) {
   val chartData: LiveData<List<List<Any>>>
     get() = _chartData
 
+  private val _timeframes = MutableLiveData<List<TimeFrameModel>>()
+  val timeframes: LiveData<List<TimeFrameModel>>
+    get() = _timeframes
+
+  private val _livePrice = MutableLiveData<LivePriceListResponse>()
+  val livePrice: LiveData<LivePriceListResponse>
+    get() = _livePrice
+
   private val _error = MutableLiveData<NetworkErrors>()
   val error: LiveData<NetworkErrors>
     get() = _error
 
   private val hubConnection = SignalR.hubConnection
 
-  private val retrofitClient: RetrofitClient by appClass.inject()
-
-  suspend fun getData(id: Int) {
-    /*
-
-    retrofitClient.service.getSpecificCoin(id).enqueue(object: Callback<CoinDetailsModel> {
-      override fun onResponse(call: Call<CoinDetailsModel>, response: Response<CoinDetailsModel>) {
-        if (response.isSuccessful)
-          _details.postValue(response.body())
-      }
-
-      override fun onFailure(call: Call<CoinDetailsModel>, t: Throwable) {
-      }
-
-    })
-
-    retrofitClient.service.getRelatedNews(id, 3).enqueue(object: Callback<List<News>> {
-      override fun onResponse(call: Call<List<News>>, response: Response<List<News>>) {
-        if (response.isSuccessful)
-          _relatedNews.postValue(response.body())
-      }
-
-      override fun onFailure(call: Call<List<News>>, t: Throwable) {
-      }
-
-    })
-
-    retrofitClient.service.getRandomCoins(id).enqueue(object: Callback<List<Coin>> {
-      override fun onResponse(call: Call<List<Coin>>, response: Response<List<Coin>>) {
-        if (response.isSuccessful)
-          _otherCoins.postValue(response.body())
-      }
-
-      override fun onFailure(call: Call<List<Coin>>, t: Throwable) {
-      }
-
-    })
-     */
-
-    if (hubConnection.connectionState == HubConnectionState.CONNECTED) {
-      GlobalScope.launch(Dispatchers.IO) {
-        withContext(Dispatchers.IO) {
-          hubConnection.send("GetCoinDetails", id)
-        }
-        withContext(Dispatchers.IO) {
-          hubConnection.send("GetRelatedNews", id, 3)
-          hubConnection.send("GetRandomCoins", id)
-        }
-      }
-    } else _error.postValue(NetworkErrors.NETWORK_ERROR)
-
-    hubConnection.on("CoinDetails", object: Action1<String> {
-      override fun invoke(param1: String?) {
-        GlobalScope.launch(Dispatchers.IO) {
-          val collectionType = object: TypeToken<ResponseModel<CoinDetailsModel>?>() {}.type
-          val response: ResponseModel<CoinDetailsModel> =
-            GsonInstance.getInstance().fromJson(param1, collectionType)
-          if (response.status)
-            _details.postValue(response.result)
-          else {
-            _error.postValue(detectError(response as ResponseModel<Any>))
-          }
-        }
-      }
-    }, String::class.java)
-    hubConnection.on("RelatedNews", object: Action1<String> {
-      override fun invoke(param1: String?) {
-        GlobalScope.launch(Dispatchers.IO) {
-          val collectionType = object: TypeToken<ResponseModel<List<News>>?>() {}.type
-          val response: ResponseModel<List<News>> =
-            GsonInstance.getInstance().fromJson(param1, collectionType)
-          if (response.status)
-            _relatedNews.postValue(response.result)
-          else {
-            _error.postValue(detectError(response as ResponseModel<Any>))
-          }
-        }
-      }
-    }, String::class.java)
-    hubConnection.on("RandomCoins", object: Action1<String> {
-      override fun invoke(param1: String?) {
-        GlobalScope.launch(Dispatchers.IO) {
-          val collectionType = object: TypeToken<ResponseModel<List<Coin>>?>() {}.type
-          var response: ResponseModel<List<Coin>> =
-            GsonInstance.getInstance().fromJson(param1, collectionType)
-          if (response.status)
-            _otherCoins.postValue(response.result)
-          else {
-            _error.postValue(detectError(response as ResponseModel<Any>))
-          }
-        }
-      }
-    }, String::class.java)
+  init {
+    viewModelScope.launch {
+      subscribeToCandleUpdate()
+    }
   }
 
-  fun getChartData(coinId: Int, timeFrameId: Int) {
-    /*
-
-    retrofitClient.service.getOHLCV(coinId, timeFrameId).enqueue(object: Callback<List<List<Any>>> {
-      override fun onResponse(call: Call<List<List<Any>>>, response: Response<List<List<Any>>>) {
-        if (response.isSuccessful)
-          _chartData.postValue(response.body()!!)
-      }
-
-      override fun onFailure(call: Call<List<List<Any>>>, t: Throwable) {
-        var a = 1
-        a++
-      }
-    })
-     */
-
-    if (hubConnection.connectionState == HubConnectionState.CONNECTED) {
-      GlobalScope.launch {
-        hubConnection.send("GetOhlcv", coinId, timeFrameId)
-      }
+  fun getData(id: Int, count: Int) {
+    viewModelScope.launch {
+      getDetails(id)
+      getTimeFrames(id)
+      getRandomCoins(id, count)
     }
-    hubConnection.on("Ohlcv", object: Action1<String> {
-      override fun invoke(param1: String?) {
-        GlobalScope.launch(Dispatchers.IO) {
-          val collectionType = object: TypeToken<ResponseModel<List<List<Any>>>?>() {}.type
-          val response: ResponseModel<List<List<Any>>> =
-            GsonInstance.getInstance().fromJson(param1, collectionType)
-          if (response.status)
-            _chartData.postValue(response.result)
-          else {
-            _error.postValue(detectError(response as ResponseModel<Any>))
-          }
+  }
+
+  suspend fun subscribeToCandleUpdate() = withContext(Dispatchers.IO) {
+    with(hubConnection) {
+      send("SubscribeToCandleUpdate")
+      on("CandleUpdate", {
+
+      }, String::class.java)
+    }
+  }
+
+  suspend fun getTimeFrames(coinId: Int) {
+    try {
+      val timeFrames = api.timeFrames(coinId)
+      if (timeFrames.isSuccessful)
+        _timeframes.postValue(timeFrames.body()?.result!!)
+      else {
+        when (timeFrames.code()) {
+          400 -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+          500 -> _error.postValue(NetworkErrors.SERVER_ERROR)
+          else -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
         }
       }
-    }, String::class.java)
+    } catch (e: Exception) {
+      if (e is IOException)
+        _error.postValue(NetworkErrors.NETWORK_ERROR)
+      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+    }
+  }
+
+  suspend fun getTimeFrames(firstId: Int, secondId: Int) {
+    try {
+      val timeFrames = api.mutualTimeFrames(firstId, secondId)
+      if (timeFrames.isSuccessful)
+        _timeframes.postValue(timeFrames.body()?.result!!)
+      else {
+        when (timeFrames.code()) {
+          400 -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+          500 -> _error.postValue(NetworkErrors.SERVER_ERROR)
+          else -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+        }
+      }
+    } catch (e: Exception) {
+      if (e is IOException)
+        _error.postValue(NetworkErrors.NETWORK_ERROR)
+      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+    }
+  }
+
+  private suspend fun getRandomCoins(id: Int, count: Int) {
+    try {
+      val randomCoins = api.randomCoins(id, count)
+      if (randomCoins.isSuccessful) {
+        _otherCoins.postValue(randomCoins.body()?.result!!)
+      } else {
+        when (randomCoins.code()) {
+          400 -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+          500 -> _error.postValue(NetworkErrors.SERVER_ERROR)
+        }
+      }
+    } catch (e: Exception) {
+      if (e is IOException)
+        _error.postValue(NetworkErrors.NETWORK_ERROR)
+      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+    }
+  }
+
+  private suspend fun getDetails(id: Int) {
+    try {
+      val details = api.coinDetails(id)
+      if (details.isSuccessful) {
+        _details.postValue(details.body()?.result!!)
+        _relatedNews.postValue(details.body()?.result!!.relatedNews)
+      } else {
+        when (details.code()) {
+          400 -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+          404 -> _error.postValue(NetworkErrors.NOT_FOUND_ERROR)
+          500 -> _error.postValue(NetworkErrors.SERVER_ERROR)
+        }
+      }
+    } catch (e: Exception) {
+      if (e is IOException)
+        _error.postValue(NetworkErrors.NETWORK_ERROR)
+      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+    }
+  }
+
+  suspend fun getChartData(coinId: Int, timeFrameId: Int) {
+    Timber.i("getChartData: ")
+    try {
+      val ohlcv = api.ohlcv(coinId, timeFrameId)
+      if (ohlcv.isSuccessful) {
+        _chartData.postValue(ohlcv.body()?.result!!)
+      } else {
+        when (ohlcv.code()) {
+          400 -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+          500 -> _error.postValue(NetworkErrors.SERVER_ERROR)
+        }
+      }
+    } catch (e: Exception) {
+      if (e is IOException)
+        _error.postValue(NetworkErrors.NETWORK_ERROR)
+      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+    }
+  }
+
+  suspend fun getToomanChartData(coinId: Int, timeFrameId: Int) {
+    Timber.i("getToomanChartData: ")
+    try {
+      val ohlcv = api.irtOhlcv(coinId, timeFrameId)
+      if (ohlcv.isSuccessful) {
+        _chartData.postValue(ohlcv.body()?.result!!)
+      } else {
+        when (ohlcv.code()) {
+          400 -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+          500 -> _error.postValue(NetworkErrors.SERVER_ERROR)
+        }
+      }
+    } catch (e: Exception) {
+      Log.i("TOOKALOG", "exception: ${e.toString()}")
+      if (e is IOException)
+        _error.postValue(NetworkErrors.NETWORK_ERROR)
+      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+    }
+  }
+
+  override fun onCleared() {
+    super.onCleared()
   }
 }

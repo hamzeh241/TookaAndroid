@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+  <TextView
+    android:text="TextView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtTitle"
+    android:layout_marginTop="16dp"
+    android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:textAlignment="center"
+    android:textColor="?colorOnSurface" />
+
+  <TextView
+    android:text="TextView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtDesc"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:textAlignment="center"
+    android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+    android:visibility="visible"
+    android:textSize="12sp"
+    android:textColor="?colorOnSurface" />
+
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginBottom="8dp">
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1" />
+
+    <TextView
+      android:text="@string/no"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/txtNo"
+      android:layout_marginEnd="@dimen/margin16"
+      android:padding="@dimen/margin8"
+      android:textAppearance="@style/TextAppearance.MyTheme.Price2"
+      android:background="?selectableItemBackground"
+      android:clickable="true"
+      android:focusable="true"
+      android:textColor="?colorOnSurface" />
+
+    <androidx.cardview.widget.CardView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:cardBackgroundColor="@color/black"
+      app:cardElevation="@dimen/elev0"
+      android:background="?selectableItemBackground"
+      android:clickable="true"
+      android:focusable="true"
+      app:cardCornerRadius="@dimen/radius16"
+      android:id="@+id/cardYes">
+
+      <TextView
+        android:text="@string/yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textAppearance="@style/TextAppearance.MyTheme.Price2"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginEnd="@dimen/margin16"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginBottom="@dimen/margin8"
+        android:id="@+id/txtYes" />
+    </androidx.cardview.widget.CardView>
+  </LinearLayout>
+
+</LinearLayout>

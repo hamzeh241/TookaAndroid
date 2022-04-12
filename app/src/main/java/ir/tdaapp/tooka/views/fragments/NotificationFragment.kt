@@ -1,38 +1,58 @@
 package ir.tdaapp.tooka.views.fragments
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.adapters.NotificationsViewHolder
 import ir.tdaapp.tooka.adapters.TookaAdapter
 import ir.tdaapp.tooka.databinding.FragmentNotificationBinding
 import ir.tdaapp.tooka.databinding.ItemNotificationBinding
+import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.Notification
+import ir.tdaapp.tooka.util.NetworkErrors
 import ir.tdaapp.tooka.viewmodels.NotificationsViewModel
 import ir.tdaapp.tooka.views.fragments.base.BaseFragment
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import kotlin.coroutines.CoroutineContext
 
-class NotificationFragment: BaseFragment() {
+class NotificationFragment: BaseFragment(), CoroutineScope {
 
   private lateinit var binding: FragmentNotificationBinding
 
   private lateinit var adapter: TookaAdapter<Notification>
   private val viewModel: NotificationsViewModel by inject()
 
-  override fun init() {
-    (requireActivity() as MainActivity).bottomNavVisibility = false
-    initAdapter()
-    initList()
-
-    viewModel.getData("samanapikey", 0)
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
+    binding = FragmentNotificationBinding.inflate(inflater, container, false)
+    return binding.root
   }
 
-  override fun initTransitions() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    (requireActivity() as MainActivity).bottomNavVisibility = false
+    initToolbar()
+    initAdapter()
+    initList()
+    initListeners()
+    initObservables()
+
+    launch {
+      viewModel.getData((requireActivity() as MainActivity).userPrefs.getUserId(requireContext()))
+    }
   }
 
   fun initAdapter() {
@@ -47,38 +67,74 @@ class NotificationFragment: BaseFragment() {
     binding.notifList.adapter = adapter
   }
 
-  override fun initToolbar() {
+  fun initToolbar() {
     (requireActivity() as MainActivity).setSupportActionBar(binding.toolbar)
     (requireActivity() as MainActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
     binding.toolbar.title = getString(R.string.notifications)
   }
 
-  override fun initListeners(view: View) {
+  fun initListeners() {
     adapter.callback = TookaAdapter.Callback { vm, pos -> }
   }
 
-  override fun initObservables() {
-    viewModel.result.observe(viewLifecycleOwner, {
+  fun initObservables() {
+    viewModel.result.observe(viewLifecycleOwner) {
       if (it != null && it.isNotEmpty()) {
         adapter.models = it as ArrayList<Notification>
         binding.notifList.visibility = View.VISIBLE
 
         binding.notifLoading.visibility = View.GONE
       }
-    })
-  }
+    }
 
-  override fun initErrors() {
-  }
+    viewModel.error.observe(viewLifecycleOwner){
+      val message: String
+      @DrawableRes val icon: Int
+      when (it) {
+        NetworkErrors.NETWORK_ERROR -> {
+          message = getString(R.string.network_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.CLIENT_ERROR -> {
+          message = getString(R.string.unknown_error_desc)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+        }
+        NetworkErrors.NOT_FOUND_ERROR -> {
+          message = getString(R.string.coin_not_found)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+          requireActivity().onBackPressed()
+        }
+        NetworkErrors.SERVER_ERROR -> {
+          message = getString(R.string.server_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.UNAUTHORIZED_ERROR -> {
+          message = getString(R.string.network_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.UNKNOWN_ERROR -> {
+          message = getString(R.string.unknown_error_desc)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+        }
+      }
 
-  override fun getLayout(inflater: LayoutInflater, container: ViewGroup?): ViewBinding {
-    binding = FragmentNotificationBinding.inflate(inflater, container, false)
-    return binding
+      Toast(requireContext()).apply {
+        setDuration(Toast.LENGTH_LONG)
+        setView(ToastLayoutBinding.inflate(layoutInflater).apply {
+          this.message.text = message
+          image.setImageResource(icon)
+        }.root)
+        show()
+      }
+    }
   }
 
   override fun onDestroy() {
     (requireActivity() as MainActivity).bottomNavVisibility = true
     super.onDestroy()
   }
+
+  override val coroutineContext: CoroutineContext
+    get() = Dispatchers.IO + CoroutineName("NotificationFragmentJob")
 }

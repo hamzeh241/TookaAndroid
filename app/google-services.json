@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "125262998222",
-    "project_id": "tooka-7d3a4",
-    "storage_bucket": "tooka-7d3a4.appspot.com"
+    "project_number": "807798953443",
+    "project_id": "tooka-12336",
+    "storage_bucket": "tooka-12336.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:125262998222:android:f568865177e6fc9704be9f",
+        "mobilesdk_app_id": "1:807798953443:android:271ab2e669f8d90e9ffcd6",
         "android_client_info": {
           "package_name": "ir.tdaapp.tooka"
         }
       },
       "oauth_client": [
         {
-          "client_id": "125262998222-2ao2cncddcvcbip2b1sq9samoh41equn.apps.googleusercontent.com",
+          "client_id": "807798953443-n0n0hsifsh7velc3jhlmc0qa0fq5t8i4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ir.tdaapp.tooka",
+            "certificate_hash": "6b4b7b832ff859d7a7129b2cf70b65f853a64909"
+          }
+        },
+        {
+          "client_id": "807798953443-56ug9g1nsatpoek4n06nnrdlfvm3k46u.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCdICOAK9-YafTi0xcpFHS2OzjrvDUjQxo"
+          "current_key": "AIzaSyB18W2GVryReg4Q5JvF1A3epk98aCNpYFU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "125262998222-2ao2cncddcvcbip2b1sq9samoh41equn.apps.googleusercontent.com",
+              "client_id": "807798953443-56ug9g1nsatpoek4n06nnrdlfvm3k46u.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,45 +1,34 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
   <!-- Base application theme. -->
-  <style name="Base.Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
-    <item name="fontFamily">@font/iranyekan_medium</item>
-    <item name="itemIconTint">@drawable/bottom_nav_tint</item>
-    <item name="itemTextColor">@drawable/bottom_nav_tint</item>
-    <item name="backgroundTint">@color/black_900</item>
-  </style>
+<!--  <style name="Base.Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">-->
+<!--    <item name="fontFamily">@font/iranyekan_medium</item>-->
+<!--    <item name="itemIconTint">@drawable/bottom_nav_tint</item>-->
+<!--    <item name="itemTextColor">@drawable/bottom_nav_tint</item>-->
+<!--    <item name="backgroundTint">@color/black_900</item>-->
+<!--  </style>-->
 
   <style name="Theme.MyApp" parent="Base.Theme.MyApp">
     <!--Material color attributes (dark theme) -->
     <item name="colorPrimary">@color/white_300</item>
     <item name="colorPrimaryVariant">@color/white_400</item>
-    <item name="colorSecondary">@color/green_200</item>
-    <item name="colorSecondaryVariant">@color/green_500</item>
+    <item name="colorSecondary">@color/black_800</item>
+    <item name="colorSecondaryVariant">@color/black_transparent</item>
+    <item name="colorGray">@color/black_800</item>
+    <item name="subtitleTextColor">@color/white_400</item>
     <item name="android:colorBackground">@color/black_900</item>
     <item name="android:textColorPrimary">@color/white_300</item>
     <item name="colorSurface">@color/black_800</item>
     <item name="colorError">@color/red_200</item>
     <item name="colorOnPrimary">@color/black_900</item>
-    <item name="colorOnSecondary">@color/black_900</item>
-    <item name="colorOnBackground">@color/white</item>
-    <item name="colorOnSurface">@color/white</item>
+    <item name="colorOnSecondary">@color/white_300</item>
+    <item name="colorOnBackground">@color/white_300</item>
+    <item name="colorOnSurface">@color/white_300</item>
     <item name="colorOnError">@color/black_900</item>
     <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
 
     <item name="android:windowEnableSplitTouch">false</item>
     <item name="android:splitMotionEvents">false</item>
     <!--        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>-->
-  </style>
-
-  <style name="Base.Widget.Toolbar" parent="Widget.AppCompat.Toolbar">
-    <item name="fontFamily">@font/iranyekan_black</item>
-    <item name="android:background">@color/black_900</item>
-
-    <item name="titleTextAppearance">@style/TextAppearance.MyTheme.ToolbarTitle</item>
-    <item name="titleTextColor">?android:attr/textColorPrimary</item>
-    <item name="subtitleTextAppearance">?attr/textAppearanceSubtitle1</item>
-    <item name="subtitleTextColor">?android:attr/textColorSecondary</item>
-    <!-- Overrides minimum height in landscape to avoid headline6 and subtitle1 height concerns. -->
-    <item name="android:minHeight">@dimen/mtrl_toolbar_default_height</item>
-    <item name="maxButtonHeight">@dimen/mtrl_toolbar_default_height</item>
   </style>
 
 </resources>

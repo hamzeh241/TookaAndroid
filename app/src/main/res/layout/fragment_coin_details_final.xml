@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <androidx.appcompat.widget.Toolbar
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:theme="?attr/actionBarTheme"
+    android:minHeight="?attr/actionBarSize"
+    android:id="@+id/toolbar"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:elevation="@dimen/elev4">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <ImageView
+        android:layout_width="@dimen/size24"
+        android:layout_height="@dimen/size24"
+        app:srcCompat="@drawable/ic_btc"
+        android:id="@+id/icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp" />
+
+      <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+        app:layout_constraintStart_toEndOf="@+id/icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:textColor="?colorOnSurface" />
+
+      <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_candlestick_chart"
+        android:id="@+id/imgToggleChart"
+        app:tint="?colorOnSurface"
+        app:layout_constraintEnd_toStartOf="@+id/imgFavorite"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="16dp"
+        android:tint="?colorOnSurface" />
+
+      <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_baseline_visibility_24"
+        android:id="@+id/imgFavorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="16dp"
+        android:tint="?colorOnSurface" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.appcompat.widget.Toolbar>
+
+  <com.airbnb.lottie.LottieAnimationView
+    android:id="@+id/contentCoinLoading"
+    android:layout_width="@dimen/size64"
+    android:layout_height="@dimen/size64"
+    app:lottie_rawRes="@raw/loading"
+    app:lottie_autoPlay="true"
+    app:lottie_loop="true"
+    app:lottie_speed="0.6"
+    android:layout_centerInParent="true"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+      android:id="@+id/scrollCoinDetails"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/toolbar"
+      android:visibility="gone">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          layout="@layout/content_fragment_content_coins_price"
+          android:id="@+id/includeCoinChart" />
+
+        <include
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          layout="@layout/content_fragment_content_coins_stats"
+          android:id="@+id/includeCoinStats" />
+
+        <include
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          layout="@layout/content_fragment_content_coins_misc"
+          android:id="@+id/includeCoinMisc" />
+      </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

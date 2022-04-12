@@ -15,15 +15,14 @@ data class News(
   @SerializedName("author_name_fa") val authorNameFa: String,
   @SerializedName("author_id") val authorId: Int,
   @SerializedName("news_kind") val newsKind: Int,
-  @SerializedName("create_date") val writeDate: String,
+  @SerializedName("news_write_date") val writeDate: String,
   @SerializedName("news_url") val url: String
 ){
 
   companion object{
-    const val OPEN_URL = 1
-    const val SHORT_NEWS = 2
-    const val LONG_NEWS = 3
-    const val SLIDER_NEWS = 4
+    const val SHORT_NEWS = 1
+    const val INTERNAL_NEWS = 2
+    const val EXTERNAL_NEWS = 3
   }
 
 }

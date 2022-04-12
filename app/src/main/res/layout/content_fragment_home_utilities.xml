@@ -1,153 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:id="@+id/miscRoot">
+
+  <LinearLayout
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+    <Button
+      android:id="@+id/converter"
+      android:text="@string/converter"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:textColor="?colorOnSurface"
+      android:backgroundTint="?colorSurface"
+      android:drawablePadding="@dimen/margin8"
+      app:icon="@drawable/ic_currency_exchange_black_24dp"
+      app:iconTint="?colorOnSurface"
+      app:iconGravity="textStart"
+      android:layout_marginStart="@dimen/margin8"
+      android:layout_marginTop="@dimen/margin8"
+      android:layout_marginBottom="@dimen/margin8"
+      android:layout_marginEnd="@dimen/margin4" />
 
-      <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin8"
-        android:layout_marginTop="@dimen/margin8"
-        android:layout_marginEnd="@dimen/margin4"
-        android:layout_marginBottom="@dimen/margin8"
-        app:cardElevation="@dimen/elev4"
-        android:layout_weight="1">
+    <Button
+      android:text="@string/compare"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:id="@+id/comparer"
+      android:layout_weight="1"
+      android:textColor="?colorOnSurface"
+      android:backgroundTint="?colorSurface"
+      android:drawablePadding="@dimen/margin8"
+      app:icon="@drawable/ic_compare_arrows_black_24dp"
+      app:iconTint="?colorOnSurface"
+      app:iconGravity="textStart"
+      android:layout_marginStart="@dimen/margin4"
+      android:layout_marginEnd="@dimen/margin8"
+      android:layout_marginTop="@dimen/margin8" />
+  </LinearLayout>
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="?selectableItemBackground"
-          android:gravity="center"
-          android:weightSum="10">
+    <Button
+      android:id="@+id/alerts"
+      android:text="@string/alerts"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:textColor="?colorOnSurface"
+      android:backgroundTint="?colorSurface"
+      android:drawablePadding="@dimen/margin8"
+      app:icon="@drawable/ic_notifications_active_black_24dp"
+      app:iconTint="?colorOnSurface"
+      app:iconGravity="textStart"
+      android:layout_marginStart="@dimen/margin8"
+      android:layout_marginBottom="@dimen/margin8"
+      android:layout_marginEnd="@dimen/margin4" />
 
-          <ImageView
-            android:layout_width="@dimen/size16"
-            android:layout_height="@dimen/size16"
-            android:layout_marginStart="@dimen/margin16"
-            android:layout_marginTop="@dimen/margin8"
-            android:layout_marginEnd="@dimen/margin16"
-            android:layout_marginBottom="@dimen/margin8"
-            app:srcCompat="@drawable/ic_tool_button"
-            app:tint="@color/black_200" />
-
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin8"
-            android:layout_marginEnd="@dimen/margin16"
-            android:layout_marginBottom="@dimen/margin8"
-            android:gravity="center"
-            android:text="@string/compare"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
-            android:textColor="@color/black_200" />
-
-        </LinearLayout>
-      </androidx.cardview.widget.CardView>
-
-      <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin4"
-        android:layout_marginTop="@dimen/margin8"
-        android:layout_marginEnd="@dimen/margin4"
-        android:layout_marginBottom="@dimen/margin8"
-        app:cardElevation="@dimen/elev4"
-        android:layout_weight="1">
-
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="?selectableItemBackground"
-          android:gravity="center"
-          android:weightSum="10"
-          android:clickable="true"
-          android:id="@+id/converter">
-
-          <ImageView
-            android:layout_width="@dimen/size16"
-            android:layout_height="@dimen/size16"
-            android:layout_marginStart="@dimen/margin8"
-            android:layout_marginTop="@dimen/margin8"
-            android:layout_marginBottom="@dimen/margin8"
-            android:layout_weight="4"
-            app:srcCompat="@drawable/ic_exchange"
-            app:tint="@color/black_200" />
-
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin8"
-            android:layout_marginEnd="@dimen/margin8"
-            android:layout_marginBottom="@dimen/margin8"
-            android:layout_weight="6"
-            android:gravity="center"
-            android:text="@string/converter"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
-            android:textColor="@color/black_200"
-            android:layout_marginStart="@dimen/margin8" />
-
-        </LinearLayout>
-      </androidx.cardview.widget.CardView>
-
-      <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin4"
-        android:layout_marginTop="@dimen/margin8"
-        android:layout_marginEnd="@dimen/margin8"
-        android:layout_marginBottom="@dimen/margin8"
-        app:cardElevation="@dimen/elev4"
-        android:layout_weight="1">
-
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="?selectableItemBackground"
-          android:gravity="center"
-          android:weightSum="10"
-          android:clickable="true"
-          android:id="@+id/compare">
-
-          <ImageView
-            android:layout_width="@dimen/size16"
-            android:layout_height="@dimen/size16"
-            android:layout_marginStart="@dimen/margin8"
-            android:layout_marginTop="@dimen/margin8"
-            android:layout_marginBottom="@dimen/margin8"
-            android:layout_weight="4"
-            app:srcCompat="@drawable/ic_scale"
-            app:tint="@color/black_200" />
-
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin8"
-            android:layout_marginEnd="@dimen/margin8"
-            android:layout_marginBottom="@dimen/margin8"
-            android:layout_weight="6"
-            android:gravity="center"
-            android:text="@string/compare"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
-            android:textColor="@color/black_200"
-            android:layout_marginStart="@dimen/margin8" />
-
-        </LinearLayout>
-      </androidx.cardview.widget.CardView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-    </LinearLayout>
+    <Button
+      android:text="@string/customize_home_page"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:id="@+id/customize"
+      android:layout_weight="1"
+      android:textColor="?colorOnSurface"
+      android:backgroundTint="?colorSurface"
+      android:drawablePadding="@dimen/margin8"
+      app:icon="@drawable/ic_construction_black_24dp"
+      app:iconTint="?colorOnSurface"
+      app:iconGravity="textStart"
+      android:layout_marginStart="@dimen/margin4"
+      android:layout_marginEnd="@dimen/margin8"
+      android:layout_marginBottom="@dimen/margin8" />
+  </LinearLayout>
 </LinearLayout>

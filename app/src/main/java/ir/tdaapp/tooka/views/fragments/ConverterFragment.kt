@@ -1,33 +1,38 @@
 package ir.tdaapp.tooka.views.fragments
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.FragmentConverterBinding
 import ir.tdaapp.tooka.models.Coin
+import ir.tdaapp.tooka.util.*
 import ir.tdaapp.tooka.util.api.RetrofitClient
-import ir.tdaapp.tooka.util.getCurrentLocale
-import ir.tdaapp.tooka.util.toEnglishNumbers
-import ir.tdaapp.tooka.util.toPersianNumbers
 import ir.tdaapp.tooka.viewmodels.ConverterViewModel
 import ir.tdaapp.tooka.views.dialogs.CoinsListBottomSheetDialog
-import ir.tdaapp.tooka.views.fragments.base.BaseFragment
-import org.koin.android.ext.android.inject
+import ir.tdaapp.tooka.views.fragments.base.BaseFragmentSecond
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import java.lang.StringBuilder
+import kotlin.coroutines.CoroutineContext
 
-class ConverterFragment: BaseFragment(), View.OnClickListener {
+class ConverterFragment: BaseFragmentSecond(), View.OnClickListener, View.OnLongClickListener,
+  CoroutineScope {
 
   private lateinit var binding: FragmentConverterBinding
 
-  private val viewModel: ConverterViewModel by inject()
+  private val viewModel by lazy {
+    val viewModelFactory = ViewModelFactory()
+    ViewModelProvider(this, viewModelFactory).get(ConverterViewModel::class.java)
+  }
 
   private lateinit var coinList: List<Coin>
   private lateinit var firstCoin: Coin
@@ -38,9 +43,21 @@ class ConverterFragment: BaseFragment(), View.OnClickListener {
 
   private var isFirstSelected: Boolean = true
 
+  private var layoutVisibility = false
+    get() = binding.subRoot.visibility == View.VISIBLE
+    set(value) {
+      if (value) binding.subRoot.visibility = View.VISIBLE
+      else binding.subRoot.visibility = View.GONE
+      field = value
+    }
+
   override fun init() {
+    layoutVisibility = false
     setSelected(1)
-    viewModel.getCoinList()
+
+    lifecycleScope.launchWhenCreated {
+      viewModel.getCoinList()
+    }
   }
 
   fun convert(place: Int) {
@@ -73,15 +90,15 @@ class ConverterFragment: BaseFragment(), View.OnClickListener {
           if ((v as TextView).text == ".") {
             if (!binding.txtCoin1Price.text.toString().isEmpty())
               if (!binding.txtCoin1Price.text.contains("."))
-                binding.txtCoin1Price.setText(StringBuilder(binding.txtCoin1Price.text).append((v as TextView).text))
+                binding.txtCoin1Price.setText(StringBuilder(binding.txtCoin1Price.text).append(v.text))
           } else
-            binding.txtCoin1Price.setText(StringBuilder(binding.txtCoin1Price.text).append((v as TextView).text))
+            binding.txtCoin1Price.setText(StringBuilder(binding.txtCoin1Price.text).append(v.text))
         } else
           if ((v as TextView).text == ".") {
             if (!binding.txtCoin2Price.text.contains("."))
-              binding.txtCoin2Price.setText(StringBuilder(binding.txtCoin2Price.text).append((v as TextView).text))
+              binding.txtCoin2Price.setText(StringBuilder(binding.txtCoin2Price.text).append(v.text))
           } else
-            binding.txtCoin2Price.setText(StringBuilder(binding.txtCoin2Price.text).append((v as TextView).text))
+            binding.txtCoin2Price.setText(StringBuilder(binding.txtCoin2Price.text).append(v.text))
 
         convert(
           when (isFirstSelected) {
@@ -92,22 +109,28 @@ class ConverterFragment: BaseFragment(), View.OnClickListener {
       } catch (ignored: Exception) {
       }
     }
-    for (i in 0..binding.numbersLayout.childCount) {
-      var a = binding.numbersLayout.getChildAt(i)
-      if (a is LinearLayout) {
-        for (j in 0..a.childCount) {
-          var b = a.getChildAt(j)
-          if (b is TextView)
-            b.setOnClickListener(numbersClick)
-        }
-      }
-    }
+
+    setNumbersClickListener()
 
     binding.firstCoin.setOnClickListener(this)
     binding.secondCoin.setOnClickListener(this)
     binding.firstCoinLayout.setOnClickListener(this)
     binding.secondCoinLayout.setOnClickListener(this)
     binding.imgDelete.setOnClickListener(this)
+    binding.imgDelete.setOnLongClickListener(this)
+  }
+
+  private fun setNumbersClickListener() {
+    for (i in 0..binding.numbersLayout.childCount) {
+      val a = binding.numbersLayout.getChildAt(i)
+      if (a is LinearLayout) {
+        for (j in 0..a.childCount) {
+          val b = a.getChildAt(j)
+          if (b is TextView)
+            b.setOnClickListener(numbersClick)
+        }
+      }
+    }
   }
 
   override fun initObservables() {
@@ -115,13 +138,14 @@ class ConverterFragment: BaseFragment(), View.OnClickListener {
       if (it != null)
         coinList = it
     })
-    viewModel.data.observe(viewLifecycleOwner, {
+    viewModel.data.observe(viewLifecycleOwner) {
       if (it != null) {
+        layoutVisibility = true
         firstCoin = it.first
         secondCoin = it.second
         converter = Converter(firstCoin, secondCoin)
       }
-    })
+    }
   }
 
   override fun initErrors() {
@@ -134,7 +158,6 @@ class ConverterFragment: BaseFragment(), View.OnClickListener {
 
   override fun onDestroy() {
     super.onDestroy()
-    viewModel.cancel()
     (requireActivity() as MainActivity).bottomNavVisibility = true
   }
 
@@ -223,19 +246,19 @@ class ConverterFragment: BaseFragment(), View.OnClickListener {
       }
       R.id.imgDelete -> {
         if (isFirstSelected) {
-          var amount = binding.txtCoin1Price.text.toString()
-          var new = amount.dropLast(1)
+          val amount = binding.txtCoin1Price.text.toString()
+          val new = amount.dropLast(1)
           if (!new.isEmpty()) {
-            var result = converter.convertFrom1(toEnglishNumbers(new))
+            val result = converter.convertFrom1(toEnglishNumbers(new))
             binding.txtCoin2Price.text = toPersianNumbers(result.toString())
           } else binding.txtCoin2Price.text = toPersianNumbers(new)
 
           binding.txtCoin1Price.text = toPersianNumbers(new)
         } else {
-          var amount = binding.txtCoin2Price.text.toString()
-          var new = amount.dropLast(1)
+          val amount = binding.txtCoin2Price.text.toString()
+          val new = amount.dropLast(1)
           if (!new.isEmpty()) {
-            var result = converter.convertFrom2(toEnglishNumbers(new))
+            val result = converter.convertFrom2(toEnglishNumbers(new))
             binding.txtCoin1Price.text = toPersianNumbers(result.toString())
           } else binding.txtCoin1Price.text = toPersianNumbers(new)
 
@@ -257,4 +280,20 @@ class ConverterFragment: BaseFragment(), View.OnClickListener {
       return result / first.priceUSD
     }
   }
+
+  override val coroutineContext: CoroutineContext
+    get() = Dispatchers.IO + CoroutineName("ConverterFragmentJob")
+
+  override fun onLongClick(v: View?): Boolean {
+    when (v?.id) {
+      R.id.imgDelete -> {
+        binding.txtCoin2Price.text = ""
+        binding.txtCoin1Price.text = ""
+      }
+      else -> false
+    }
+
+    return true
+  }
+
 }

@@ -1,17 +1,15 @@
 package ir.tdaapp.tooka.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.reflect.TypeToken
-import com.microsoft.signalr.Action1
-import com.microsoft.signalr.HubConnectionState
-import ir.tdaapp.tooka.models.*
-import ir.tdaapp.tooka.util.GsonInstance
-import ir.tdaapp.tooka.util.signalr.SignalR
+import androidx.lifecycle.ViewModel
+import ir.tdaapp.tooka.models.News
+import ir.tdaapp.tooka.models.SliderNews
+import ir.tdaapp.tooka.util.NetworkErrors
+import ir.tdaapp.tooka.util.api.ApiService
+import java.io.IOException
 
-class NewsViewModel(val appClass: Application): AndroidViewModel(appClass) {
+class NewsViewModel(private val api: ApiService): ViewModel() {
 
   private val _sliderNews = MutableLiveData<List<SliderNews>>()
   val sliderNews: LiveData<List<SliderNews>>
@@ -25,62 +23,27 @@ class NewsViewModel(val appClass: Application): AndroidViewModel(appClass) {
   val allNews: LiveData<List<News>>
     get() = _allNews
 
-  private val hubConnection = SignalR.hubConnection
+  private val _error = MutableLiveData<NetworkErrors>()
+  val error: LiveData<NetworkErrors>
+    get() = _error
 
-  fun getData() {
-    /*
-
-    val retrofit: RetrofitClient by appClass.inject()
-
-    retrofit.service.getNewsData().enqueue(object: Callback<NewsContentResponse> {
-      override fun onResponse(
-        call: Call<NewsContentResponse>,
-        response: Response<NewsContentResponse>
-      ) {
-        if (response.isSuccessful) {
-          _sliderNews.postValue(response.body()!!.sliderNews)
-          _breakingNews.postValue(response.body()!!.breakingNews)
-          _allNews.postValue(response.body()!!.allNews)
-        }
+  suspend fun getData() {
+    try {
+      val news = api.newsData()
+      if (news.isSuccessful) {
+        val result = news.body()!!.result
+        _sliderNews.postValue(result.sliderNews)
+        _breakingNews.postValue(result.breakingNews)
+        _allNews.postValue(result.allNews)
+      } else {
+        _error.postValue(NetworkErrors.SERVER_ERROR)
       }
 
-      override fun onFailure(call: Call<NewsContentResponse>, t: Throwable) {
-        var a = 0
-        a++
-      }
-
-    })
-     */
-    if (hubConnection.connectionState == HubConnectionState.CONNECTED) {
-      hubConnection.send("GetPreviewAllNews")
-      hubConnection.send("GetBreakingNews")
-      hubConnection.send("GetSliderNews")
+    } catch (e: Exception) {
+      if (e is IOException)
+        _error.postValue(NetworkErrors.NETWORK_ERROR)
+      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
     }
-
-    hubConnection.on("PreviewAllNews", object: Action1<String> {
-      override fun invoke(param1: String?) {
-        val collectionType = object: TypeToken<ResponseModel<List<News>>?>() {}.type
-        var response: ResponseModel<List<News>> =
-          GsonInstance.getInstance().fromJson(param1, collectionType)
-        _allNews.postValue(response.result)
-      }
-    }, String::class.java)
-    hubConnection.on("BreakingNews", object: Action1<String> {
-      override fun invoke(param1: String?) {
-        val collectionType = object: TypeToken<ResponseModel<List<News>>?>() {}.type
-        var response: ResponseModel<List<News>> =
-          GsonInstance.getInstance().fromJson(param1, collectionType)
-        _breakingNews.postValue(response.result)
-      }
-    }, String::class.java)
-    hubConnection.on("SliderNews", object: Action1<String> {
-      override fun invoke(param1: String?) {
-        val collectionType = object: TypeToken<ResponseModel<List<SliderNews>>?>() {}.type
-        var response: ResponseModel<List<SliderNews>> =
-          GsonInstance.getInstance().fromJson(param1, collectionType)
-        _sliderNews.postValue(response.result)
-      }
-    }, String::class.java)
 
   }
 }

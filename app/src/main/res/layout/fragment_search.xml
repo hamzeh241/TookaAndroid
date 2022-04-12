@@ -47,8 +47,8 @@
     </LinearLayout>
   </androidx.appcompat.widget.Toolbar>
 
-  <LinearLayout
-    android:orientation="vertical"
+  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/swipeRefreshLayout"
     android:layout_width="0dp"
     android:layout_height="0dp"
     app:layout_constraintTop_toBottomOf="@+id/toolbar"
@@ -58,48 +58,58 @@
 
     <LinearLayout
       android:orientation="vertical"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/coinsSection"
-      android:visibility="gone">
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      app:layout_constraintTop_toBottomOf="@+id/toolbar"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent">
 
-      <TextView
-        android:text="@string/crypto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
-        android:layout_marginStart="@dimen/margin16"
-        android:layout_marginTop="@dimen/margin8" />
-
-      <androidx.recyclerview.widget.RecyclerView
+      <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/coinsList" />
+        android:id="@+id/coinsSection"
+        android:visibility="gone">
 
-    </LinearLayout>
+        <TextView
+          android:text="@string/crypto"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+          android:layout_marginStart="@dimen/margin16"
+          android:layout_marginTop="@dimen/margin8" />
 
-    <LinearLayout
-      android:orientation="vertical"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/newsSection"
-      android:visibility="gone">
+        <androidx.recyclerview.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/coinsList" />
 
-      <TextView
-        android:text="@string/news"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
-        android:layout_marginTop="@dimen/margin8"
-        android:layout_marginStart="@dimen/margin16" />
+      </LinearLayout>
 
-      <androidx.recyclerview.widget.RecyclerView
+      <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/newsList" />
-    </LinearLayout>
+        android:id="@+id/newsSection"
+        android:visibility="gone">
 
-  </LinearLayout>
+        <TextView
+          android:text="@string/news"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
+          android:layout_marginTop="@dimen/margin8"
+          android:layout_marginStart="@dimen/margin16" />
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/newsList" />
+      </LinearLayout>
+
+    </LinearLayout>
+  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

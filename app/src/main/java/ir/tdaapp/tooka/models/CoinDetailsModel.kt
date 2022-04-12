@@ -11,9 +11,9 @@ data class CoinDetailsModel(
   @SerializedName("coin_symbol") var symbol: String,
   @SerializedName("nobitex_id") var nobitexId: String,
   @SerializedName("coin_icon") var icon: String,
+  @SerializedName("is_watchlist") var isWatchlist: Boolean,
   @SerializedName("statistics") var stats: Statistics,
-  @SerializedName("related_news") var relatedNews: List<News>,
-  @SerializedName("time_frames") var timeFrames: List<TimeFrameModel>
+  @SerializedName("related_news") var relatedNews: List<News>
 ) {
   data class Statistics(
     @SerializedName("coin_id") var id: Int,

@@ -1,42 +1,45 @@
 package ir.tdaapp.tooka.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import ir.tdaapp.tooka.models.SearchResponse
-import ir.tdaapp.tooka.util.api.RetrofitClient
-import org.koin.android.ext.android.inject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import ir.tdaapp.tooka.util.NetworkErrors
+import ir.tdaapp.tooka.util.api.ApiService
+import timber.log.Timber
+import java.io.IOException
 
-class SearchViewModel(val appClass: Application): AndroidViewModel(appClass) {
+class SearchViewModel(private val api: ApiService): ViewModel() {
 
   private val _result = MutableLiveData<SearchResponse>()
   val result: LiveData<SearchResponse>
     get() = _result
 
-  val retrofit: RetrofitClient by appClass.inject()
+  private val _error = MutableLiveData<NetworkErrors>()
+  val error: LiveData<NetworkErrors>
+    get() = _error
 
-  lateinit var call: Call<SearchResponse>
-
-  fun getData(input: String) {
-    call = retrofit.service.search(input)
-    call.enqueue(object: Callback<SearchResponse> {
-      override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
+  suspend fun getData(input: String) {
+    try {
+      if (!input.isBlank()) {
+        Timber.i("Is not blank")
+        val response = api.search(input)
         if (response.isSuccessful) {
-          _result.postValue(response.body())
+          Timber.i("Is successful")
+          _result.postValue(response.body()?.result!!)
+        } else {
+          Timber.i("Is failed - ${response.code()}")
+          when (response.code()) {
+            400 -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+            500 -> _error.postValue(NetworkErrors.SERVER_ERROR)
+            else -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+          }
         }
       }
-
-      override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
-      }
-    })
-  }
-
-  fun cancel() {
-    if (call != null)
-      call.cancel()
+    } catch (e: Exception) {
+      if (e is IOException)
+        _error.postValue(NetworkErrors.NETWORK_ERROR)
+      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+    }
   }
 }

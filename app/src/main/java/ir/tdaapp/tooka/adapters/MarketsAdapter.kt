@@ -1,14 +1,15 @@
 package ir.tdaapp.tooka.adapters
 
 import android.annotation.SuppressLint
+import android.content.res.Resources.Theme
 import android.graphics.Color
-import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
@@ -20,8 +21,10 @@ import ir.tdaapp.tooka.models.LivePriceListResponse
 import ir.tdaapp.tooka.models.PriceChange
 import ir.tdaapp.tooka.util.*
 import ir.tdaapp.tooka.util.api.RetrofitClient
-import kotlinx.coroutines.*
-import java.lang.StringBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
+
 
 class MarketsAdapter(val action: (clicked: Coin, position: Int)->Unit):
   RecyclerView.Adapter<MarketsAdapter.ViewHolder>() {
@@ -58,22 +61,25 @@ class MarketsAdapter(val action: (clicked: Coin, position: Int)->Unit):
         true -> View.VISIBLE
         false -> View.GONE
       }
-      holder.binding.txtCoinName.text = when (getCurrentLocale(holder.binding.root.context)) {
-        "en" -> data.name
-        "fa" -> {
-          if (data.persianName != null) data.persianName
-          else data.name
-        }
-        else -> data.name
-      }
-      holder.binding.txtCoinSymbol.text = data.symbol
+
+      holder.binding.txtCoinName.text = formatSymbol(
+        when (getCurrentLocale(holder.binding.root.context)) {
+          "fa" -> data.persianName ?: data.name
+          else -> data.name
+        }, data.symbol
+      )
+
       holder.binding.txtCoinPriceTMN.text =
-        StringBuilder(separatePrice(data.priceTMN.toFloat())).append(" ")
-          .append(holder.binding.root.context.getString(R.string.toomans)).toString()
+        formatPrice(
+          toPersianNumbers(separatePrice(data.priceTMN.toInt())),
+          currency = holder.binding.root.context.getString(R.string.toomans)
+        )
 
       holder.binding.txtCoinPriceUSD.text =
-        StringBuilder(separatePrice(data.priceUSD.toFloat())).append(" ")
-          .append(holder.binding.root.context.getString(R.string.dollars)).toString()
+        formatPrice(
+          toPersianNumbers(separatePrice(data.priceUSD)),
+          holder.binding.root.context.getString(R.string.dollars)
+        )
 
       holder.binding.txtCoinPercentage.text =
         StringBuilder(data.percentage.toString()).append(" %").toString()
@@ -103,16 +109,12 @@ class MarketsAdapter(val action: (clicked: Coin, position: Int)->Unit):
       holder.binding as ItemMarketCoinsGridBinding
 
       holder.binding.txtCoinName.text = when (getCurrentLocale(holder.binding.root.context)) {
-        "en" -> data.name
-        "fa" -> {
-          if (data.persianName != null) data.persianName
-          else data.name
-        }
+        "fa" -> data.persianName ?: data.name
         else -> data.name
       }
 
       holder.binding.txtPriceTMN.text =
-        StringBuilder(separatePrice(data.priceTMN.toFloat())).toString()
+        StringBuilder(separatePrice(data.priceTMN.toInt())).toString()
       holder.binding.txtPriceUSD.text =
         StringBuilder(separatePrice(data.priceUSD.toFloat())).toString()
 
@@ -141,40 +143,65 @@ class MarketsAdapter(val action: (clicked: Coin, position: Int)->Unit):
     }
   }
 
-  @DelicateCoroutinesApi
   override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
     if (payloads.isNullOrEmpty())
       super.onBindViewHolder(holder, position, payloads)
+
+    val typedValueUsd = TypedValue()
+    val themeUsd: Theme = holder.binding.root.context.theme
+    themeUsd.resolveAttribute(R.attr.colorOnSurface, typedValueUsd, true)
+    @ColorInt val colorUsd = typedValueUsd.data
+    val color = holder.binding.root.context.getColor(android.R.color.secondary_text_light)
+
+    val typedValue = TypedValue()
+    val theme: Theme = holder.binding.root.context.theme
+    theme.resolveAttribute(R.attr.colorOnSurface, typedValue, true)
+    @ColorInt val colorTmn = typedValue.data
 
     if (payloads.any { it is PriceChange }) {
       if (holder.binding is ItemMarketCoinsFlatBinding) {
         val item = differ.currentList[position]
 
         if ((payloads.last() as PriceChange).ascend) {
-          holder.binding.txtCoinPriceUSD.setPrice(item.priceUSD)
+          holder.binding.txtCoinPriceUSD.text =
+            formatPrice(
+              toPersianNumbers(separatePrice(item.priceUSD.toFloat())),
+              holder.binding.root.context.getString(R.string.dollars)
+            )
           holder.binding.txtCoinPriceUSD.animateColor(
-            holder.binding.root.resources.getColor(R.color.gray_400),
+            colorUsd,
             Color.GREEN,
             1000L
           )
 
-          holder.binding.txtCoinPriceTMN.setPrice(item.priceTMN)
+          holder.binding.txtCoinPriceTMN.text =
+            formatPrice(
+              toPersianNumbers(separatePrice(item.priceTMN.toInt())),
+              currency = holder.binding.root.context.getString(R.string.toomans)
+            )
           holder.binding.txtCoinPriceTMN.animateColor(
-            holder.binding.root.resources.getColor(R.color.dark_blue_900),
+            colorTmn,
             Color.GREEN,
             1000L
           )
         } else {
-          holder.binding.txtCoinPriceUSD.setPrice(item.priceUSD)
+          holder.binding.txtCoinPriceUSD.text = formatPrice(
+            toPersianNumbers(separatePrice(item.priceUSD)),
+            holder.binding.root.context.getString(R.string.dollars)
+          )
           holder.binding.txtCoinPriceUSD.animateColor(
-            holder.binding.root.resources.getColor(R.color.gray_400),
+            colorUsd,
             Color.RED,
             1000L
           )
 
-          holder.binding.txtCoinPriceTMN.setPrice(item.priceTMN)
+          holder.binding.txtCoinPriceTMN.text =
+            formatPrice(
+              toPersianNumbers(separatePrice(item.priceTMN.toInt())),
+              currency = holder.binding.root.context.getString(R.string.toomans)
+            )
           holder.binding.txtCoinPriceTMN.animateColor(
-            holder.binding.root.resources.getColor(R.color.dark_blue_900),
+            colorTmn,
             Color.RED,
             1000L
           )
@@ -184,30 +211,46 @@ class MarketsAdapter(val action: (clicked: Coin, position: Int)->Unit):
         val item = differ.currentList[position]
 
         if ((payloads.last() as PriceChange).ascend) {
-          holder.binding.txtPriceUSD.setPrice(item.priceUSD)
+          holder.binding.txtPriceUSD.text =
+            formatPrice(
+              toPersianNumbers(separatePrice(item.priceUSD)),
+              currency = holder.binding.root.context.getString(R.string.dollars)
+            )
           holder.binding.txtPriceUSD.animateColor(
-            holder.binding.root.resources.getColor(R.color.gray_400),
+            colorUsd,
             Color.GREEN,
             1000L
           )
 
-          holder.binding.txtPriceTMN.setPrice(item.priceTMN)
+          holder.binding.txtPriceTMN.text =
+            formatPrice(
+              toPersianNumbers(separatePrice(item.priceTMN.toInt())),
+              currency = holder.binding.root.context.getString(R.string.toomans)
+            )
           holder.binding.txtPriceTMN.animateColor(
-            holder.binding.root.resources.getColor(R.color.dark_blue_900),
+            colorTmn,
             Color.GREEN,
             1000L
           )
         } else {
-          holder.binding.txtPriceUSD.setPrice(item.priceUSD)
+          holder.binding.txtPriceUSD.text =
+            formatPrice(
+              toPersianNumbers(separatePrice(item.priceTMN)),
+              currency = holder.binding.root.context.getString(R.string.dollars)
+            )
           holder.binding.txtPriceUSD.animateColor(
-            holder.binding.root.resources.getColor(R.color.gray_400),
+            colorUsd,
             Color.RED,
             1000L
           )
 
-          holder.binding.txtPriceTMN.setPrice(item.priceTMN)
+          holder.binding.txtPriceTMN.text =
+            formatPrice(
+              toPersianNumbers(separatePrice(item.priceTMN.toInt())),
+              currency = holder.binding.root.context.getString(R.string.toomans)
+            )
           holder.binding.txtPriceTMN.animateColor(
-            holder.binding.root.resources.getColor(R.color.dark_blue_900),
+            colorTmn,
             Color.RED,
             1000L
           )
@@ -229,7 +272,7 @@ class MarketsAdapter(val action: (clicked: Coin, position: Int)->Unit):
 
         also {
           differ.currentList[it].priceUSD = livePrice.priceUSD
-          differ.currentList[it].priceTMN = livePrice.priceTMN!!
+          differ.currentList[it].priceTMN = livePrice.priceTMN
           withContext(Dispatchers.Main) {
             notifyItemChanged(this@with, PriceChange(ascend))
           }

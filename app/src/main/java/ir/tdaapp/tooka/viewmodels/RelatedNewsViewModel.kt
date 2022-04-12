@@ -1,37 +1,54 @@
 package ir.tdaapp.tooka.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import ir.tdaapp.tooka.models.News
-import ir.tdaapp.tooka.util.api.RetrofitClient
-import org.koin.android.ext.android.inject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import ir.tdaapp.tooka.util.NetworkErrors
+import ir.tdaapp.tooka.util.api.ApiService
+import java.io.IOException
 
-class RelatedNewsViewModel(appClass: Application): AndroidViewModel(appClass) {
+class RelatedNewsViewModel(private val api: ApiService): ViewModel() {
 
   private val _news = MutableLiveData<List<News>>()
   val news: LiveData<List<News>>
     get() = _news
 
-  private val retrofitClient:RetrofitClient by appClass.inject()
+  private val _error = MutableLiveData<NetworkErrors>()
+  val error: LiveData<NetworkErrors>
+    get() = _error
 
-  fun getData(coinId: Int) {
+  suspend fun getData(coinId: Int, isRefreshing: Boolean = false) {
+    if (isRefreshing) {
+      callApi(coinId)
+      return
+    }
+    if (news.value != null) {
+      _news.postValue(news.value)
+    } else callApi(coinId)
+  }
 
-    retrofitClient.service.getRelatedNews(coinId,0).enqueue(object: Callback<List<News>> {
-      override fun onResponse(call: Call<List<News>>, response: Response<List<News>>) {
-        if (response.isSuccessful)
-          _news.postValue(response.body())
+  private suspend fun callApi(coinId: Int) {
+    try {
+
+      val response = api.relatedNews(coinId)
+      if (response.isSuccessful)
+        _news.postValue(response.body()?.result!!)
+      else {
+        when (response.code()) {
+          400 ->
+            _error.postValue(NetworkErrors.CLIENT_ERROR)
+          500 ->
+            _error.postValue(NetworkErrors.SERVER_ERROR)
+          else ->
+            _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+        }
       }
-
-      override fun onFailure(call: Call<List<News>>, t: Throwable) {
-      }
-
-    })
-
+    }catch (e:Exception){
+      if (e is IOException)
+        _error.postValue(NetworkErrors.NETWORK_ERROR)
+      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+    }
   }
 
 }

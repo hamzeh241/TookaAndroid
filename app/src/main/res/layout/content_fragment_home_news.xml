@@ -3,7 +3,8 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  android:id="@+id/newsRoot">
 
   <TextView
     android:layout_width="match_parent"
@@ -12,17 +13,19 @@
     android:layout_marginTop="@dimen/margin8"
     android:layout_marginBottom="@dimen/margin8"
     android:text="@string/important_news"
-    android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle" />
+    android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+    android:id="@+id/newsTitle" />
 
   <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="184dp">
+    android:layout_height="184dp"
+    android:id="@+id/newsSubRoot">
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/importantNewsList"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:visibility="gone" />
+      android:visibility="visible" />
 
     <com.airbnb.lottie.LottieAnimationView
       android:id="@+id/breakingNewsLoading"

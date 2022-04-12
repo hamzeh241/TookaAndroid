@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Base.Widget.Toolbar" parent="Widget.AppCompat.Toolbar">
+    <item name="android:background">?colorSecondary</item>
+    <item name="titleTextAppearance">?textAppearanceHeadline6</item>
+    <item name="titleTextColor">?colorOnSurface</item>
+    <!-- Overrides minimum height in landscape to avoid headline6 and subtitle1 height concerns. -->
+    <item name="android:minHeight">@dimen/mtrl_toolbar_default_height</item>
+    <item name="maxButtonHeight">@dimen/mtrl_toolbar_default_height</item>
+  </style>
+
+  <style name="Base.Widget.TopCoins" parent="Widget.MaterialComponents.CardView">
+    <item name="rippleColor">@android:color/transparent</item>
+    <item name="cardElevation">2dp</item>
+  </style>
+
+  <style name="AppTheme.FullScreenDialog" parent="Theme.MaterialComponents.Light.Dialog">
+    <item name="android:statusBarColor">?colorSurface</item>
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:windowBackground">?colorSurface</item>
+  </style>
+
+  <style name="RoundedCornersDialog" parent="@style/Theme.MaterialComponents.Dialog">
+    <item name="dialogCornerRadius">16dp</item>
+  </style>
+
+  <style name="Base.Widget.TabLayout" parent="Widget.MaterialComponents.TabLayout">
+    <item name="fontFamily">@font/iranyekan_bold</item>
+    <item name="android:fontFamily">@font/iranyekan_bold</item>
+  </style>
+
+  <style name="Base.Widget.SwitchMaterial" parent="Theme.MaterialComponents.Light">
+    <item name="colorControlActivated">#46bdbf</item>
+    <item name="colorSwitchThumbNormal">#f1f1f1</item>
+    <item name="android:colorForeground">#42221f1f</item>
+  </style>
+
+  <style name="Base.Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+    <item name="fontFamily">@font/iranyekan_medium</item>
+    <item name="itemIconTint">@drawable/bottom_nav_tint</item>
+    <item name="itemTextColor">@drawable/bottom_nav_tint</item>
+  </style>
+
+  <style name="Base.Widget.ImageButton" parent="Widget.AppCompat.ImageButton">
+    <item name="android:background">?selectableItemBackgroundBorderless</item>
+  </style>
+
+  <style name="Base.Widget.SettingsCardView" parent="Widget.MaterialComponents.CardView">
+    <item name="cardCornerRadius">@dimen/radius16</item>
+    <item name="cardElevation">@dimen/elev0</item>
+    <item name="cardBackgroundColor">?colorGray</item>
+  </style>
+
+  <style name="Base.AlertDialog" parent="@style/Theme.MaterialComponents.Dialog">
+    <item name="dialogCornerRadius">16dp</item>
+  </style>
+
+  <style name="Base.Widget.ExtendedFAB" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+    <item name="android:textAppearance">?textAppearanceHeadline6</item>
+    <item name="iconTint">?colorOnSurface</item>
+    <item name="backgroundTint">?colorSurface</item>
+    <item name="android:backgroundTint">?colorSurface</item>
+    <item name="android:textColor">?colorOnSurface</item>
+  </style>
+
+  <style name="Base.Widget.HyperlinkTextView" parent="Widget.AppCompat.TextView">
+    <item name="android:textColor">@color/purple_500</item>
+    <item name="android:textAppearance">@style/TextAppearance.MyTheme.Subtitle2</item>
+    <item name="background">?selectableItemBackground</item>
+    <item name="android:background">?selectableItemBackground</item>
+    <item name="android:clickable">true</item>
+  </style>
+</resources>

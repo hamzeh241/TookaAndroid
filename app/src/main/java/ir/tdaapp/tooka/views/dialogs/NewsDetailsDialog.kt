@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.DialogNewsDetailsBinding
@@ -12,11 +13,15 @@ import ir.tdaapp.tooka.models.NewsDetailsModel
 import ir.tdaapp.tooka.util.getCurrentLocale
 import ir.tdaapp.tooka.util.share
 import ir.tdaapp.tooka.viewmodels.NewsDetailsViewModel
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
 import java.lang.StringBuilder
+import kotlin.coroutines.CoroutineContext
 
-class NewsDetailsDialog(val newsId: Int): DialogFragment() {
+class NewsDetailsDialog(val newsId: Int): DialogFragment(), CoroutineScope {
 
   lateinit var binding: DialogNewsDetailsBinding
 
@@ -32,12 +37,6 @@ class NewsDetailsDialog(val newsId: Int): DialogFragment() {
     savedInstanceState: Bundle?
   ): View? {
     binding = DialogNewsDetailsBinding.inflate(inflater, container, false)
-
-    for(a in 0..6 step 3){
-
-
-
-    }
     return binding.root
   }
 
@@ -45,7 +44,9 @@ class NewsDetailsDialog(val newsId: Int): DialogFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    viewModel.getData(newsId)
+    lifecycleScope.launchWhenCreated {
+      viewModel.getData(newsId)
+    }
 
     viewModel.newsDetails.observe(viewLifecycleOwner, {
       if (it != null) {
@@ -69,7 +70,6 @@ class NewsDetailsDialog(val newsId: Int): DialogFragment() {
           .append("ضمیمه شده توسط توکا").toString()
 
       share(requireContext(), message);
-
     }
     binding.btnDismiss.setOnClickListener {
       dismiss()
@@ -94,7 +94,7 @@ class NewsDetailsDialog(val newsId: Int): DialogFragment() {
         .append("\n\n")
         .append(model.contentEn).toString()
     }
-    binding.txtWriter.text = when(getCurrentLocale(requireContext())){
+    binding.txtWriter.text = when (getCurrentLocale(requireContext())) {
       "en" -> model.author.name
       "fa" -> model.author.persianName
       else -> model.author.name
@@ -104,4 +104,6 @@ class NewsDetailsDialog(val newsId: Int): DialogFragment() {
   }
 
   override fun getTheme(): Int = R.style.Base_AlertDialog
+  override val coroutineContext: CoroutineContext
+    get() = Dispatchers.IO + CoroutineName("NewsDetailsDialogJob")
 }

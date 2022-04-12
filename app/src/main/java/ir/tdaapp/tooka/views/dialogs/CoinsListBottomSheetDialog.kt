@@ -21,7 +21,7 @@ class CoinsListBottomSheetDialog(val models: ArrayList<Coin>):
     const val TAG = "CoinsListBottomSheetDialog"
   }
 
-  interface OnCoinSelected {
+  fun interface OnCoinSelected {
     fun onCoinSelected(id: Int)
   }
 

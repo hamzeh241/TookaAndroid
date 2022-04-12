@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/portfolio"
+  app:startDestination="@id/portfolioFragment">
+
+  <fragment
+    android:id="@+id/relatedNewsFragment"
+    android:name="ir.tdaapp.tooka.views.fragments.RelatedNewsFragment"
+    android:label="RelatedNewsFragment">
+    <argument
+      android:name="coinName"
+      app:argType="string" />
+    <argument
+      android:name="coinId"
+      app:argType="integer" />
+  </fragment>
+  <fragment
+    android:id="@+id/relatedCoinsFragment"
+    android:name="ir.tdaapp.tooka.views.fragments.RelatedCoinsFragment"
+    android:label="RelatedCoinsFragment">
+    <argument
+      android:name="coinId"
+      app:argType="integer" />
+  </fragment>
+  <fragment
+    android:id="@+id/portfolioFragment"
+    android:name="ir.tdaapp.tooka.views.fragments.PortfolioFragment"
+    android:label="PortfolioFragment"
+    tools:layout="@layout/fragment_portfolio" >
+    <action
+      android:id="@+id/action_portfolioFragment_to_coinFragment2"
+      app:destination="@id/coinFragment2" />
+    <action
+      android:id="@+id/action_portfolioFragment_to_notificationFragment3"
+      app:destination="@id/notificationFragment3" />
+    <action
+      android:id="@+id/action_portfolioFragment_to_searchFragment3"
+      app:destination="@id/searchFragment3" />
+  </fragment>
+  <fragment
+    android:id="@+id/notificationFragment3"
+    android:name="ir.tdaapp.tooka.views.fragments.NotificationFragment"
+    android:label="NotificationFragment" />
+  <fragment
+    android:id="@+id/searchFragment3"
+    android:name="ir.tdaapp.tooka.views.fragments.SearchFragment"
+    android:label="SearchFragment" />
+</navigation>

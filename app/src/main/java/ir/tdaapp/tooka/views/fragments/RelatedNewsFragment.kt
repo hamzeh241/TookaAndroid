@@ -1,55 +1,107 @@
 package ir.tdaapp.tooka.views.fragments
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.DrawableRes
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.BreakingAndCryptoNewsViewHolder
-import ir.tdaapp.tooka.adapters.TookaAdapter
+import ir.tdaapp.tooka.adapters.NewsAdapter
 import ir.tdaapp.tooka.databinding.FragmentRelatedNewsBinding
-import ir.tdaapp.tooka.databinding.ItemBreakingCryptoNewsBinding
+import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.News
+import ir.tdaapp.tooka.util.NetworkErrors
+import ir.tdaapp.tooka.util.openWebpage
 import ir.tdaapp.tooka.viewmodels.RelatedNewsViewModel
+import ir.tdaapp.tooka.views.dialogs.NewsDetailsDialog
 import ir.tdaapp.tooka.views.fragments.base.BaseFragment
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import java.lang.StringBuilder
+import kotlin.coroutines.CoroutineContext
 
-class RelatedNewsFragment: BaseFragment() {
+class RelatedNewsFragment: BaseFragment(), CoroutineScope {
 
-  lateinit var binding: FragmentRelatedNewsBinding
+  private lateinit var binding: FragmentRelatedNewsBinding
 
-  val viewModel: RelatedNewsViewModel by inject()
-  lateinit var adapter: TookaAdapter<News>
+  private val viewModel: RelatedNewsViewModel by inject()
+  private lateinit var adapter: NewsAdapter
+  private val args: RelatedNewsFragmentArgs by navArgs()
 
-  override fun init() {
-    initList()
-    viewModel.getData(RelatedNewsFragmentArgs.fromBundle(requireArguments()).coinId)
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
+    if (this::binding.isInitialized)
+      return binding.root
+
+    binding = FragmentRelatedNewsBinding.inflate(inflater, container, false)
+    return binding.root
   }
 
-  fun initList() {
-    adapter = object: TookaAdapter<News>() {
-      override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        BreakingAndCryptoNewsViewHolder(
-          ItemBreakingCryptoNewsBinding.inflate(
-            layoutInflater,
-            parent,
-            false
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    binding.swipeRefreshLayout.isRefreshing = true
+    initToolbar()
+    initAdapter()
+    initList()
+    initSwipeRefresh()
+    initObservables()
+
+    lifecycleScope.launchWhenCreated {
+      viewModel.getData(args.coinId)
+    }
+  }
+
+  private fun initAdapter() {
+    adapter = NewsAdapter { clicked, position ->
+      newsClicked(clicked)
+    }
+  }
+
+  private fun initSwipeRefresh() = binding.swipeRefreshLayout.setOnRefreshListener {
+    launch(Dispatchers.IO) {
+      viewModel.getData(args.coinId, true)
+    }
+  }
+
+  private fun newsClicked(clicked: News) {
+    when (clicked.newsKind) {
+      News.EXTERNAL_NEWS -> {
+        openWebpage(requireActivity(), clicked.url)
+      }
+      News.INTERNAL_NEWS -> {
+        findNavController().navigate(
+          RelatedNewsFragmentDirections.actionRelatedNewsFragmentToNewsDetailsFragment(
+            clicked.id
           )
         )
+      }
+      News.SHORT_NEWS -> {
+        NewsDetailsDialog(clicked.id).show(
+          requireActivity().supportFragmentManager,
+          NewsDetailsDialog.TAG
+        )
+      }
     }
-
-    binding.list.layoutManager = LinearLayoutManager(requireContext())
-    binding.list.adapter = adapter
   }
 
-  override fun initTransitions() {
+  private fun initList() = with(binding.list) {
+    layoutManager = LinearLayoutManager(requireContext())
+    adapter = this@RelatedNewsFragment.adapter
   }
 
-  override fun initToolbar() {
+
+  fun initToolbar() {
     (requireActivity() as MainActivity).setSupportActionBar(binding.toolbar)
     (requireActivity() as MainActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
@@ -59,27 +111,55 @@ class RelatedNewsFragment: BaseFragment() {
       ).toString()
   }
 
-  override fun initListeners(view: View) {
-    adapter.callback = TookaAdapter.Callback { vm, pos ->
+  private fun initObservables() {
+    viewModel.news.observe(viewLifecycleOwner, {
+      binding.swipeRefreshLayout.isRefreshing = false
+      adapter.differ.submitList(it as ArrayList)
+    })
+
+    viewModel.error.observe(viewLifecycleOwner) {
+      binding.swipeRefreshLayout.isRefreshing = false
+      val message: String
+      @DrawableRes val icon: Int
+      when (it) {
+        NetworkErrors.NETWORK_ERROR -> {
+          message = getString(R.string.network_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.CLIENT_ERROR -> {
+          message = getString(R.string.unknown_error_desc)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+        }
+        NetworkErrors.NOT_FOUND_ERROR -> {
+          message = getString(R.string.coin_not_found)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+          requireActivity().onBackPressed()
+        }
+        NetworkErrors.SERVER_ERROR -> {
+          message = getString(R.string.server_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.UNAUTHORIZED_ERROR -> {
+          message = getString(R.string.network_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.UNKNOWN_ERROR -> {
+          message = getString(R.string.unknown_error_desc)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+        }
+      }
+
+      Toast(requireContext()).apply {
+        setDuration(Toast.LENGTH_LONG)
+        setView(ToastLayoutBinding.inflate(layoutInflater).apply {
+          this.message.text = message
+          image.setImageResource(icon)
+        }.root)
+        show()
+      }
     }
   }
 
-  override fun initObservables() {
-    viewModel.news.observe(viewLifecycleOwner, {
-      if (it.size > 0) {
-        binding.loading.pauseAnimation()
-        binding.loading.visibility = View.GONE
-        adapter.models = it as ArrayList<News>
-        binding.list.visibility = View.VISIBLE
-      }
-    })
-  }
-
-  override fun initErrors() {
-  }
-
-  override fun getLayout(inflater: LayoutInflater, container: ViewGroup?): ViewBinding {
-    binding = FragmentRelatedNewsBinding.inflate(inflater, container, false)
-    return binding
-  }
+  override val coroutineContext: CoroutineContext
+    get() = Dispatchers.IO + CoroutineName("RelatedNewsFragmentJob")
 }

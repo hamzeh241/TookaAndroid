@@ -1,19 +1,17 @@
 package ir.tdaapp.tooka.adapters
 
-import android.view.ViewGroup
+import ContextUtils
+import android.view.View
+import androidx.annotation.DrawableRes
+import androidx.cardview.widget.CardView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.*
-import ir.tdaapp.tooka.util.*
-import java.lang.StringBuilder
-import ContextUtils
-import android.content.res.ColorStateList
-import android.view.View
-import androidx.annotation.DrawableRes
-import androidx.cardview.widget.CardView
 import ir.tdaapp.tooka.models.*
+import ir.tdaapp.tooka.util.*
 import ir.tdaapp.tooka.util.api.RetrofitClient
 import java.math.BigDecimal
 import java.text.DecimalFormat
@@ -79,48 +77,6 @@ class ImportantNewsViewHolder(val binding: ItemImportantNewsBinding):
     models: ArrayList<News>,
     position: Int
   ) {
-    val params = binding.root.layoutParams as ViewGroup.MarginLayoutParams
-    params.setMargins(
-      binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
-      binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
-      binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
-      binding.root.context.resources.getDimension(R.dimen.margin4).toInt()
-    )
-    when (getCurrentLocale(binding.root.context)) {
-      "fa" -> {
-        if (position == 0 || position == 1)
-          params.setMargins(
-            binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
-            binding.root.context.resources.getDimension(R.dimen.margin2).toInt(),
-            binding.root.context.resources.getDimension(R.dimen.margin8).toInt(),
-            binding.root.context.resources.getDimension(R.dimen.margin8).toInt()
-          )
-        if (position == 2 || position == 3)
-          params.setMargins(
-            binding.root.context.resources.getDimension(R.dimen.margin8).toInt(),
-            binding.root.context.resources.getDimension(R.dimen.margin2).toInt(),
-            binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
-            binding.root.context.resources.getDimension(R.dimen.margin8).toInt()
-          )
-      }
-      "en" -> {
-        if (position == 0 || position == 1)
-          params.setMargins(
-            binding.root.context.resources.getDimension(R.dimen.margin8).toInt(),
-            binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
-            binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
-            binding.root.context.resources.getDimension(R.dimen.margin4).toInt()
-          )
-        if (position == 2 || position == 3)
-          params.setMargins(
-            binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
-            binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
-            binding.root.context.resources.getDimension(R.dimen.margin8).toInt(),
-            binding.root.context.resources.getDimension(R.dimen.margin4).toInt()
-          )
-      }
-    }
-
     binding.txtNewsTitle.text = when (ContextUtils.getLocale(binding.root.context).toString()) {
       "en" -> data.titleEn
       "fa" -> data.titleFa
@@ -255,7 +211,7 @@ class MarketCoinsViewHolder(val binding: ViewBinding):
     if (data.viewType == VIEW_TYPE_LINEAR) {
       binding = this.binding as ItemMarketCoinsFlatBinding
 
-      binding.watchlistIndicator.visibility = when(data.isWatchlist){
+      binding.watchlistIndicator.visibility = when (data.isWatchlist) {
         true -> View.VISIBLE
         false -> View.GONE
       }
@@ -267,7 +223,6 @@ class MarketCoinsViewHolder(val binding: ViewBinding):
         }
         else -> data.name
       }
-      binding.txtCoinSymbol.text = data.symbol
       binding.txtCoinPriceTMN.text =
         StringBuilder(separatePrice(data.priceTMN.toFloat())).append(" ")
           .append(binding.root.context.getString(R.string.toomans)).toString()
@@ -428,8 +383,9 @@ class SliderNewsViewHolder(val binding: ItemSliderNewsBinding):
       callback.onClick(data, position)
     }
 
+    val imageUrl = StringBuilder(RetrofitClient.NEWS_IMAGES).append(data.imageUrl)
     Glide.with(binding.root.context)
-      .load(R.drawable.ic_btc)
+      .load(imageUrl)
       .placeholder(R.drawable.ic_placeholder)
       .error(R.drawable.ic_broken_image)
       .into(binding.image)
@@ -619,7 +575,30 @@ class SortOptionsViewHolder(val binding: ItemSortOptionBinding):
         R.drawable.ic_arrow_descend
     }
 
-    binding.imgSortOptionsAscend.setImageResource(image)
+    val drawable = ResourcesCompat.getDrawable(binding.root.resources, image, null)
+    drawable.let {
+      val dimen16 = binding.root.resources.getDimension(R.dimen.size16)
+      it?.setBounds(0, 0, dimen16.toInt(), dimen16.toInt())
+    }
+
+    when (getCurrentLocale(binding.root.context)) {
+      "fa" ->
+        binding.txtSortOptionsTitle.setCompoundDrawables(
+          drawable,
+          null,
+          null,
+          null
+        )
+      else ->
+        binding.txtSortOptionsTitle.setCompoundDrawablesWithIntrinsicBounds(
+          null,
+          null,
+          drawable,
+          null
+        )
+    }
+
+
 
     binding.root.setOnClickListener {
       callback.onClick(data, position)

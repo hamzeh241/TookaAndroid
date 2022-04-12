@@ -4,6 +4,11 @@
 
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.CAMERA" />
+
+  <uses-feature
+    android:name="android.hardware.camera"
+    android:required="true" />
 
   <application
     android:name=".application.App"
@@ -16,12 +21,17 @@
     android:theme="@style/Theme.MyApp"
     android:usesCleartextTraffic="true">
     <activity
+      android:name=".views.activities.LoginActivity"
+      android:exported="false"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"/>
+    <activity
       android:name=".MainActivity"
       android:launchMode="singleTop"
       android:screenOrientation="portrait" />
-
     <activity
       android:name=".views.activities.SplashActivity"
+      android:exported="true"
       android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -30,10 +40,19 @@
       </intent-filter>
     </activity>
 
-    <service android:name=".firebase.FirebaseMessaging">
+    <receiver
+      android:name=".util.TookaSmsRetriever"
+      android:exported="true"
+      android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
       <intent-filter>
-        <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-        <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
+        <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
+      </intent-filter>
+    </receiver>
+
+    <service
+      android:name=".services.firebase.TookaMessagingService"
+      android:exported="false">
+      <intent-filter>
         <action android:name="com.google.firebase.MESSAGING_EVENT" />
       </intent-filter>
     </service>

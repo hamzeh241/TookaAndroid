@@ -4,42 +4,42 @@ import ContextUtils
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Color
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.formatter.IFillFormatter
-import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import ir.tdaapp.tooka.R
-import java.lang.StringBuilder
-import java.util.*
-
 import android.content.Intent
+import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Looper
+import android.text.SpannableString
+import android.text.style.RelativeSizeSpan
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.core.animation.doOnEnd
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
+import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
 import com.github.mikephil.charting.charts.CandleStickChart
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.IFillFormatter
+import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import ir.tdaapp.tooka.components.ChartMarkerView
+import ir.tdaapp.tooka.R
+import ir.tdaapp.tooka.databinding.ItemImportantNewsBinding
 import ir.tdaapp.tooka.models.Coin
 import ir.tdaapp.tooka.models.CoinDetailsModel
 import ir.tdaapp.tooka.models.CompareOHLCVModel
 import ir.tdaapp.tooka.models.ResponseModel
 import java.text.DecimalFormat
-import kotlin.reflect.KClass
-import com.google.gson.Gson
-import kotlin.collections.ArrayList
+import java.util.*
 
 
 const val VIEW_TYPE_LINEAR = 0
@@ -53,6 +53,60 @@ fun maskTextView(textView: TextView) {
 
   textView.text = string.toString()
 }
+
+fun formatPrice(
+  price: Number,
+  currency: String = "تومان",
+  unitRelaticeSizeFactor: Float = 0.7f
+): SpannableString {
+  val spannableString = SpannableString("$price $currency")
+  spannableString.setSpan(
+    RelativeSizeSpan(unitRelaticeSizeFactor),
+    spannableString.indexOf(currency),
+    spannableString.length,
+    SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+  )
+  return spannableString
+}
+fun formatPrice(
+  price: String,
+  currency: String = "تومان",
+  unitRelaticeSizeFactor: Float = 0.7f
+): SpannableString {
+  val spannableString = SpannableString("$price $currency")
+  spannableString.setSpan(
+    RelativeSizeSpan(unitRelaticeSizeFactor),
+    spannableString.indexOf(currency),
+    spannableString.length,
+    SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+  )
+  return spannableString
+}
+
+fun formatSymbol(
+  name: String,
+  symbol: String,
+  unitRelaticeSizeFactor: Float = 0.7f
+): SpannableString {
+  val spannableString = SpannableString("$name $symbol")
+  spannableString.setSpan(
+    RelativeSizeSpan(unitRelaticeSizeFactor),
+    spannableString.indexOf(symbol),
+    spannableString.length,
+    SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+  )
+  return spannableString
+}
+
+fun convertError(json: String) = Gson().fromJson(json, ResponseModel::class.java)
+
+fun RecyclerView.smoothScrollToTop() = this.smoothScrollToPosition(0)
+
+val Float.toPx get() = this * Resources.getSystem().displayMetrics.density
+val Float.toDp get() = this / Resources.getSystem().displayMetrics.density
+
+val Int.toPx get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+val Int.toDp get() = (this / Resources.getSystem().displayMetrics.density).toInt()
 
 fun TextView.animateColor(
   fromColor: Int,
@@ -109,7 +163,7 @@ fun detectError(response: ResponseModel<Any>): NetworkErrors {
   }
 }
 
-fun separatePrice(price: Float): String {
+fun separatePrice(price: Number): String {
   val decim = DecimalFormat("#,###.##")
   return decim.format(price)
 }
@@ -175,21 +229,19 @@ fun toEnglishNumbers(value: String): String {
   return newValue
 }
 
-fun String.toEnglishNumbers(value: String): String {
-  var newValue = value
-  newValue = newValue.replace("۰", "0")
-  newValue = newValue.replace("۱", "1")
-  newValue = newValue.replace("۲", "2")
-  newValue = newValue.replace("۳", "3")
-  newValue = newValue.replace("۴", "4")
-  newValue = newValue.replace("۵", "5")
-  newValue = newValue.replace("۶", "6")
-  newValue = newValue.replace("۷", "7")
-  newValue = newValue.replace("۸", "8")
-  newValue = newValue.replace("۹", "9")
-  newValue = newValue.replace("٬", ",")
-
-  return newValue
+@JvmName("toEnglishNumbers1")
+fun String.toEnglishNumbers(): String {
+  return this.replace("۰", "0")
+    .replace("۱", "1")
+    .replace("۲", "2")
+    .replace("۳", "3")
+    .replace("۴", "4")
+    .replace("۵", "5")
+    .replace("۶", "6")
+    .replace("۷", "7")
+    .replace("۸", "8")
+    .replace("۹", "9")
+    .replace("٬", ",")
 }
 
 fun openWebpage(context: Context, url: String) {
@@ -206,13 +258,13 @@ fun share(context: Context, message: String) {
   context.startActivity(Intent.createChooser(share, context.getString(R.string.send_to)))
 }
 
-fun isMainThread(): Boolean = if (Looper.getMainLooper() == Looper.myLooper()) true else false
+fun isMainThread(): Boolean = Looper.getMainLooper() == Looper.myLooper()
 
-fun getCurrentLocale(context: Context): String? {
+fun getCurrentLocale(context: Context): String {
   return ContextUtils.getLocale(context).toString()
 }
 
-fun getName(context: Context,coin: Coin): String {
+fun getName(context: Context, coin: Coin): String {
   return when (getCurrentLocale(context)) {
     "fa" -> {
       if (coin.persianName != null)
@@ -264,7 +316,6 @@ fun setCandleChart(
 
   val yValsCandleStick = ArrayList<CandleEntry>()
   var specifiedCandle: CandleEntry?
-  specifiedCandle = null
   for (a in models) {
     specifiedCandle = CandleEntry(
       models.indexOf(a).toFloat(),
@@ -489,6 +540,8 @@ fun setCoinDetailsChartData(lineChart: LineChart, priceList: List<Double>) {
       clear()
       setData(data)
       invalidate()
+
+      moveViewToX(data.entryCount.toFloat())
     }
   }
 }
@@ -611,7 +664,7 @@ fun setCompareChartData(lineChart: LineChart, priceList: CompareOHLCVModel) {
       getLegend().setEnabled(false)
       getDescription().setEnabled(false)
       setTouchEnabled(true)
-      animateXY(1000, 1000)
+      animateXY(300, 300)
 //      val markerView = ChartMarkerView(lineChart.context, R.layout.component_marker_view)
 //      this.markerView = markerView
 
@@ -748,6 +801,50 @@ fun setCorrectMargins(cardView: CardView, context: Context, position: Int, lastP
           context.resources.getDimension(R.dimen.margin8).toInt()
         )
       }
+    }
+  }
+}
+
+fun setNewsMargin(binding: ItemImportantNewsBinding, position: Int) {
+  val params = binding.root.layoutParams as ViewGroup.MarginLayoutParams
+  params.setMargins(
+    binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
+    binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
+    binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
+    binding.root.context.resources.getDimension(R.dimen.margin4).toInt()
+  )
+  when (getCurrentLocale(binding.root.context)) {
+    "fa" -> {
+      if (position == 0 || position == 1)
+        params.setMargins(
+          binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
+          binding.root.context.resources.getDimension(R.dimen.margin2).toInt(),
+          binding.root.context.resources.getDimension(R.dimen.margin8).toInt(),
+          binding.root.context.resources.getDimension(R.dimen.margin8).toInt()
+        )
+      if (position == 2 || position == 3)
+        params.setMargins(
+          binding.root.context.resources.getDimension(R.dimen.margin8).toInt(),
+          binding.root.context.resources.getDimension(R.dimen.margin2).toInt(),
+          binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
+          binding.root.context.resources.getDimension(R.dimen.margin8).toInt()
+        )
+    }
+    "en" -> {
+      if (position == 0 || position == 1)
+        params.setMargins(
+          binding.root.context.resources.getDimension(R.dimen.margin8).toInt(),
+          binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
+          binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
+          binding.root.context.resources.getDimension(R.dimen.margin4).toInt()
+        )
+      if (position == 2 || position == 3)
+        params.setMargins(
+          binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
+          binding.root.context.resources.getDimension(R.dimen.margin4).toInt(),
+          binding.root.context.resources.getDimension(R.dimen.margin8).toInt(),
+          binding.root.context.resources.getDimension(R.dimen.margin4).toInt()
+        )
     }
   }
 }

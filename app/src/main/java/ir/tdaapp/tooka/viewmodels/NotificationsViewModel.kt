@@ -1,42 +1,34 @@
 package ir.tdaapp.tooka.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import ir.tdaapp.tooka.models.Notification
-import ir.tdaapp.tooka.util.api.RetrofitClient
-import org.koin.android.ext.android.inject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import ir.tdaapp.tooka.util.NetworkErrors
+import ir.tdaapp.tooka.util.api.ApiService
+import java.io.IOException
 
-class NotificationsViewModel(private val appClass: Application): AndroidViewModel(appClass) {
+class NotificationsViewModel(private val api: ApiService): ViewModel() {
 
   private val _result = MutableLiveData<List<Notification>>()
   val result: LiveData<List<Notification>>
     get() = _result
 
-  private val retrofit: RetrofitClient by appClass.inject()
+  private val _error = MutableLiveData<NetworkErrors>()
+  val error: LiveData<NetworkErrors>
+    get() = _error
 
-  lateinit var call: Call<List<Notification>>
-
-  fun getData(apiKey: String, page: Int) {
-    call = retrofit.service.getNotifications(apiKey, page)
-    call.enqueue(object: Callback<List<Notification>> {
-      override fun onResponse(
-        call: Call<List<Notification>>,
-        response: Response<List<Notification>>
-      ) {
-        if (response.isSuccessful) {
-          _result.postValue(response.body())
-        }
-      }
-
-      override fun onFailure(call: Call<List<Notification>>, t: Throwable) {
-      }
-    })
+  suspend fun getData(userId: Int) {
+    try {
+      val result = api.notifications(userId)
+      if (result.isSuccessful)
+        _result.postValue(result.body()?.result!!)
+      else
+        _error.postValue(NetworkErrors.SERVER_ERROR)
+    } catch (e: Exception) {
+      if (e is IOException)
+        _error.postValue(NetworkErrors.NETWORK_ERROR)
+      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+    }
   }
-
-  fun cancel() = call.cancel()
 }

@@ -20,8 +20,8 @@
     android:layout_marginEnd="16dp"
     app:boxStrokeColor="?colorPrimary"
     android:id="@+id/textInputCoins"
-    app:hintTextAppearance="@style/TextAppearance.MyTheme.Headline6"
-    app:errorTextAppearance="@style/TextAppearance.MyTheme.Headline6"
+    app:hintTextAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+    app:errorTextAppearance="@style/TextAppearance.MyTheme.Subtitle2"
     app:layout_constraintTop_toBottomOf="@+id/textView3"
     android:layout_marginTop="8dp">
 
@@ -29,7 +29,7 @@
       android:id="@+id/autoCompleteSpinner"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+      android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
       android:gravity="start|center_vertical"
       android:singleLine="true"
       android:maxLines="1" />
@@ -44,7 +44,7 @@
     app:layout_constraintTop_toTopOf="parent"
     android:layout_marginTop="16dp"
     android:layout_marginStart="16dp"
-    android:textAppearance="@style/TextAppearance.MyTheme.Headline6" />
+    android:textAppearance="@style/TextAppearance.MyTheme.Body1" />
 
   <androidx.cardview.widget.CardView
     android:layout_width="wrap_content"
@@ -71,8 +71,9 @@
         android:layout_weight="1"
         android:layout_marginStart="@dimen/margin24"
         android:layout_marginEnd="@dimen/margin24"
-        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
-        android:textColor="@color/white" />
+        android:textAppearance="@style/TextAppearance.MyTheme.Button"
+        android:textColor="@color/white"
+        android:id="@+id/txtSubmit" />
     </LinearLayout>
   </androidx.cardview.widget.CardView>
 
@@ -85,7 +86,7 @@
     app:layout_constraintStart_toStartOf="parent"
     android:layout_marginStart="16dp"
     android:layout_marginTop="8dp"
-    android:textAppearance="@style/TextAppearance.MyTheme.Headline6" />
+    android:textAppearance="@style/TextAppearance.MyTheme.Body1" />
 
   <RelativeLayout
     android:layout_width="match_parent"
@@ -98,10 +99,34 @@
     android:id="@+id/relativeLayout"
     android:layout_marginTop="8dp">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.google.android.material.textfield.TextInputLayout
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+      android:hint="@string/platform"
       android:layout_width="match_parent"
+      app:boxCornerRadiusBottomEnd="@dimen/radius8"
+      app:boxCornerRadiusBottomStart="@dimen/radius8"
+      app:boxCornerRadiusTopStart="@dimen/radius8"
+      app:boxCornerRadiusTopEnd="@dimen/radius8"
       android:layout_height="match_parent"
-      android:id="@+id/platformList" />
+      app:boxStrokeColor="?colorPrimary"
+      android:id="@+id/textInputPlatform"
+      app:hintTextAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+      app:errorTextAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentTop="true"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentBottom="true">
+
+      <AutoCompleteTextView
+        android:id="@+id/autoCompletePlatform"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+        android:gravity="start|center_vertical"
+        android:singleLine="true"
+        android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
   </RelativeLayout>
 
   <TextView
@@ -113,7 +138,7 @@
     app:layout_constraintStart_toStartOf="parent"
     android:layout_marginTop="8dp"
     android:layout_marginStart="16dp"
-    android:textAppearance="@style/TextAppearance.MyTheme.Headline6" />
+    android:textAppearance="@style/TextAppearance.MyTheme.Body1" />
 
   <androidx.cardview.widget.CardView
     android:layout_width="0dp"
@@ -125,7 +150,7 @@
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
     app:cardElevation="@dimen/elev0"
-    app:cardBackgroundColor="@color/white_100"
+    app:cardBackgroundColor="?colorGray"
     android:id="@+id/cardView2">
 
     <RelativeLayout
@@ -171,7 +196,8 @@
           android:layout_height="match_parent"
           app:srcCompat="@drawable/ic_qr_code"
           android:scaleType="centerInside"
-          android:clickable="false" />
+          android:clickable="false"
+          android:id="@+id/imgQrCode" />
       </androidx.cardview.widget.CardView>
     </RelativeLayout>
   </androidx.cardview.widget.CardView>

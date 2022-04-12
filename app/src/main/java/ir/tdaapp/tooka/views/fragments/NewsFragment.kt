@@ -1,76 +1,118 @@
 package ir.tdaapp.tooka.views.fragments
 
-import android.util.Log
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
-import com.microsoft.signalr.Action1
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.BreakingAndCryptoNewsViewHolder
-import ir.tdaapp.tooka.adapters.TookaAdapter
-import ir.tdaapp.tooka.adapters.SliderNewsViewHolder
+import ir.tdaapp.tooka.adapters.NewsAdapter
+import ir.tdaapp.tooka.adapters.SliderNewsAdapter
 import ir.tdaapp.tooka.databinding.FragmentNewsBinding
-import ir.tdaapp.tooka.databinding.ItemBreakingCryptoNewsBinding
-import ir.tdaapp.tooka.databinding.ItemSliderNewsBinding
 import ir.tdaapp.tooka.models.News
-import ir.tdaapp.tooka.models.SliderNews
-import ir.tdaapp.tooka.util.getCurrentLocale
 import ir.tdaapp.tooka.util.openWebpage
 import ir.tdaapp.tooka.viewmodels.NewsViewModel
 import ir.tdaapp.tooka.views.dialogs.NewsDetailsDialog
 import ir.tdaapp.tooka.views.fragments.base.BaseFragment
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.android.inject
+import kotlin.coroutines.CoroutineContext
 
-class NewsFragment: BaseFragment() {
+class NewsFragment: BaseFragment(), CoroutineScope {
 
   lateinit var binding: FragmentNewsBinding
 
-  lateinit var sliderAdapter: TookaAdapter<SliderNews>
-  lateinit var breakingAdapter: TookaAdapter<News>
-  lateinit var cryptoNewsAdapter: TookaAdapter<News>
+  lateinit var sliderAdapter: SliderNewsAdapter
+  lateinit var breakingAdapter: NewsAdapter
+  lateinit var cryptoNewsAdapter: NewsAdapter
 
-  val viewModel: NewsViewModel by inject()
+  private val viewModel: NewsViewModel by inject()
 
-  override fun init() {
-    initSliderNews()
-    initIndicator()
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View =
+    if (this::binding.isInitialized)
+      binding.root
+    else {
+      binding = FragmentNewsBinding.inflate(inflater, container, false)
+      binding.root
+    }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    binding.toolbar.title = getString(R.string.news)
+    initAdapters()
+    initViewPager()
     initBreakingList()
     initCryptoNews()
+    initObservables()
+
+    lifecycleScope.launchWhenCreated {
+      viewModel.getData()
+    }
   }
 
-  override fun initTransitions() {
-  }
-
-  override fun initToolbar() {
-    binding.toolbar.title = getString(R.string.news)
-  }
-
-  override fun initListeners(view: View) {
-    sliderAdapter.callback = TookaAdapter.Callback { vm, position -> }
-
-    breakingAdapter.callback = TookaAdapter.Callback { vm, position -> }
-
-    cryptoNewsAdapter.callback = TookaAdapter.Callback { vm, position ->
-      when (vm.newsKind) {
-        News.OPEN_URL -> {
-          openWebpage(requireContext(), vm.url)
+  private fun initAdapters() {
+    sliderAdapter = SliderNewsAdapter { clicked, position ->
+      when (clicked.newsKind) {
+        News.EXTERNAL_NEWS -> {
+          openWebpage(requireActivity(), clicked.newsUrl)
+        }
+        News.INTERNAL_NEWS -> {
+          findNavController().navigate(
+            NewsFragmentDirections.actionNewsFragmentToNewsDetailsFragment2(
+              clicked.newsId
+            )
+          )
         }
         News.SHORT_NEWS -> {
-          val dialog = NewsDetailsDialog(vm.id)
-          dialog.show(requireActivity().supportFragmentManager, NewsDetailsDialog.TAG)
+          NewsDetailsDialog(clicked.newsId).show(
+            requireActivity().supportFragmentManager,
+            NewsDetailsDialog.TAG
+          )
         }
+      }
+    }
+    breakingAdapter = NewsAdapter { clicked, position ->
+      newsClicked(clicked)
+    }
+    cryptoNewsAdapter = NewsAdapter { clicked, position ->
+      newsClicked(clicked)
+    }
+  }
+
+  private fun newsClicked(clicked: News) {
+    when (clicked.newsKind) {
+      News.EXTERNAL_NEWS -> {
+        openWebpage(requireActivity(), clicked.url)
+      }
+      News.INTERNAL_NEWS -> {
+        findNavController().navigate(
+          NewsFragmentDirections.actionNewsFragmentToNewsDetailsFragment2(
+            clicked.id
+          )
+        )
+      }
+      News.SHORT_NEWS -> {
+        NewsDetailsDialog(clicked.id).show(
+          requireActivity().supportFragmentManager,
+          NewsDetailsDialog.TAG
+        )
       }
     }
   }
 
-  override fun initObservables() {
+  fun initObservables() {
     viewModel.sliderNews.observe(viewLifecycleOwner, {
       if (it.size > 0) {
-        sliderAdapter.models = it as ArrayList<SliderNews>
+        sliderAdapter.differ.submitList(it)
         binding.includeSlider.loading.pauseAnimation()
         binding.includeSlider.newsViewPager.visibility = View.VISIBLE
         binding.includeSlider.dotsIndicator.visibility = View.VISIBLE
@@ -80,7 +122,7 @@ class NewsFragment: BaseFragment() {
 
     viewModel.breakingNews.observe(viewLifecycleOwner, {
       if (it.size > 0) {
-        breakingAdapter.models = it as ArrayList<News>
+        breakingAdapter.differ.submitList(it)
         binding.includeBreakingNews.loading.pauseAnimation()
         binding.includeBreakingNews.breakingNewsList.visibility = View.VISIBLE
         binding.includeBreakingNews.loading.visibility = View.GONE
@@ -89,7 +131,7 @@ class NewsFragment: BaseFragment() {
 
     viewModel.allNews.observe(viewLifecycleOwner, {
       if (it.size > 0) {
-        cryptoNewsAdapter.models = it as ArrayList<News>
+        cryptoNewsAdapter.differ.submitList(it)
         binding.includeCryptoNews.loading.pauseAnimation()
         binding.includeCryptoNews.cryptoNewsList.visibility = View.VISIBLE
         binding.includeCryptoNews.loading.visibility = View.GONE
@@ -97,67 +139,37 @@ class NewsFragment: BaseFragment() {
     })
   }
 
-  override fun initErrors() {
-  }
-
-  override fun getLayout(inflater: LayoutInflater, container: ViewGroup?): ViewBinding {
-    binding = FragmentNewsBinding.inflate(inflater, container, false)
-    return binding
-  }
-
-  private fun initIndicator() {
-    binding.includeSlider.dotsIndicator.setViewPager2(binding.includeSlider.newsViewPager)
-  }
-
-  private fun initSliderNews() {
-    sliderAdapter = object: TookaAdapter<SliderNews>() {
-      override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        SliderNewsViewHolder(
-          ItemSliderNewsBinding.inflate(
-            layoutInflater,
-            parent,
-            false
-          )
-        )
+  private fun initViewPager() =
+    binding.includeSlider.newsViewPager.apply {
+      adapter = sliderAdapter
+      binding.includeSlider.dotsIndicator.setViewPager2(this)
     }
 
-    viewModel.getData()
-
-
-
-    binding.includeSlider.newsViewPager.adapter = sliderAdapter
-  }
-
-  private fun initBreakingList() {
-    breakingAdapter = object: TookaAdapter<News>() {
-      override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        BreakingAndCryptoNewsViewHolder(
-          ItemBreakingCryptoNewsBinding.inflate(layoutInflater, parent, false)
-        )
-    }
-
-    binding.includeBreakingNews.breakingNewsList.layoutManager = GridLayoutManager(
+  private val breakingManager by lazy {
+    GridLayoutManager(
       requireContext(), 2,
       GridLayoutManager.HORIZONTAL, false
     )
-
-    binding.includeBreakingNews.breakingNewsList.adapter = breakingAdapter
   }
 
-  private fun initCryptoNews() {
-    cryptoNewsAdapter = object: TookaAdapter<News>() {
-      override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        BreakingAndCryptoNewsViewHolder(
-          ItemBreakingCryptoNewsBinding.inflate(layoutInflater, parent, false)
-        )
+  private fun initBreakingList() =
+    binding.includeBreakingNews.breakingNewsList.apply {
+      layoutManager = breakingManager
+      adapter = breakingAdapter
     }
 
-
-    binding.includeCryptoNews.cryptoNewsList.layoutManager =
-      object: LinearLayoutManager(requireContext()) {
-        override fun canScrollVertically(): Boolean = false
-      }
-
-    binding.includeCryptoNews.cryptoNewsList.adapter = cryptoNewsAdapter
+  private val cryptoManager by lazy {
+    object: LinearLayoutManager(requireContext()) {
+      override fun canScrollVertically(): Boolean = false
+    }
   }
+
+  private fun initCryptoNews() =
+    binding.includeCryptoNews.cryptoNewsList.apply {
+      layoutManager = cryptoManager
+      adapter = cryptoNewsAdapter
+    }
+
+  override val coroutineContext: CoroutineContext
+    get() = Dispatchers.IO + CoroutineName("NewsFragmentJob")
 }

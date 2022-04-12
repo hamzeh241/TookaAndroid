@@ -9,7 +9,7 @@ import java.util.*
 
 object SignalR {
 
-  const val SIGNAL_R_URL = "https://ws.razhashop.ir/signalr"
+  const val SIGNAL_R_URL = "https://www.razhashop.ir/signalr"
 
   /**
    * Ijade instance 'HubConnection'

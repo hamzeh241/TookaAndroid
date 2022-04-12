@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<ir.tdaapp.tooka.components.TookaMaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:id="@+id/cardTopCoin"
   android:layout_width="136dp"
   android:layout_height="104dp"
-  app:cardCornerRadius="@dimen/radius16">
+  style="@style/Base.Widget.TopCoins"
+  app:cardCornerRadius="@dimen/radius16"
+  app:cardBackgroundColor="?colorSurface">
 
   <RelativeLayout
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
     <com.github.mikephil.charting.charts.LineChart
       android:id="@+id/chart"
-      data="@{coin.ohlc}"
       android:layout_width="match_parent"
       android:layout_height="88dp"
       android:layout_alignParentBottom="true"
@@ -25,11 +24,12 @@
       android:orientation="horizontal"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="#E6FFFFFF"
+      android:background="?colorSecondaryVariant"
       android:layout_alignParentTop="true"
       android:layout_alignParentBottom="true"
       android:layout_alignParentEnd="true"
-      android:layout_alignParentStart="true"></LinearLayout>
+      android:layout_alignParentStart="true"
+      android:visibility="gone" />
 
     <LinearLayout
       android:id="@+id/topCoinRoot"
@@ -64,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin8"
+            android:layout_marginEnd="@dimen/margin8"
             android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
             android:textSize="12sp"
             android:requiresFadingEdge="horizontal"
@@ -118,19 +119,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:textAppearance="@style/TextAppearance.MyTheme.Price1" />
+            android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+            android:textColor="?colorOnSurface" />
 
-          <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin8"
-            android:fontFamily="@font/iran_yekan_reqular_mobile_fa_num"
-            android:gravity="center"
-            android:text="تومان"
-            android:textColor="@color/dark_blue_900"
-            android:textSize="12sp"
-            android:layout_marginStart="@dimen/margin8" />
         </LinearLayout>
 
         <LinearLayout
@@ -145,22 +136,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:textAppearance="@style/TextAppearance.MyTheme.Price2" />
+            android:textAppearance="@style/TextAppearance.MyTheme.Price2"
+            android:textColor="?colorOnSurface" />
 
-          <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/iran_yekan_reqular_mobile_fa_num"
-            android:gravity="center"
-            android:text="دلار"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="12sp"
-            android:layout_marginStart="@dimen/margin8" />
         </LinearLayout>
 
       </LinearLayout>
     </LinearLayout>
   </RelativeLayout>
 
-</androidx.cardview.widget.CardView>
+</ir.tdaapp.tooka.components.TookaMaterialCardView>

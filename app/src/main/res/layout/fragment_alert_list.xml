@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <androidx.appcompat.widget.Toolbar
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:theme="?attr/actionBarTheme"
+    android:minHeight="?attr/actionBarSize"
+    android:id="@+id/toolbar"
+    android:elevation="@dimen/elev4"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+  <androidx.cardview.widget.CardView
+    android:layout_width="0dp"
+    android:layout_height="@dimen/size64"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginStart="@dimen/margin8"
+    android:layout_marginEnd="@dimen/margin8"
+    android:layout_marginBottom="@dimen/margin8"
+    android:id="@+id/cardView"
+    app:cardBackgroundColor="@color/black" >
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center">
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_add"
+        android:id="@+id/imageView5"
+        app:tint="@color/white" />
+
+      <TextView
+        android:text="@string/add_alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtIrt"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/margin8" />
+    </LinearLayout>
+  </androidx.cardview.widget.CardView>
+
+  <ImageView
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:id="@+id/imageView2"
+    android:layout_marginBottom="@dimen/margin8"
+    app:layout_constraintBottom_toTopOf="@+id/cardView"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:background="@color/gray_400" />
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toTopOf="@+id/imageView2"
+    android:id="@+id/alertList"
+    tools:listitem="@layout/item_alert"
+    app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

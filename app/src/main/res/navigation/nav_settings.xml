@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/settings"
+  app:startDestination="@id/settingsFragment">
+
+  <fragment
+    android:id="@+id/settingsFragment"
+    android:name="ir.tdaapp.tooka.views.fragments.SettingsFragment"
+    android:label="SettingsFragment" >
+    <action
+      android:id="@+id/action_settingsFragment_to_loginActivity"
+      app:destination="@id/loginActivity"
+      app:popUpTo="@id/settingsFragment" />
+  </fragment>
+  <activity
+    android:id="@+id/loginActivity"
+    android:name="ir.tdaapp.tooka.views.activities.LoginActivity"
+    android:label="activity_login"
+    tools:layout="@layout/activity_login" />
+</navigation>

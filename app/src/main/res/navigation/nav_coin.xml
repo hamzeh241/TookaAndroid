@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/nav_coin"
+  app:startDestination="@id/coinDetailsFragment2">
+
+  <fragment
+    android:id="@+id/coinDetailsFragment2"
+    android:name="ir.tdaapp.tooka.views.fragments.CoinDetailsFragment"
+    android:label="CoinDetailsFragment">
+    <argument
+      android:name="coinId"
+      app:argType="integer" />
+    <argument
+      android:name="apiKey"
+      app:argType="string" />
+    <argument
+      android:name="coinName"
+      app:argType="string" />
+    <argument android:name="coinIcon"
+      app:argType="string" />
+  </fragment>
+</navigation>

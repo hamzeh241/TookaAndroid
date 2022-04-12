@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 ~ Copyright (C) 2019 The Android Open Source Project
 ~
 ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,49 +16,51 @@
 
 <resources>
 
-    <!--Common attributes-->
-    <attr name="colorFillColor" format="color"/>
-    <attr name="colorStrokeColor" format="color"/>
+  <!--Common attributes-->
+  <attr name="colorFillColor" format="color" />
+  <attr name="colorStrokeColor" format="color" />
 
-    <!--Label view attributes-->
-    <declare-styleable name="LabelLinkView">
-        <attr name="android:text" />
-        <attr name="leadingIcon" format="integer" />
-        <attr name="linkUrl" format="string" />
-    </declare-styleable>
+  <attr name="colorGray" format="color"/>
 
-    <!--Color attribute view attributes-->
-    <declare-styleable name="ColorAttributeView">
-        <attr name="android:text"/>
-        <attr name="colorFillColor"/>
-        <attr name="colorStrokeColor"/>
-    </declare-styleable>
+  <!--Label view attributes-->
+  <declare-styleable name="LabelLinkView">
+    <attr name="android:text" />
+    <attr name="leadingIcon" format="integer" />
+    <attr name="linkUrl" format="string" />
+  </declare-styleable>
 
-    <!--Color dot view attributes-->
-    <declare-styleable name="ColorDotView">
-        <attr name="colorFillColor"/>
-        <attr name="colorStrokeColor"/>
-    </declare-styleable>
+  <!--Color attribute view attributes-->
+  <declare-styleable name="ColorAttributeView">
+    <attr name="android:text" />
+    <attr name="colorFillColor" />
+    <attr name="colorStrokeColor" />
+  </declare-styleable>
 
-    <!--Type attribute view attributes-->
-    <declare-styleable name="TypeAttributeView">
-        <attr name="android:text"/>
-        <attr name="previewText" format="string"/>
-        <attr name="previewTextAppearance" format="reference"/>
-        <attr name="previewTextColor" format="reference"/>
-    </declare-styleable>
+  <!--Color dot view attributes-->
+  <declare-styleable name="ColorDotView">
+    <attr name="colorFillColor" />
+    <attr name="colorStrokeColor" />
+  </declare-styleable>
 
-    <!--Shape attribute view attributes-->
-    <declare-styleable name="ShapeAttributeView">
-        <attr name="android:text"/>
-        <attr name="shapeSizeLetter" format="string"/>
-        <attr name="shapeFillColor" format="color"/>
-        <attr name="shapeStrokeColor" format="color"/>
-        <attr name="shapeAppearanceAttr" format="reference"/>
-    </declare-styleable>
+  <!--Type attribute view attributes-->
+  <declare-styleable name="TypeAttributeView">
+    <attr name="android:text" />
+    <attr name="previewText" format="string" />
+    <attr name="previewTextAppearance" format="reference" />
+    <attr name="previewTextColor" format="reference" />
+  </declare-styleable>
 
-  <attr name="motionInterpolatorPersistent" format="reference"/>
-  <attr name="motionInterpolatorIncoming" format="reference"/>
-  <attr name="motionInterpolatorOutgoing" format="reference"/>
-    
+  <!--Shape attribute view attributes-->
+  <declare-styleable name="ShapeAttributeView">
+    <attr name="android:text" />
+    <attr name="shapeSizeLetter" format="string" />
+    <attr name="shapeFillColor" format="color" />
+    <attr name="shapeStrokeColor" format="color" />
+    <attr name="shapeAppearanceAttr" format="reference" />
+  </declare-styleable>
+
+  <attr name="motionInterpolatorPersistent" format="reference" />
+  <attr name="motionInterpolatorIncoming" format="reference" />
+  <attr name="motionInterpolatorOutgoing" format="reference" />
+
 </resources>

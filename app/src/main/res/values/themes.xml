@@ -9,8 +9,11 @@
     <!--selection controls.-->
     <item name="colorPrimary">@color/black_800</item>
     <item name="colorPrimaryVariant">@color/black_900</item>
-    <item name="colorSecondary">@color/white_300</item>
-    <item name="colorSecondaryVariant">@color/white</item>
+    <item name="colorSecondary">@color/white</item>
+    <item name="colorSecondaryVariant">@color/white_transparent</item>
+
+    <item name="colorGray">@color/white_100</item>
+    <item name="subtitleTextColor">@color/gray_400</item>
     <item name="android:textColorPrimary">@color/black_900</item>
 
     <item name="android:windowEnableSplitTouch">false</item>
@@ -43,7 +46,6 @@
     <item name="textAppearanceBody2">@style/TextAppearance.MyTheme.Body2</item>
     <item name="textAppearanceButton">@style/TextAppearance.MyTheme.Button</item>
     <item name="textAppearanceCaption">@style/TextAppearance.MyTheme.Caption</item>
-    <item name="textAppearanceOverline">@style/TextAppearance.MyTheme.Overline</item>
     <!--Material shape attributes-->
     <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent
     </item>
@@ -58,7 +60,6 @@
     <!--        <item name="navigationViewStyle">@style/Widget.MyTheme.NavigationView</item>-->
     <item name="toolbarStyle">@style/Base.Widget.Toolbar</item>
     <item name="imageButtonStyle">@style/Base.Widget.ImageButton</item>
-    <item name="cardViewStyle">@style/Base.Widget.CardView</item>
     <item name="extendedFloatingActionButtonStyle">@style/Base.Widget.ExtendedFAB</item>
   </style>
 
@@ -74,83 +75,4 @@
     </item>
   </style>
 
-  <style name="Base.Widget.Toolbar" parent="Widget.AppCompat.Toolbar">
-    <item name="fontFamily">@font/iranyekan_black</item>
-    <item name="android:background">@color/white</item>
-
-    <item name="titleTextAppearance">@style/TextAppearance.MyTheme.ToolbarTitle</item>
-    <item name="titleTextColor">?android:attr/textColorPrimary</item>
-    <item name="subtitleTextAppearance">?attr/textAppearanceSubtitle1</item>
-    <item name="subtitleTextColor">?android:attr/textColorSecondary</item>
-    <!-- Overrides minimum height in landscape to avoid headline6 and subtitle1 height concerns. -->
-    <item name="android:minHeight">@dimen/mtrl_toolbar_default_height</item>
-    <item name="maxButtonHeight">@dimen/mtrl_toolbar_default_height</item>
-  </style>
-
-  <style name="Base.Widget.AlternateToolbar" parent="Widget.AppCompat.Toolbar">
-    <item name="fontFamily">@font/iranyekan_medium</item>
-    <item name="android:fontFamily">@font/iranyekan_medium</item>
-    <item name="android:background">@color/white</item>
-
-    <item name="titleTextAppearance">@style/TextAppearance.MyTheme.AlternateToolbarTitle</item>
-    <item name="titleTextColor">?android:attr/textColorPrimary</item>
-    <item name="subtitleTextAppearance">?attr/textAppearanceSubtitle1</item>
-    <item name="subtitleTextColor">?android:attr/textColorSecondary</item>
-    <!-- Overrides minimum height in landscape to avoid headline6 and subtitle1 height concerns. -->
-    <item name="android:minHeight">@dimen/mtrl_toolbar_default_height</item>
-    <item name="maxButtonHeight">@dimen/mtrl_toolbar_default_height</item>
-  </style>
-
-  <style name="Base.Widget.TabLayout" parent="Widget.MaterialComponents.TabLayout">
-    <item name="fontFamily">@font/iranyekan_bold</item>
-    <item name="android:fontFamily">@font/iranyekan_bold</item>
-  </style>
-
-  <style name="Base.Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
-    <item name="fontFamily">@font/iranyekan_medium</item>
-    <item name="itemIconTint">@drawable/bottom_nav_tint</item>
-    <item name="itemTextColor">@drawable/bottom_nav_tint</item>
-  </style>
-
-  <style name="Base.Widget.ImageButton" parent="Widget.AppCompat.ImageButton">
-    <item name="android:background">?selectableItemBackgroundBorderless</item>
-  </style>
-
-  <style name="Base.Widget.CardView" parent="Widget.MaterialComponents.CardView">
-    <item name="cardCornerRadius">@dimen/radius8</item>
-    <item name="cardElevation">@dimen/elev4</item>
-  </style>
-
-  <style name="Base.Widget.SettingsCardView" parent="Widget.MaterialComponents.CardView">
-    <item name="cardCornerRadius">@dimen/radius16</item>
-    <item name="cardElevation">@dimen/elev0</item>
-    <item name="cardBackgroundColor">@color/white_100</item>
-  </style>
-
-  <style name="Base.Widget.AlertDialogButtons" parent="Widget.MaterialComponents.Button">
-    <item name="android:textColor">@color/black_200</item>
-    <item name="android:textAppearance">@style/TextAppearance.MyTheme.Headline6</item>
-    <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
-    <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
-  </style>
-
-  <style name="Base.AlertDialog" parent="@style/Theme.MaterialComponents.Dialog">
-    <item name="dialogCornerRadius">16dp</item>
-  </style>
-
-  <style name="Base.Widget.ExtendedFAB" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
-    <item name="android:textAppearance">@style/TextAppearance.MyTheme.Headline6</item>
-    <item name="iconTint">@color/white</item>
-    <item name="backgroundTint">@color/dark_blue_900</item>
-    <item name="android:backgroundTint">@color/dark_blue_900</item>
-    <item name="android:textColor">@color/white</item>
-  </style>
-
-  <style name="Base.Widget.HyperlinkTextView" parent="Widget.AppCompat.TextView">
-    <item name="android:textColor">@color/purple_500</item>
-    <item name="android:textAppearance">@style/TextAppearance.MyTheme.Headline6</item>
-    <item name="background">?selectableItemBackground</item>
-    <item name="android:background">?selectableItemBackground</item>
-    <item name="android:clickable">true</item>
-  </style>
 </resources>

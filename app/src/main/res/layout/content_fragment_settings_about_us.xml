@@ -9,7 +9,7 @@
     android:text="@string/about_us"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+    android:textAppearance="@style/TextAppearance.MyTheme.Body1"
     android:layout_marginTop="@dimen/margin16"
     android:layout_marginStart="@dimen/margin16" />
 
@@ -41,8 +41,9 @@
           android:text="@string/tooka_website"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textAppearance="@style/TextAppearance.MyTheme.Price1"
-          android:layout_marginStart="@dimen/margin16" />
+          android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+          android:layout_marginStart="@dimen/margin16"
+          android:textColor="?colorOnSurface" />
 
         <View
           android:layout_width="0dp"
@@ -54,7 +55,7 @@
           android:layout_height="@dimen/size16"
           app:srcCompat="@drawable/ic_arrow_forward"
           android:layout_marginEnd="@dimen/margin16"
-          app:tint="@color/black" />
+          app:tint="?colorOnSurface" />
 
       </LinearLayout>
 
@@ -63,7 +64,8 @@
         android:layout_height="1dp"
         android:background="@color/gray_500"
         android:layout_marginStart="@dimen/margin16"
-        android:layout_marginEnd="@dimen/margin16" />
+        android:layout_marginEnd="@dimen/margin16"
+        android:tint="?colorOnSurface" />
 
       <LinearLayout
         android:orientation="horizontal"
@@ -81,7 +83,8 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/margin16"
-          android:textAppearance="@style/TextAppearance.MyTheme.Price1" />
+          android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+          android:textColor="?colorOnSurface" />
 
         <View
           android:layout_width="0dp"
@@ -93,7 +96,7 @@
           android:layout_height="@dimen/size16"
           app:srcCompat="@drawable/ic_arrow_forward"
           android:layout_marginEnd="@dimen/margin16"
-          app:tint="@color/black" />
+          app:tint="?colorOnSurface" />
       </LinearLayout>
     </LinearLayout>
   </androidx.cardview.widget.CardView>

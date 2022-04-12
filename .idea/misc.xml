@@ -57,18 +57,78 @@
         <entry key="..\:/StudioProjects/Tooka/app/src/main/res/layout/item_top_coin.xml" value="0.5" />
         <entry key="..\:/StudioProjects/Tooka/app/src/main/res/layout/list_item.xml" value="0.3138586956521739" />
         <entry key="..\:/StudioProjects/Tooka/app/src/main/res/menu/home_toolbar_items.xml" value="0.3216216216216216" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/drawable/ascending_background.xml" value="0.3395" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/drawable/divider_item_decoration.xml" value="0.3395" />
-        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/activity_main.xml" value="0.3216216216216216" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/drawable/error_snackbar_background.xml" value="0.1" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/drawable/green_gradient.xml" value="0.295" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/drawable/ic_exchange.xml" value="0.2505" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/drawable/market_coins_background.xml" value="0.2985" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/drawable/neutral_background.xml" value="0.3395" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/drawable/ok_snackbar_background.xml" value="0.2985" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/activity_coin_details.xml" value="0.33" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/activity_login.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/activity_main.xml" value="0.1925287356321839" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/activity_qr.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/activity_test.xml" value="0.33" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/component_custom_text_view.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/concept_fragment_coin_details.xml" value="0.25" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_content_coins_misc.xml" value="0.33" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_content_coins_price.xml" value="0.4399260628465804" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_content_coins_price_second.xml" value="0.5" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_content_coins_stats.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_home_gainers_losers.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_home_news.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_home_top_coins.xml" value="0.24728260869565216" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_home_utilities.xml" value="0.5" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_home_watchlist.xml" value="0.22" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_markets_coin_list.xml" value="0.3216216216216216" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_markets_sort.xml" value="0.5" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_settings_about_us.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_settings_app_settings.xml" value="0.5" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_settings_user_settings.xml" value="0.3216216216216216" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_app_theme_bottom_sheet.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_automatic_bottom_sheet.xml" value="0.33" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_confirmation.xml" value="0.67" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_manual_bottom_sheet.xml" value="0.33" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_qr_code_scanner.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_alert_list.xml" value="0.33" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_coin_details.xml" value="0.3216216216216216" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_coin_details_final.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_coins_list.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_content_coin_details.xml" value="0.25" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_content_price_alert.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_converter.xml" value="0.3216216216216216" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_home.xml" value="0.3216216216216216" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_insert_price_alert.xml" value="0.33" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_markets.xml" value="0.3216216216216216" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_news.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_news_details.xml" value="0.3216216216216216" />
-        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_search.xml" value="0.3216216216216216" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_portfolio.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_related_coins.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_related_news.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_search.xml" value="0.2" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_settings.xml" value="0.3216216216216216" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_verification.xml" value="0.37888198757763975" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_alert.xml" value="0.5" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_alternate_coins.xml" value="0.3216216216216216" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_breaking_crypto_news.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_coins_list.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_important_news.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_market_coins_flat.xml" value="0.3216216216216216" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_market_coins_grid.xml" value="0.3216216216216216" />
-        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_second_top_coin.xml" value="0.3216216216216216" />
-        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_top_coin.xml" value="0.24728260869565216" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_portfolio_balance_coin.xml" value="0.5" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_portfolio_coin.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_second_coins_list.xml" value="0.67" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_second_top_coin.xml" value="0.5" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_sort_option.xml" value="0.5" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_top_coin.xml" value="0.33" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_watchlist_selection.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/list_item.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/simple_drop_down_item.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/test.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/toast_layout.xml" value="0.5" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/menu/bottom_menu.xml" value="0.21621621621621623" />
         <entry key="..\:/Users/sam/StudioProjects/Tooka/app/src/main/res/drawable/coin_rank_background.xml" value="0.2074074074074074" />
         <entry key="..\:/Users/sam/StudioProjects/Tooka/app/src/main/res/drawable/divider_gradient.xml" value="0.26296296296296295" />
         <entry key="..\:/Users/sam/StudioProjects/Tooka/app/src/main/res/drawable/green_gradient.xml" value="0.2755208333333333" />
