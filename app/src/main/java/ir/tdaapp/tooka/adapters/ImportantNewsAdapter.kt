@@ -14,13 +14,21 @@ import ir.tdaapp.tooka.util.api.RetrofitClient
 import ir.tdaapp.tooka.util.getCurrentLocale
 import ir.tdaapp.tooka.util.setNewsMargin
 
-class ImportantNewsAdapter(val action: (clicked: News, position: Int)->Unit):
+/**
+ * Be manzure rahat tar motavajeh shodane barnamenevis
+ */
+typealias ImportantNewsCallback = (clicked: News, position: Int)->Unit
+
+class ImportantNewsAdapter(val action: ImportantNewsCallback):
   RecyclerView.Adapter<ImportantNewsAdapter.ViewHolder>() {
 
   class ViewHolder private constructor(val binding: ItemImportantNewsBinding):
     RecyclerView.ViewHolder(binding.root) {
 
     companion object {
+      /**
+       * Gereftane instance ViewHolder
+       */
       fun from(parent: ViewGroup): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemImportantNewsBinding.inflate(layoutInflater, parent, false)
@@ -77,6 +85,9 @@ class ImportantNewsAdapter(val action: (clicked: News, position: Int)->Unit):
   override fun getItemCount(): Int = differ.currentList.size
 }
 
+/**
+ * Classe mohasebe konandeie taghirate adapter
+ */
 private class ImportantNewsDiffCallback: DiffUtil.ItemCallback<News>() {
 
   override fun areItemsTheSame(oldItem: News, newItem: News): Boolean = oldItem.id == newItem.id

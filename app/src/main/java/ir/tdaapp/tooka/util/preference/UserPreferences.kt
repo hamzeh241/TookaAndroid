@@ -1,4 +1,4 @@
-package ir.tdaapp.tooka.util
+package ir.tdaapp.tooka.util.preference
 
 import android.content.Context
 import android.content.SharedPreferences

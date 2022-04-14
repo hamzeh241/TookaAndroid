@@ -21,6 +21,9 @@ class NewsAdapter(val action: (clicked: News, position: Int)->Unit):
     RecyclerView.ViewHolder(binding.root) {
 
     companion object {
+      /**
+       * Gereftane instance ViewHolder
+       */
       fun from(parent: ViewGroup): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemBreakingCryptoNewsBinding.inflate(layoutInflater, parent, false)
@@ -28,6 +31,7 @@ class NewsAdapter(val action: (clicked: News, position: Int)->Unit):
       }
     }
   }
+
 
   val differ = AsyncListDiffer(this, NewsDiffCallback())
 
@@ -71,6 +75,9 @@ class NewsAdapter(val action: (clicked: News, position: Int)->Unit):
   override fun getItemCount(): Int = differ.currentList.size
 }
 
+/**
+ * Classe mohasebe konandeie taghirate adapter
+ */
 private class NewsDiffCallback: DiffUtil.ItemCallback<News>() {
 
   override fun areItemsTheSame(oldItem: News, newItem: News): Boolean = oldItem.id == newItem.id

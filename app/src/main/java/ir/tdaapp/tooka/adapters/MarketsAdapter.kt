@@ -25,14 +25,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
-
-class MarketsAdapter(val action: (clicked: Coin, position: Int)->Unit):
+/**
+ * Adaptere marbut be liste arz ha dar MarketsFragment.kt
+ */
+class MarketsAdapter(val action: CoinCallback):
   RecyclerView.Adapter<MarketsAdapter.ViewHolder>() {
 
   class ViewHolder private constructor(val binding: ViewBinding):
     RecyclerView.ViewHolder(binding.root) {
 
     companion object {
+      /**
+       * Gereftane instance ViewHolder
+       */
       fun from(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         if (viewType == VIEW_TYPE_LINEAR)
@@ -42,6 +47,9 @@ class MarketsAdapter(val action: (clicked: Coin, position: Int)->Unit):
     }
   }
 
+  /**
+   * Fielde AsyncListDiffer baraie mohasebe asynce taghirate adapter
+   */
   val differ = AsyncListDiffer(this, MarketsDiffCallback())
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -131,6 +139,9 @@ class MarketsAdapter(val action: (clicked: Coin, position: Int)->Unit):
 
   override fun getItemViewType(position: Int): Int = differ.currentList[position].viewType
 
+  /**
+   * Dar inja viewType arz ha az flat be grid taghir mikonand
+   */
   @SuppressLint("NotifyDataSetChanged")
   suspend fun changeViewType(viewType: Int) = withContext(Dispatchers.IO) {
 
@@ -143,6 +154,13 @@ class MarketsAdapter(val action: (clicked: Coin, position: Int)->Unit):
     }
   }
 
+  /**
+   * Dar inja agar taghirate ma be gunei ast ke nabaiad kole
+   * item ReDraw shavad mitavanim ba estefade az parametre
+   * payloads taghirate morede nazare khod ra baraie
+   * adapter ersal konim va mostaghiman be view dastresi dashte bashim
+   * @param payloads taghirati ke ijad mikonim
+   */
   override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
     if (payloads.isNullOrEmpty())
       super.onBindViewHolder(holder, position, payloads)
@@ -151,7 +169,6 @@ class MarketsAdapter(val action: (clicked: Coin, position: Int)->Unit):
     val themeUsd: Theme = holder.binding.root.context.theme
     themeUsd.resolveAttribute(R.attr.colorOnSurface, typedValueUsd, true)
     @ColorInt val colorUsd = typedValueUsd.data
-    val color = holder.binding.root.context.getColor(android.R.color.secondary_text_light)
 
     val typedValue = TypedValue()
     val theme: Theme = holder.binding.root.context.theme
@@ -259,6 +276,10 @@ class MarketsAdapter(val action: (clicked: Coin, position: Int)->Unit):
     }
   }
 
+  /**
+   * Inja hengami ke gheimate arz taghir mikonad, bar asase id, arz ra peida mikonim
+   * va taghirat ra e'mal mikonim
+   */
   suspend fun notifyChanges(livePrice: LivePriceListResponse) = withContext(Dispatchers.IO) {
     val position = async {
       differ.currentList.singleOrNull { it.id == livePrice.id }.let { coin ->
@@ -284,6 +305,9 @@ class MarketsAdapter(val action: (clicked: Coin, position: Int)->Unit):
   override fun getItemCount(): Int = differ.currentList.size
 }
 
+/**
+ * Classe mohasebe konandeie taghirate adapter
+ */
 private class MarketsDiffCallback: DiffUtil.ItemCallback<Coin>() {
 
   override fun areItemsTheSame(oldItem: Coin, newItem: Coin): Boolean = oldItem.id == newItem.id

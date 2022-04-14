@@ -41,6 +41,11 @@ object SignalR {
     }, {
       callback.onDisconnected()
     })
+
+    hubConnection.onClosed {
+      callback.onDisconnected()
+      connect(callback)
+    }
   }
 
   private const val SECONDS_3 = 3000L

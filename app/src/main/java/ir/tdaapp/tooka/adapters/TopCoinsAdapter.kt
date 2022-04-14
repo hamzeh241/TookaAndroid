@@ -18,13 +18,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
-class TopCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
+class TopCoinsAdapter(val action: CoinCallback):
   RecyclerView.Adapter<TopCoinsAdapter.ViewHolder>() {
 
   class ViewHolder private constructor(val binding: ItemSecondTopCoinBinding):
     RecyclerView.ViewHolder(binding.root) {
 
     companion object {
+      /**
+       * Gereftane instance ViewHolder
+       */
       fun from(parent: ViewGroup): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemSecondTopCoinBinding.inflate(layoutInflater, parent, false)
@@ -33,6 +36,9 @@ class TopCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
     }
   }
 
+  /**
+   * Fielde AsyncListDiffer baraie mohasebe asynce taghirate adapter
+   */
   val differ = AsyncListDiffer(this, DiffCallback())
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -93,6 +99,13 @@ class TopCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
     setMiniChart(holder.binding.chart, data.ohlc.reversed())
   }
 
+  /**
+   * Dar inja agar taghirate ma be gunei ast ke nabaiad kole
+   * item ReDraw shavad mitavanim ba estefade az parametre
+   * payloads taghirate morede nazare khod ra baraie
+   * adapter ersal konim va mostaghiman be view dastresi dashte bashim
+   * @param payloads taghirati ke ijad mikonim
+   */
   override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
     if (payloads.isNullOrEmpty())
       super.onBindViewHolder(holder, position, payloads)
@@ -137,6 +150,10 @@ class TopCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
     }
   }
 
+  /**
+   * Inja hengami ke gheimate arz taghir mikonad, bar asase id, arz ra peida mikonim
+   * va taghirat ra e'mal mikonim
+   */
   suspend fun notifyChanges(livePrice: LivePriceListResponse) =
     withContext(Dispatchers.IO) {
       val position = async {
@@ -165,6 +182,9 @@ class TopCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
   override fun getItemCount(): Int = differ.currentList.size
 }
 
+/**
+ * Classe mohasebe konandeie taghirate adapter
+ */
 private class DiffCallback: DiffUtil.ItemCallback<Coin>() {
 
   override fun areItemsTheSame(oldItem: Coin, newItem: Coin): Boolean = oldItem.id == newItem.id

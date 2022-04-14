@@ -11,15 +11,19 @@ import ir.tdaapp.tooka.databinding.ItemSliderNewsBinding
 import ir.tdaapp.tooka.models.SliderNews
 import ir.tdaapp.tooka.util.api.RetrofitClient
 import ir.tdaapp.tooka.util.getCurrentLocale
-import java.lang.StringBuilder
 
-class SliderNewsAdapter(val action: (clicked: SliderNews, position: Int)->Unit):
+typealias SliderNewsCallback = (clicked: SliderNews, position: Int)->Unit
+
+class SliderNewsAdapter(val action: SliderNewsCallback):
   RecyclerView.Adapter<SliderNewsAdapter.ViewHolder>() {
 
   class ViewHolder private constructor(val binding: ItemSliderNewsBinding):
     RecyclerView.ViewHolder(binding.root) {
 
     companion object {
+      /**
+       * Gereftane instance ViewHolder
+       */
       fun from(parent: ViewGroup): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemSliderNewsBinding.inflate(layoutInflater, parent, false)
@@ -28,6 +32,9 @@ class SliderNewsAdapter(val action: (clicked: SliderNews, position: Int)->Unit):
     }
   }
 
+  /**
+   * Fielde AsyncListDiffer baraie mohasebe asynce taghirate adapter
+   */
   val differ = AsyncListDiffer(this, SliderDiffCallback())
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -57,6 +64,9 @@ class SliderNewsAdapter(val action: (clicked: SliderNews, position: Int)->Unit):
   override fun getItemCount(): Int = differ.currentList.size
 }
 
+/**
+ * Classe mohasebe konandeie taghirate adapter
+ */
 private class SliderDiffCallback: DiffUtil.ItemCallback<SliderNews>() {
 
   override fun areItemsTheSame(oldItem: SliderNews, newItem: SliderNews): Boolean =

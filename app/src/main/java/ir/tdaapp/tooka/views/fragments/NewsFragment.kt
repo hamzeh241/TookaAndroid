@@ -23,7 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
-class NewsFragment: BaseFragment(), CoroutineScope {
+class NewsFragment: BaseFragment(), CoroutineScope, View.OnClickListener {
 
   lateinit var binding: FragmentNewsBinding
 
@@ -172,4 +172,15 @@ class NewsFragment: BaseFragment(), CoroutineScope {
 
   override val coroutineContext: CoroutineContext
     get() = Dispatchers.IO + CoroutineName("NewsFragmentJob")
+
+  override fun onClick(v: View?) {
+    when (v?.id) {
+      R.id.txtBreakingSeeMore -> {
+
+      }
+      R.id.txtCryptoNewsSeeMore -> {
+
+      }
+    }
+  }
 }

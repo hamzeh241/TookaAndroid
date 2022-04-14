@@ -1,6 +1,5 @@
 package ir.tdaapp.tooka.adapters
 
-import ContextUtils
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -16,17 +15,27 @@ import ir.tdaapp.tooka.models.PriceChange
 import ir.tdaapp.tooka.util.*
 import ir.tdaapp.tooka.util.api.RetrofitClient
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
-class AlternateCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
+/**
+ * Be manzure rahat tar motavajeh shodane barnamenevis
+ */
+typealias CoinCallback = (clicked: Coin, position: Int)->Unit
+
+/**
+ * Adaptere marbut be coin haii ke mamulan asli nistand wa dar jahaie omumi estefade mihavand
+ */
+class AlternateCoinsAdapter( /*  */val action: CoinCallback):
   RecyclerView.Adapter<AlternateCoinsAdapter.ViewHolder>() {
 
   class ViewHolder private constructor(val binding: ItemAlternateCoinsBinding):
     RecyclerView.ViewHolder(binding.root) {
 
     companion object {
+      /**
+       * Gereftane instance ViewHolder
+       */
       fun from(parent: ViewGroup): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemAlternateCoinsBinding.inflate(layoutInflater, parent, false)
@@ -35,6 +44,9 @@ class AlternateCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
     }
   }
 
+  /**
+   * Fielde AsyncListDiffer baraie mohasebe asynce taghirate adapter
+   */
   val differ = AsyncListDiffer(this, AlternateDiffCallback())
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -54,10 +66,10 @@ class AlternateCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
       differ.currentList.size - 1
     )
 
+    /* Baraie modiriate zabane farsi o englisi */
     holder.binding.txtCoinName.text =
-      when (ContextUtils.getLocale(holder.binding.root.context).toString()) {
-        "en" -> data.name
-        "fa" -> data.persianName
+      when (getCurrentLocale(holder.binding.root.context)) {
+        "fa" -> data.persianName ?: data.name
         else -> data.name
       }
 
@@ -83,6 +95,13 @@ class AlternateCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
     holder.binding.imageView glideUrl imageUrl
   }
 
+  /**
+   * Dar inja agar taghirate ma be gunei ast ke nabaiad kole
+   * item ReDraw shavad mitavanim ba estefade az parametre
+   * payloads taghirate morede nazare khod ra baraie
+   * adapter ersal konim va mostaghiman be view dastresi dashte bashim
+   * @param payloads taghirati ke ijad mikonim
+   */
   override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
     if (payloads.isNullOrEmpty())
       super.onBindViewHolder(holder, position, payloads)
@@ -122,8 +141,12 @@ class AlternateCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
     }
   }
 
-  suspend fun notifyChanges(livePrice: LivePriceListResponse) {
-    val position = GlobalScope.async {
+  /**
+   * Inja hengami ke gheimate arz taghir mikonad, bar asase id, arz ra peida mikonim
+   * va taghirat ra e'mal mikonim
+   */
+  suspend fun notifyChanges(livePrice: LivePriceListResponse) = withContext(Dispatchers.IO) {
+    val position = async {
       differ.currentList.singleOrNull { it.id == livePrice.id }.let { coin ->
         differ.currentList.indexOf(coin)
       }
@@ -147,6 +170,9 @@ class AlternateCoinsAdapter(val action: (clicked: Coin, position: Int)->Unit):
   override fun getItemCount(): Int = differ.currentList.size
 }
 
+/**
+ * Classe mohasebe konandeie taghirate adapter
+ */
 private class AlternateDiffCallback: DiffUtil.ItemCallback<Coin>() {
 
   override fun areItemsTheSame(oldItem: Coin, newItem: Coin): Boolean = oldItem.id == newItem.id

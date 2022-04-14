@@ -2,11 +2,10 @@ package ir.tdaapp.tooka.application
 
 import android.app.Application
 import android.content.res.Configuration
-import android.util.Log
-import com.flurry.android.FlurryAgent
-import com.flurry.android.FlurryPerformance
 import ir.tdaapp.tooka.BuildConfig
 import ir.tdaapp.tooka.util.*
+import ir.tdaapp.tooka.util.preference.LanguagePreferences
+import ir.tdaapp.tooka.util.preference.TokenPreferences
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -16,13 +15,11 @@ import java.util.*
 
 class App: Application() {
 
-  companion object {
-    var preferenceHelper: PreferenceHelper? = null
-  }
-
+  lateinit var preferenceHelper: PreferenceHelper
   private val DEFAULT_PREFERENCES = "default_preferences"
 
   val langPreferences = LanguagePreferences()
+  val tokenPreferences = TokenPreferences()
 
   override fun onCreate() {
     super.onCreate()
@@ -32,13 +29,6 @@ class App: Application() {
 
     if (BuildConfig.DEBUG)
       Timber.plant(Timber.DebugTree())
-
-    FlurryAgent.Builder()
-      .withCaptureUncaughtExceptions(true)
-      .withIncludeBackgroundSessionsInMetrics(true)
-      .withLogLevel(Log.VERBOSE)
-      .withPerformanceMetrics(FlurryPerformance.ALL)
-      .build(this, "QDTDTXN39BFBYVWHPDHF")
 
     preferenceHelper = PreferenceHelper(
       getSharedPreferences(DEFAULT_PREFERENCES, MODE_PRIVATE),

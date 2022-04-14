@@ -5,19 +5,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import ir.tdaapp.tooka.databinding.ItemImportantNewsBinding
 import ir.tdaapp.tooka.databinding.ItemSecondCoinsListBinding
 import ir.tdaapp.tooka.models.Coin
 import ir.tdaapp.tooka.util.api.RetrofitClient
 import ir.tdaapp.tooka.util.getCurrentLocale
 import ir.tdaapp.tooka.util.glideUrl
 
-class CoinsListAdapter(val clickAction: (Coin, Int)->Unit):
+/**
+ * Adaptere marbut be liste arz ha
+ */
+class CoinsListAdapter(val clickAction: CoinCallback):
   RecyclerView.Adapter<CoinsListAdapter.ViewHolder>() {
 
   class ViewHolder private constructor(val binding: ItemSecondCoinsListBinding):
     RecyclerView.ViewHolder(binding.root) {
     companion object {
+      /**
+       * Gereftane instance ViewHolder
+       */
       fun from(parent: ViewGroup): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemSecondCoinsListBinding.inflate(layoutInflater, parent, false)
@@ -26,6 +31,9 @@ class CoinsListAdapter(val clickAction: (Coin, Int)->Unit):
     }
   }
 
+  /**
+   * Fielde AsyncListDiffer baraie mohasebe asynce taghirate adapter
+   */
   val differ = AsyncListDiffer(this, CoinListDiffCallback())
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -50,6 +58,9 @@ class CoinsListAdapter(val clickAction: (Coin, Int)->Unit):
   override fun getItemCount(): Int = differ.currentList.size
 }
 
+/**
+ * Classe mohasebe konandeie taghirate adapter
+ */
 private class CoinListDiffCallback: DiffUtil.ItemCallback<Coin>() {
 
   override fun areItemsTheSame(oldItem: Coin, newItem: Coin): Boolean = oldItem.id == newItem.id

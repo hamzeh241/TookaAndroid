@@ -11,13 +11,18 @@ import ir.tdaapp.tooka.models.TimeFrameModel
 import ir.tdaapp.tooka.util.getCurrentLocale
 import ir.tdaapp.tooka.util.setCorrectMargins
 
-class TimeFramesAdapter(val action: (clicked: TimeFrameModel, position: Int)->Unit):
+typealias TimeFramesCallback = (clicked: TimeFrameModel, position: Int)->Unit
+
+class TimeFramesAdapter(val action: TimeFramesCallback):
   RecyclerView.Adapter<TimeFramesAdapter.ViewHolder>() {
 
   class ViewHolder private constructor(val binding: ItemTimeFrameBinding):
     RecyclerView.ViewHolder(binding.root) {
 
     companion object {
+      /**
+       * Gereftane instance ViewHolder
+       */
       fun from(parent: ViewGroup): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemTimeFrameBinding.inflate(layoutInflater, parent, false)
@@ -26,6 +31,9 @@ class TimeFramesAdapter(val action: (clicked: TimeFrameModel, position: Int)->Un
     }
   }
 
+  /**
+   * Fielde AsyncListDiffer baraie mohasebe asynce taghirate adapter
+   */
   val differ = AsyncListDiffer(this, TimeFrameDiffCallback())
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -72,6 +80,9 @@ class TimeFramesAdapter(val action: (clicked: TimeFrameModel, position: Int)->Un
   override fun getItemCount(): Int = differ.currentList.size
 }
 
+/**
+ * Classe mohasebe konandeie taghirate adapter
+ */
 private class TimeFrameDiffCallback: DiffUtil.ItemCallback<TimeFrameModel>() {
 
   override fun areItemsTheSame(oldItem: TimeFrameModel, newItem: TimeFrameModel): Boolean =

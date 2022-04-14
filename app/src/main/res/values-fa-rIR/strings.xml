@@ -134,4 +134,6 @@
   <string name="persian">فارسی</string>
   <string name="english">English</string>
   <string name="lang_change_message">زبان برنامه در ورود بعدی شما تغییر خواهد کرد</string>
+  <string name="below">زیر</string>
+  <string name="above">بالای</string>
 </resources>

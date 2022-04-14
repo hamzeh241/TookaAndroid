@@ -158,6 +158,8 @@
   <string name="persian">فارسی</string>
   <string name="english">English</string>
   <string name="lang_change_message">Language will change the next time you enter the app</string>
+  <string name="below">Below</string>
+  <string name="above">Above</string>
 
 
 </resources>

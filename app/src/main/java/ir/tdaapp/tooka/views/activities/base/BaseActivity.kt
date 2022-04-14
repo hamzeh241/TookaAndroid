@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.transition.TransitionManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import ir.tdaapp.tooka.util.LanguagePreferences
+import ir.tdaapp.tooka.util.preference.LanguagePreferences
 import java.util.*
 
 

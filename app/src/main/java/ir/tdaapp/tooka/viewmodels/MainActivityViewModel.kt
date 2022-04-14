@@ -15,6 +15,10 @@ class MainActivityViewModel: ViewModel() {
 
   private val hubConnection = SignalR.hubConnection
 
+  init {
+    subscribeToLivePrice()
+  }
+
   fun subscribeToLivePrice() = hubConnection.apply {
     send("SubscribeToLivePrice")
     observeLivePrice()

@@ -33,6 +33,9 @@ infix fun TextView.text(value: CharSequence) = this.setText(value)
 
 infix fun TextView.text(@StringRes resId: Int) = this.setText(resId)
 
+/**
+ * Serfan be manzure rahat tar budan kar
+ */
 infix fun ImageView.glideUrl(url: String) {
   Glide.with(this.context)
     .load(url)

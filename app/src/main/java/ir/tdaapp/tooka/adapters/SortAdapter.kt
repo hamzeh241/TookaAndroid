@@ -12,7 +12,9 @@ import ir.tdaapp.tooka.databinding.ItemSortOptionBinding
 import ir.tdaapp.tooka.models.SortModel
 import ir.tdaapp.tooka.util.getCurrentLocale
 
-class SortAdapter(private val click: (clicked: SortModel, position: Int)->Unit):
+typealias SortCallback = (clicked: SortModel, position: Int)->Unit
+
+class SortAdapter(private val click: SortCallback):
   RecyclerView.Adapter<SortAdapter.ViewHolder>() {
 
   class ViewHolder private constructor(val binding: ItemSortOptionBinding):
@@ -26,6 +28,9 @@ class SortAdapter(private val click: (clicked: SortModel, position: Int)->Unit):
     }
   }
 
+  /**
+   * Fielde AsyncListDiffer baraie mohasebe asynce taghirate adapter
+   */
   val differ = AsyncListDiffer(this, SortDiffCallback())
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -78,6 +83,9 @@ class SortAdapter(private val click: (clicked: SortModel, position: Int)->Unit):
   override fun getItemCount(): Int = differ.currentList.size
 }
 
+/**
+ * Classe mohasebe konandeie taghirate adapter
+ */
 class SortDiffCallback: DiffUtil.ItemCallback<SortModel>() {
   override fun areItemsTheSame(oldItem: SortModel, newItem: SortModel): Boolean {
     return oldItem.id == newItem.id

@@ -15,7 +15,7 @@ import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.application.App
 import ir.tdaapp.tooka.components.TookaSnackBar
 import ir.tdaapp.tooka.databinding.FragmentSettingsBinding
-import ir.tdaapp.tooka.util.LanguagePreferences
+import ir.tdaapp.tooka.util.preference.LanguagePreferences
 import ir.tdaapp.tooka.util.toast
 import ir.tdaapp.tooka.views.dialogs.AppLanguageBottomSheetDialog
 import ir.tdaapp.tooka.views.dialogs.AppLanguageBottomSheetDialog.Language.ENGLISH

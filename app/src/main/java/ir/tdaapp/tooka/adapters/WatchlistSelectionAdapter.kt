@@ -24,6 +24,9 @@ class WatchlistSelectionAdapter: RecyclerView.Adapter<WatchlistSelectionAdapter.
 
   class ViewHolder(binding: ItemWatchlistSelectionBinding): RecyclerView.ViewHolder(binding.root) {
     companion object {
+      /**
+       * Gereftane instance ViewHolder
+       */
       fun from(parent: ViewGroup): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemWatchlistSelectionBinding.inflate(layoutInflater, parent, false)

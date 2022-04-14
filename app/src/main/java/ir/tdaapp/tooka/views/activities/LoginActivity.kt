@@ -1,15 +1,11 @@
 package ir.tdaapp.tooka.views.activities
 
 import android.content.IntentFilter
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import androidx.navigation.findNavController
 import androidx.viewbinding.ViewBinding
 import com.google.android.gms.auth.api.phone.SmsRetriever
-import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ActivityLoginBinding
 import ir.tdaapp.tooka.util.TookaSmsRetriever
-import ir.tdaapp.tooka.util.UserPreferences
+import ir.tdaapp.tooka.util.preference.UserPreferences
 import ir.tdaapp.tooka.viewmodels.LoginActivityViewModel
 import ir.tdaapp.tooka.views.activities.base.BaseActivity
 import org.koin.android.ext.android.inject

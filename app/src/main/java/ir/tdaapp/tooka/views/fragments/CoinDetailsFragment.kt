@@ -285,6 +285,7 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
     binding.imgToggleChart.setOnClickListener(this)
   }
 
+  @SuppressLint("NotifyDataSetChanged")
   private fun initAdapters() {
     timeFrameAdapter = TimeFramesAdapter { clicked, position ->
 
@@ -294,13 +295,9 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
       chartLoading = true
       binding.includeCoinChart.timeFramesList.isEnabled = false
 
-      var selectedPos = 0
       val deselctorJob = launch(Dispatchers.IO) {
         timeFrameAdapter.differ.currentList.forEachIndexed { index, timeFrameModel ->
-          if (timeFrameModel.isSelected) {
-            selectedPos = index
-            timeFrameModel.isSelected = false
-          }
+          timeFrameModel.isSelected = false
         }
       }
 
@@ -310,9 +307,7 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
         launch {
           if (it == null) {
             withContext(Dispatchers.Main) {
-//              timeFrameAdapter.notifyDataSetChanged()
-              timeFrameAdapter.notifyItemChanged(position)
-              timeFrameAdapter.notifyItemChanged(selectedPos)
+              timeFrameAdapter.notifyDataSetChanged()
             }
           }
         }

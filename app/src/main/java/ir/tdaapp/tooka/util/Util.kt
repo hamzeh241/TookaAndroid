@@ -771,6 +771,11 @@ fun setMiniChart(lineChart: LineChart, priceList: List<Double>) {
   }
 }
 
+/**
+ * Dar inja margine item haie adapter tanzim mishavad.
+ * Behtar ast az ItemDecoration estefade shavad
+ * @see RecyclerView.ItemDecoration
+ */
 fun setCorrectMargins(cardView: CardView, context: Context, position: Int, lastPosition: Int) {
   val params = cardView.layoutParams as ViewGroup.MarginLayoutParams
   params.setMargins(

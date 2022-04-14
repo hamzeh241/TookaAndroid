@@ -2,6 +2,7 @@ package ir.tdaapp.tooka
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Process
 import android.transition.Slide
 import android.transition.TransitionManager
 import android.view.Gravity
@@ -16,13 +17,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationBarView
 import ir.tdaapp.tooka.application.App
 import ir.tdaapp.tooka.databinding.ActivityMainBinding
-import ir.tdaapp.tooka.util.LanguagePreferences
 import ir.tdaapp.tooka.util.LocaleHelper
-import ir.tdaapp.tooka.util.UserPreferences
+import ir.tdaapp.tooka.util.preference.UserPreferences
 import ir.tdaapp.tooka.util.signalr.SignalR
 import ir.tdaapp.tooka.viewmodels.MainActivityViewModel
 import ir.tdaapp.tooka.viewmodels.SharedViewModel
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 import java.util.*
 
 class MainActivity: AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
@@ -42,8 +43,6 @@ class MainActivity: AppCompatActivity(), NavigationBarView.OnItemSelectedListene
   lateinit var userPrefs: UserPreferences
   private val viewModel: MainActivityViewModel by inject()
   private val sharedViewModel: SharedViewModel by inject()
-
-  private val langPreference = LanguagePreferences()
 
   /*Set kardane Visibility 'BottomNavigationBar'*/
   var bottomNavVisibility: Boolean = true
@@ -80,10 +79,8 @@ class MainActivity: AppCompatActivity(), NavigationBarView.OnItemSelectedListene
     ) as NavHostFragment
     navController = navHostFragment.navController
 
-    // Setup the bottom navigation view with navController
     binding.bottomNav.setupWithNavController(navController)
 
-    // Setup the ActionBar with navController and 3 top level destinations
     appBarConfiguration = AppBarConfiguration(
       setOf(R.id.home, R.id.markets, R.id.portfolio, R.id.news, R.id.settings)
     )
@@ -99,6 +96,13 @@ class MainActivity: AppCompatActivity(), NavigationBarView.OnItemSelectedListene
     userPrefs = UserPreferences()
 
     binding.bottomNav.setOnItemReselectedListener(this)
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    Timber.i("OnDestroy")
+    finishAffinity()
+    Process.killProcess(Process.myPid())
   }
 
   /**
