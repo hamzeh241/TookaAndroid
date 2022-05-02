@@ -1,4 +1,4 @@
-package ir.tdaapp.tooka.viewmodels
+package ir.tdaapp.tooka.models.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

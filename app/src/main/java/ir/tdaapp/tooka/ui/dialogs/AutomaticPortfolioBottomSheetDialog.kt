@@ -21,7 +21,7 @@ import ir.tdaapp.tooka.databinding.ItemPlatformBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.CompoundPosition
 import ir.tdaapp.tooka.models.util.isLoading
-import ir.tdaapp.tooka.viewmodels.AutomaticBottomSheetViewModel
+import ir.tdaapp.tooka.models.viewmodels.AutomaticBottomSheetViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

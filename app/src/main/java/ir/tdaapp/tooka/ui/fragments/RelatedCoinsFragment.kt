@@ -18,7 +18,7 @@ import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.NetworkErrors
 import ir.tdaapp.tooka.models.util.getCurrentLocale
-import ir.tdaapp.tooka.viewmodels.RelatedCoinsViewModel
+import ir.tdaapp.tooka.models.viewmodels.RelatedCoinsViewModel
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope

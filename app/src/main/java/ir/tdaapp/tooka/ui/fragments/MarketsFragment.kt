@@ -16,7 +16,7 @@ import ir.tdaapp.tooka.models.adapters.SortAdapter
 import ir.tdaapp.tooka.databinding.FragmentMarketsBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.*
-import ir.tdaapp.tooka.viewmodels.MarketsViewModel
+import ir.tdaapp.tooka.models.viewmodels.MarketsViewModel
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope

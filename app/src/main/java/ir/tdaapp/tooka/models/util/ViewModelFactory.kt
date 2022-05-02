@@ -2,7 +2,7 @@ package ir.tdaapp.tooka.models.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import ir.tdaapp.tooka.viewmodels.*
+import ir.tdaapp.tooka.models.viewmodels.*
 
 class ViewModelFactory: ViewModelProvider.Factory {
   override fun <T: ViewModel?> create(modelClass: Class<T>): T {

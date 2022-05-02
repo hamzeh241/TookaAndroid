@@ -6,7 +6,7 @@ import com.google.android.gms.auth.api.phone.SmsRetriever
 import ir.tdaapp.tooka.databinding.ActivityLoginBinding
 import ir.tdaapp.tooka.models.util.TookaSmsRetriever
 import ir.tdaapp.tooka.models.preference.UserPreferences
-import ir.tdaapp.tooka.viewmodels.LoginActivityViewModel
+import ir.tdaapp.tooka.models.viewmodels.LoginActivityViewModel
 import ir.tdaapp.tooka.ui.activities.base.BaseActivitySecond
 import org.koin.android.ext.android.inject
 

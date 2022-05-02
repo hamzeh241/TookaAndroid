@@ -16,8 +16,8 @@ import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.models.adapters.PriceAlertAdapter
 import ir.tdaapp.tooka.databinding.FragmentAlertListBinding
-import ir.tdaapp.tooka.viewmodels.PriceAlertListViewModel
-import ir.tdaapp.tooka.viewmodels.PriceAlertListViewModel.AlertDisableState.*
+import ir.tdaapp.tooka.models.viewmodels.PriceAlertListViewModel
+import ir.tdaapp.tooka.models.viewmodels.PriceAlertListViewModel.AlertDisableState.*
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragmentSecond
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope

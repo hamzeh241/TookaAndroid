@@ -13,8 +13,8 @@ import ir.tdaapp.tooka.models.adapters.TopCoinsAdapter
 import ir.tdaapp.tooka.databinding.FragmentHomeBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.getCurrentLocale
-import ir.tdaapp.tooka.viewmodels.HomeViewModel
-import ir.tdaapp.tooka.viewmodels.SharedViewModel
+import ir.tdaapp.tooka.models.viewmodels.HomeViewModel
+import ir.tdaapp.tooka.models.viewmodels.SharedViewModel
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope

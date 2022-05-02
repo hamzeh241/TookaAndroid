@@ -13,7 +13,7 @@ import ir.tdaapp.tooka.models.adapters.SliderNewsAdapter
 import ir.tdaapp.tooka.databinding.FragmentNewsBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.openWebpage
-import ir.tdaapp.tooka.viewmodels.NewsViewModel
+import ir.tdaapp.tooka.models.viewmodels.NewsViewModel
 import ir.tdaapp.tooka.ui.dialogs.NewsDetailsDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.CoroutineName

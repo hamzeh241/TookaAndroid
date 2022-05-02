@@ -18,7 +18,7 @@ import ir.tdaapp.tooka.databinding.FragmentSearchBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.util.InputManagerHelper
 import ir.tdaapp.tooka.models.util.NetworkErrors
-import ir.tdaapp.tooka.viewmodels.SearchViewModel
+import ir.tdaapp.tooka.models.viewmodels.SearchViewModel
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

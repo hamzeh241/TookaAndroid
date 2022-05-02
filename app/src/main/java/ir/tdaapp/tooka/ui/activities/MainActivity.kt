@@ -18,8 +18,8 @@ import com.google.android.material.navigation.NavigationBarView
 import ir.tdaapp.tooka.databinding.ActivityMainBinding
 import ir.tdaapp.tooka.models.preference.UserPreferences
 import ir.tdaapp.tooka.models.util.signalr.SignalR
-import ir.tdaapp.tooka.viewmodels.MainActivityViewModel
-import ir.tdaapp.tooka.viewmodels.SharedViewModel
+import ir.tdaapp.tooka.models.viewmodels.MainActivityViewModel
+import ir.tdaapp.tooka.models.viewmodels.SharedViewModel
 import ir.tdaapp.tooka.ui.activities.base.BaseActivity
 import org.koin.android.ext.android.inject
 import timber.log.Timber

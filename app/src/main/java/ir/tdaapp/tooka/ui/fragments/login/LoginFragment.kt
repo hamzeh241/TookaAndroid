@@ -30,7 +30,7 @@ import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.UserErrors.*
 import ir.tdaapp.tooka.models.util.toPx
-import ir.tdaapp.tooka.viewmodels.LoginActivityViewModel
+import ir.tdaapp.tooka.models.viewmodels.LoginActivityViewModel
 import ir.tdaapp.tooka.ui.dialogs.ConfirmationDialog
 import ir.tdaapp.tooka.ui.dialogs.ConfirmationDialog.ConfirmationChoice.*
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragmentSecond

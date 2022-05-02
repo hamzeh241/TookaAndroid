@@ -17,7 +17,7 @@ import ir.tdaapp.tooka.databinding.FragmentVerificationBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.util.UserErrors
 import ir.tdaapp.tooka.models.util.toPx
-import ir.tdaapp.tooka.viewmodels.LoginActivityViewModel
+import ir.tdaapp.tooka.models.viewmodels.LoginActivityViewModel
 import ir.tdaapp.tooka.ui.activities.LoginActivity
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragmentSecond
 import kotlinx.coroutines.CoroutineScope

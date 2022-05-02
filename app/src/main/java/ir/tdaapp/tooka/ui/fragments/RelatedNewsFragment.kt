@@ -18,7 +18,7 @@ import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.NetworkErrors
 import ir.tdaapp.tooka.models.util.openWebpage
-import ir.tdaapp.tooka.viewmodels.RelatedNewsViewModel
+import ir.tdaapp.tooka.models.viewmodels.RelatedNewsViewModel
 import ir.tdaapp.tooka.ui.dialogs.NewsDetailsDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.CoroutineName

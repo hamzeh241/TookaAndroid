@@ -20,9 +20,9 @@ import ir.tdaapp.tooka.databinding.FragmentPortfolioBinding
 import ir.tdaapp.tooka.databinding.ItemPortfolioBalanceCoinBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.separatePrice
-import ir.tdaapp.tooka.viewmodels.AutomaticBottomSheetViewModel
-import ir.tdaapp.tooka.viewmodels.ManualBottomSheetViewModel
-import ir.tdaapp.tooka.viewmodels.PortfolioViewModel
+import ir.tdaapp.tooka.models.viewmodels.AutomaticBottomSheetViewModel
+import ir.tdaapp.tooka.models.viewmodels.ManualBottomSheetViewModel
+import ir.tdaapp.tooka.models.viewmodels.PortfolioViewModel
 import ir.tdaapp.tooka.ui.dialogs.AutomaticPortfolioBottomSheetDialog
 import ir.tdaapp.tooka.ui.dialogs.ManualPortfolioBottomSheetDialog
 import ir.tdaapp.tooka.ui.dialogs.PortfolioChoiceBottomSheetDialog

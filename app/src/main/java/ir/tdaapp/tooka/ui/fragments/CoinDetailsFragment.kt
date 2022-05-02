@@ -33,8 +33,8 @@ import ir.tdaapp.tooka.models.util.*
 import ir.tdaapp.tooka.models.util.ChartType.CANDLESTICK
 import ir.tdaapp.tooka.models.util.ChartType.LINEAR
 import ir.tdaapp.tooka.models.network.RetrofitClient
-import ir.tdaapp.tooka.viewmodels.CoinDetailsViewModel
-import ir.tdaapp.tooka.viewmodels.MainActivityViewModel
+import ir.tdaapp.tooka.models.viewmodels.CoinDetailsViewModel
+import ir.tdaapp.tooka.models.viewmodels.MainActivityViewModel
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.*
 import org.greenrobot.eventbus.EventBus

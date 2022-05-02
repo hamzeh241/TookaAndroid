@@ -27,8 +27,8 @@ import ir.tdaapp.tooka.models.util.NetworkErrors.*
 import ir.tdaapp.tooka.models.util.NetworkErrors.NETWORK_ERROR
 import ir.tdaapp.tooka.models.util.NetworkErrors.SERVER_ERROR
 import ir.tdaapp.tooka.models.util.NetworkErrors.UNKNOWN_ERROR
-import ir.tdaapp.tooka.viewmodels.PriceAlertViewModel
-import ir.tdaapp.tooka.viewmodels.PriceAlertViewModel.AlertStatus.*
+import ir.tdaapp.tooka.models.viewmodels.PriceAlertViewModel
+import ir.tdaapp.tooka.models.viewmodels.PriceAlertViewModel.AlertStatus.*
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragmentSecond
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

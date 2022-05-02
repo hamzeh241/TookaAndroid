@@ -1,4 +1,4 @@
-package ir.tdaapp.tooka.viewmodels
+package ir.tdaapp.tooka.models.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,29 +7,24 @@ import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.NetworkErrors
 import ir.tdaapp.tooka.models.network.ApiService
 import java.io.IOException
-import java.lang.Exception
 
-class CoinsListViewModel(private val api: ApiService): ViewModel() {
+class NotificationsViewModel(private val api: ApiService): ViewModel() {
 
-  private val _list = MutableLiveData<List<Coin>>()
-  val list: LiveData<List<Coin>>
-    get() = _list
+  private val _result = MutableLiveData<List<Notification>>()
+  val result: LiveData<List<Notification>>
+    get() = _result
 
   private val _error = MutableLiveData<NetworkErrors>()
   val error: LiveData<NetworkErrors>
     get() = _error
 
-  suspend fun getData() {
+  suspend fun getData(userId: Int) {
     try {
-      val result = api.allCoins(false, sortOptions = 2)
-      if (result.isSuccessful) {
-        _list.postValue(result.body()?.result!!)
-      } else {
-        when(result.code()){
-          400 -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
-          500 -> _error.postValue(NetworkErrors.SERVER_ERROR)
-        }
-      }
+      val result = api.notifications(userId)
+      if (result.isSuccessful)
+        _result.postValue(result.body()?.result!!)
+      else
+        _error.postValue(NetworkErrors.SERVER_ERROR)
     } catch (e: Exception) {
       if (e is IOException)
         _error.postValue(NetworkErrors.NETWORK_ERROR)

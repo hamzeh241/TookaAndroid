@@ -14,7 +14,7 @@ import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.models.adapters.CoinsListAdapter
 import ir.tdaapp.tooka.databinding.FragmentCoinsListBinding
 import ir.tdaapp.tooka.models.util.NetworkErrors
-import ir.tdaapp.tooka.viewmodels.CoinsListViewModel
+import ir.tdaapp.tooka.models.viewmodels.CoinsListViewModel
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragmentSecond
 import org.koin.android.ext.android.inject
 

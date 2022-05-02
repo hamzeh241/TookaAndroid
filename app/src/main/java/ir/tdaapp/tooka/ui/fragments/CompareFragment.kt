@@ -18,7 +18,7 @@ import ir.tdaapp.tooka.databinding.ItemTimeFrameBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.*
 import ir.tdaapp.tooka.models.network.RetrofitClient
-import ir.tdaapp.tooka.viewmodels.CompareViewModel
+import ir.tdaapp.tooka.models.viewmodels.CompareViewModel
 import ir.tdaapp.tooka.ui.dialogs.CoinsListBottomSheetDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragmentSecond
 import kotlinx.coroutines.*

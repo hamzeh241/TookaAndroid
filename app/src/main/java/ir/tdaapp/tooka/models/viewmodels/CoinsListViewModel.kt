@@ -1,4 +1,4 @@
-package ir.tdaapp.tooka.viewmodels
+package ir.tdaapp.tooka.models.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,39 +7,30 @@ import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.NetworkErrors
 import ir.tdaapp.tooka.models.network.ApiService
 import java.io.IOException
+import java.lang.Exception
 
-class PortfolioViewModel(private val api: ApiService): ViewModel() {
+class CoinsListViewModel(private val api: ApiService): ViewModel() {
 
-  private val _isPortfolio = MutableLiveData<Boolean>()
-  val isPortfolio: LiveData<Boolean>
-    get() = _isPortfolio
-
-  private val _capitals = MutableLiveData<PortfolioInfo>()
-  val capitals: LiveData<PortfolioInfo>
-    get() = _capitals
+  private val _list = MutableLiveData<List<Coin>>()
+  val list: LiveData<List<Coin>>
+    get() = _list
 
   private val _error = MutableLiveData<NetworkErrors>()
   val error: LiveData<NetworkErrors>
     get() = _error
 
-  fun isPortfolio(apiKey: String) {
-
-  }
-
-  suspend fun getAllBalances(userId: Int) {
+  suspend fun getData() {
     try {
-      val balances = api.allBalances(userId)
-      if (balances.isSuccessful)
-        _capitals.postValue(balances.body()!!.result!!)
-      else {
-        when(balances.code()){
+      val result = api.allCoins(false, sortOptions = 2)
+      if (result.isSuccessful) {
+        _list.postValue(result.body()?.result!!)
+      } else {
+        when(result.code()){
           400 -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
-          404 -> _error.postValue(NetworkErrors.NOT_FOUND_ERROR)
           500 -> _error.postValue(NetworkErrors.SERVER_ERROR)
         }
       }
     } catch (e: Exception) {
-
       if (e is IOException)
         _error.postValue(NetworkErrors.NETWORK_ERROR)
       else _error.postValue(NetworkErrors.UNKNOWN_ERROR)

@@ -1,6 +1,6 @@
 package ir.tdaapp.tooka.di
 
-import ir.tdaapp.tooka.viewmodels.*
+import ir.tdaapp.tooka.models.viewmodels.*
 import org.koin.dsl.module
 
 val viewModelModule = module {

@@ -11,7 +11,7 @@ import ir.tdaapp.tooka.databinding.DialogNewsDetailsBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.getCurrentLocale
 import ir.tdaapp.tooka.models.util.share
-import ir.tdaapp.tooka.viewmodels.NewsDetailsViewModel
+import ir.tdaapp.tooka.models.viewmodels.NewsDetailsViewModel
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

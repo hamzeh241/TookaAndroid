@@ -16,8 +16,8 @@ import ir.tdaapp.tooka.databinding.DialogManualBottomSheetBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.isLoading
-import ir.tdaapp.tooka.viewmodels.ManualBottomSheetViewModel
-import ir.tdaapp.tooka.viewmodels.ManualBottomSheetViewModel.ManualPortfolioErrors.*
+import ir.tdaapp.tooka.models.viewmodels.ManualBottomSheetViewModel
+import ir.tdaapp.tooka.models.viewmodels.ManualBottomSheetViewModel.ManualPortfolioErrors.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
