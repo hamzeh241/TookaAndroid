@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.MarketsAdapter
-import ir.tdaapp.tooka.adapters.SortAdapter
+import ir.tdaapp.tooka.models.adapters.MarketsAdapter
+import ir.tdaapp.tooka.models.adapters.SortAdapter
 import ir.tdaapp.tooka.databinding.FragmentMarketsBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.*

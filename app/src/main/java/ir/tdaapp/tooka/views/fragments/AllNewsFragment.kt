@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.NewsAdapter
+import ir.tdaapp.tooka.models.adapters.NewsAdapter
 import ir.tdaapp.tooka.databinding.FragmentAllNewsBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.dataclasses.*

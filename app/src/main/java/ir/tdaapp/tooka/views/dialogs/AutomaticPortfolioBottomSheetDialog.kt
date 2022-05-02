@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.PlatformsViewHolder
-import ir.tdaapp.tooka.adapters.TookaAdapter
+import ir.tdaapp.tooka.models.adapters.PlatformsViewHolder
+import ir.tdaapp.tooka.models.adapters.TookaAdapter
 import ir.tdaapp.tooka.databinding.DialogAutomaticBottomSheetBinding
 import ir.tdaapp.tooka.databinding.ItemPlatformBinding
 import ir.tdaapp.tooka.models.dataclasses.*

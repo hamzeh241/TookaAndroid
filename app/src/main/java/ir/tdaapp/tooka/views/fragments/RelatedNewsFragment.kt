@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.NewsAdapter
+import ir.tdaapp.tooka.models.adapters.NewsAdapter
 import ir.tdaapp.tooka.databinding.FragmentRelatedNewsBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.dataclasses.*

@@ -14,8 +14,8 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.PortfolioCoinsViewHolder
-import ir.tdaapp.tooka.adapters.TookaAdapter
+import ir.tdaapp.tooka.models.adapters.PortfolioCoinsViewHolder
+import ir.tdaapp.tooka.models.adapters.TookaAdapter
 import ir.tdaapp.tooka.databinding.FragmentPortfolioBinding
 import ir.tdaapp.tooka.databinding.ItemPortfolioBalanceCoinBinding
 import ir.tdaapp.tooka.models.dataclasses.*

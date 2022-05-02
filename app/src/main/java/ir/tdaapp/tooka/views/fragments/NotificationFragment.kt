@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.NotificationsViewHolder
-import ir.tdaapp.tooka.adapters.TookaAdapter
+import ir.tdaapp.tooka.models.adapters.NotificationsViewHolder
+import ir.tdaapp.tooka.models.adapters.TookaAdapter
 import ir.tdaapp.tooka.databinding.FragmentNotificationBinding
 import ir.tdaapp.tooka.databinding.ItemNotificationBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding

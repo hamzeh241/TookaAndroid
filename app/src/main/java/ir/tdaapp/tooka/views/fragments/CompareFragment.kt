@@ -11,8 +11,8 @@ import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.TookaAdapter
-import ir.tdaapp.tooka.adapters.TimeFramesViewHolder
+import ir.tdaapp.tooka.models.adapters.TookaAdapter
+import ir.tdaapp.tooka.models.adapters.TimeFramesViewHolder
 import ir.tdaapp.tooka.databinding.FragmentCompareBinding
 import ir.tdaapp.tooka.databinding.ItemTimeFrameBinding
 import ir.tdaapp.tooka.models.dataclasses.*

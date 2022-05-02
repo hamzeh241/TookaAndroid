@@ -1,9 +1,8 @@
-package ir.tdaapp.tooka.adapters
+package ir.tdaapp.tooka.models.adapters
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ir.tdaapp.tooka.models.dataclasses.*
-import java.lang.Exception
+import ir.tdaapp.tooka.models.dataclasses.Coin
 
 abstract class TookaAdapter<VM>:
   RecyclerView.Adapter<RecyclerView.ViewHolder>() {

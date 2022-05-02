@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.MarketsAdapter
+import ir.tdaapp.tooka.models.adapters.MarketsAdapter
 import ir.tdaapp.tooka.databinding.FragmentRelatedCoinsBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.dataclasses.*

@@ -12,8 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.MarketsAdapter
-import ir.tdaapp.tooka.adapters.NewsAdapter
+import ir.tdaapp.tooka.models.adapters.MarketsAdapter
+import ir.tdaapp.tooka.models.adapters.NewsAdapter
 import ir.tdaapp.tooka.databinding.FragmentSearchBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.util.InputManagerHelper

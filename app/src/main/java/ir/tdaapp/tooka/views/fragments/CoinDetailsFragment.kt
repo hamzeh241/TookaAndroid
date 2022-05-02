@@ -23,9 +23,9 @@ import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.AlternateCoinsAdapter
-import ir.tdaapp.tooka.adapters.ImportantNewsAdapter
-import ir.tdaapp.tooka.adapters.TimeFramesAdapter
+import ir.tdaapp.tooka.models.adapters.AlternateCoinsAdapter
+import ir.tdaapp.tooka.models.adapters.ImportantNewsAdapter
+import ir.tdaapp.tooka.models.adapters.TimeFramesAdapter
 import ir.tdaapp.tooka.databinding.FragmentCoinDetailsFinalBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.dataclasses.*

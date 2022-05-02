@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.PriceAlertAdapter
+import ir.tdaapp.tooka.models.adapters.PriceAlertAdapter
 import ir.tdaapp.tooka.databinding.FragmentAlertListBinding
 import ir.tdaapp.tooka.viewmodels.PriceAlertListViewModel
 import ir.tdaapp.tooka.viewmodels.PriceAlertListViewModel.AlertDisableState.*

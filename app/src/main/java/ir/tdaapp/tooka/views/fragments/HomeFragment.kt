@@ -7,9 +7,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.AlternateCoinsAdapter
-import ir.tdaapp.tooka.adapters.ImportantNewsAdapter
-import ir.tdaapp.tooka.adapters.TopCoinsAdapter
+import ir.tdaapp.tooka.models.adapters.AlternateCoinsAdapter
+import ir.tdaapp.tooka.models.adapters.ImportantNewsAdapter
+import ir.tdaapp.tooka.models.adapters.TopCoinsAdapter
 import ir.tdaapp.tooka.databinding.FragmentHomeBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.getCurrentLocale

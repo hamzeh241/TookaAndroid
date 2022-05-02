@@ -1,4 +1,4 @@
-package ir.tdaapp.tooka.adapters;
+package ir.tdaapp.tooka.models.adapters;
 
 import android.content.Context;
 import android.renderscript.ScriptIntrinsicYuvToRGB;

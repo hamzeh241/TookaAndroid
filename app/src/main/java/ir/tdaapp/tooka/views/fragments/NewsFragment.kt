@@ -8,8 +8,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.adapters.NewsAdapter
-import ir.tdaapp.tooka.adapters.SliderNewsAdapter
+import ir.tdaapp.tooka.models.adapters.NewsAdapter
+import ir.tdaapp.tooka.models.adapters.SliderNewsAdapter
 import ir.tdaapp.tooka.databinding.FragmentNewsBinding
 import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.openWebpage

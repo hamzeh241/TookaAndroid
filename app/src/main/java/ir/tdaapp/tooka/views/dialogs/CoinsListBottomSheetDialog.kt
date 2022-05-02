@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import ir.tdaapp.tooka.adapters.CoinsViewHolder
-import ir.tdaapp.tooka.adapters.TookaAdapter
+import ir.tdaapp.tooka.models.adapters.CoinsViewHolder
+import ir.tdaapp.tooka.models.adapters.TookaAdapter
 import ir.tdaapp.tooka.databinding.DialogCoinsListBottomSheetBinding
 import ir.tdaapp.tooka.databinding.ItemCoinsListBinding
 import ir.tdaapp.tooka.models.dataclasses.*
