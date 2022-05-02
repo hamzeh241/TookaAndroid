@@ -6,7 +6,7 @@
 
   <fragment
     android:id="@+id/coinDetailsFragment2"
-    android:name="ir.tdaapp.tooka.views.fragments.CoinDetailsFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.CoinDetailsFragment"
     android:label="CoinDetailsFragment">
     <argument
       android:name="coinId"

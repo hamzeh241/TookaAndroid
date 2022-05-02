@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemSecondTopCoinBinding
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.util.*
-import ir.tdaapp.tooka.util.api.RetrofitClient
+import ir.tdaapp.tooka.models.util.*
+import ir.tdaapp.tooka.models.network.RetrofitClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext

@@ -150,13 +150,13 @@
           app:lottie_speed="0.6"
           android:layout_centerInParent="true" />
 
-        <ir.tdaapp.tooka.components.TookaLineChart
+        <ir.tdaapp.tooka.models.components.TookaLineChart
           android:layout_width="match_parent"
           android:layout_height="200dp"
           android:id="@+id/chart"
           android:visibility="gone">
 
-        </ir.tdaapp.tooka.components.TookaLineChart>
+        </ir.tdaapp.tooka.models.components.TookaLineChart>
       </RelativeLayout>
 
       <androidx.recyclerview.widget.RecyclerView

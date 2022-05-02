@@ -6,7 +6,7 @@
   app:startDestination="@id/homeFragment">
   <fragment
     android:id="@+id/homeFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.HomeFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.HomeFragment"
     android:label="HomeFragment" >
     <action
       android:id="@+id/action_homeFragment_to_notificationFragment"
@@ -38,7 +38,7 @@
   </fragment>
   <fragment
     android:id="@+id/relatedCoinsFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.RelatedCoinsFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.RelatedCoinsFragment"
     android:label="RelatedCoinsFragment" >
     <argument
       android:name="coinId"
@@ -49,7 +49,7 @@
   </fragment>
   <fragment
     android:id="@+id/relatedNewsFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.RelatedNewsFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.RelatedNewsFragment"
     android:label="RelatedNewsFragment" >
     <argument
       android:name="coinId"
@@ -64,7 +64,7 @@
   </fragment>
   <fragment
     android:id="@+id/newsDetailsFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.NewsDetailsFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.NewsDetailsFragment"
     android:label="NewsDetailsFragment" >
     <argument
       android:name="newsId"
@@ -72,23 +72,23 @@
   </fragment>
   <fragment
     android:id="@+id/notificationFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.NotificationFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.NotificationFragment"
     android:label="NotificationFragment" />
   <fragment
     android:id="@+id/searchFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.SearchFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.SearchFragment"
     android:label="SearchFragment" />
   <fragment
     android:id="@+id/compareFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.CompareFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.CompareFragment"
     android:label="CompareFragment" />
   <fragment
     android:id="@+id/converterFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.ConverterFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.ConverterFragment"
     android:label="ConverterFragment" />
   <fragment
     android:id="@+id/alertListFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.pricealert.AlertListFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.pricealert.AlertListFragment"
     android:label="AlertListFragment" >
     <action
       android:id="@+id/action_alertListFragment_to_coinsListFragment"
@@ -97,7 +97,7 @@
   </fragment>
   <fragment
     android:id="@+id/coinsListFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.pricealert.CoinsListFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.pricealert.CoinsListFragment"
     android:label="CoinsListFragment" >
     <action
       android:id="@+id/action_coinsListFragment_to_insertPriceAlertFragment"
@@ -106,7 +106,7 @@
   </fragment>
   <fragment
     android:id="@+id/insertPriceAlertFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.pricealert.InsertPriceAlertFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.pricealert.InsertPriceAlertFragment"
     android:label="InsertPriceAlertFragment" >
     <argument
       android:name="coinId"
@@ -114,7 +114,7 @@
   </fragment>
   <fragment
     android:id="@+id/coinDetailsFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.CoinDetailsFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.CoinDetailsFragment"
     android:label="CoinDetailsFragment">
     <argument
       android:name="coinId"

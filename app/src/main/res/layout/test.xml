@@ -253,13 +253,13 @@
     android:layout_width="match_parent"
     android:layout_height="200dp">
 
-    <ir.tdaapp.tooka.components.TookaLineChart
+    <ir.tdaapp.tooka.models.components.TookaLineChart
       android:id="@+id/lineChart"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:visibility="gone" />
 
-    <ir.tdaapp.tooka.components.TookaCandlestickChart
+    <ir.tdaapp.tooka.models.components.TookaCandlestickChart
       android:id="@+id/candleStickChart"
       android:layout_height="match_parent"
       android:layout_width="match_parent"
@@ -326,7 +326,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ir.tdaapp.tooka.components.TookaRecyclerView
+    <ir.tdaapp.tooka.models.components.TookaRecyclerView
       android:layout_width="match_parent"
       android:layout_height="@dimen/size88"
       android:id="@+id/timeFramesList"

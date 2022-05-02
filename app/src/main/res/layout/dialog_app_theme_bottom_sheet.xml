@@ -5,7 +5,7 @@
   android:layout_height="wrap_content"
   android:orientation="vertical">
 
-  <ir.tdaapp.tooka.components.TookaCustomTextView
+  <ir.tdaapp.tooka.models.components.TookaCustomTextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/margin16"
@@ -18,7 +18,7 @@
     android:clickable="true"
     android:focusable="true"/>
 
-  <ir.tdaapp.tooka.components.TookaCustomTextView
+  <ir.tdaapp.tooka.models.components.TookaCustomTextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:customTextViewIcon="@drawable/ic_nightmode"

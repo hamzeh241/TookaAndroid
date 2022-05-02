@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.databinding.ItemSecondCoinsListBinding
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.util.api.RetrofitClient
-import ir.tdaapp.tooka.util.getCurrentLocale
-import ir.tdaapp.tooka.util.glideUrl
+import ir.tdaapp.tooka.models.network.RetrofitClient
+import ir.tdaapp.tooka.models.util.getCurrentLocale
+import ir.tdaapp.tooka.models.util.glideUrl
 
 /**
  * Adaptere marbut be liste arz ha

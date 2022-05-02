@@ -6,9 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.microsoft.signalr.HubConnectionState
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.util.api.RetrofitClient
-import ir.tdaapp.tooka.util.convertResponse
-import ir.tdaapp.tooka.util.signalr.SignalR
+import ir.tdaapp.tooka.models.network.RetrofitClient
+import ir.tdaapp.tooka.models.util.convertResponse
+import ir.tdaapp.tooka.models.util.signalr.SignalR
 import org.koin.android.ext.android.inject
 
 class NewsDetailsViewModel(appClass: Application): AndroidViewModel(appClass) {

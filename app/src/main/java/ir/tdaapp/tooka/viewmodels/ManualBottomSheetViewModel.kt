@@ -1,18 +1,11 @@
 package ir.tdaapp.tooka.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.util.api.ApiService
-import ir.tdaapp.tooka.util.api.RetrofitClient
-import org.koin.android.ext.android.inject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import ir.tdaapp.tooka.models.network.ApiService
 import java.io.IOException
 
 class ManualBottomSheetViewModel(private val api: ApiService): ViewModel() {

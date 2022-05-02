@@ -8,7 +8,7 @@ import ir.tdaapp.tooka.models.dataclasses.AutoWalletModel
 import ir.tdaapp.tooka.models.dataclasses.Coin
 import ir.tdaapp.tooka.models.dataclasses.Platform
 import ir.tdaapp.tooka.models.dataclasses.ResponseModel
-import ir.tdaapp.tooka.util.api.ApiService
+import ir.tdaapp.tooka.models.network.ApiService
 import java.io.IOException
 
 class AutomaticBottomSheetViewModel(private val api: ApiService): ViewModel() {

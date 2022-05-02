@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.util.UserErrors
-import ir.tdaapp.tooka.util.api.ApiService
+import ir.tdaapp.tooka.models.util.UserErrors
+import ir.tdaapp.tooka.models.network.ApiService
 import java.io.IOException
 
 class LoginActivityViewModel(private val api: ApiService): ViewModel() {

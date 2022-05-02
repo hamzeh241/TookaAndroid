@@ -1,7 +1,6 @@
 package ir.tdaapp.tooka.models.adapters;
 
 import android.content.Context;
-import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import java.util.List;
 
 import ir.tdaapp.tooka.R;
 import ir.tdaapp.tooka.models.dataclasses.*;
-import ir.tdaapp.tooka.util.api.RetrofitClient;
+import ir.tdaapp.tooka.models.network.RetrofitClient;
 
 public class TookaSpinnerAdapter extends BaseAdapter implements Filterable {
 

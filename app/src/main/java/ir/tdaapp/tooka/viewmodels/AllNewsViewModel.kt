@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.tdaapp.tooka.models.dataclasses.News
-import ir.tdaapp.tooka.util.NetworkErrors
-import ir.tdaapp.tooka.util.api.ApiService
+import ir.tdaapp.tooka.models.util.NetworkErrors
+import ir.tdaapp.tooka.models.network.ApiService
 import kotlinx.coroutines.launch
 
 class AllNewsViewModel(private val api: ApiService): ViewModel() {

@@ -106,7 +106,7 @@
     android:layout_width="match_parent"
     android:layout_height="96dp">
 
-    <ir.tdaapp.tooka.components.TookaRecyclerView
+    <ir.tdaapp.tooka.models.components.TookaRecyclerView
       android:id="@+id/relatedNewsList"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
     android:layout_width="match_parent"
     android:layout_height="112dp">
 
-  <ir.tdaapp.tooka.components.TookaRecyclerView
+  <ir.tdaapp.tooka.models.components.TookaRecyclerView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/relatedCoinsList"

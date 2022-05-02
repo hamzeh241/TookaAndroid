@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ir.tdaapp.tooka.components.TookaMaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<ir.tdaapp.tooka.models.components.TookaMaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:id="@+id/cardTopCoin"
   android:layout_width="136dp"
@@ -145,4 +145,4 @@
     </LinearLayout>
   </RelativeLayout>
 
-</ir.tdaapp.tooka.components.TookaMaterialCardView>
+</ir.tdaapp.tooka.models.components.TookaMaterialCardView>

@@ -11,8 +11,8 @@ import com.bumptech.glide.Glide
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.*
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.util.*
-import ir.tdaapp.tooka.util.api.RetrofitClient
+import ir.tdaapp.tooka.models.util.*
+import ir.tdaapp.tooka.models.network.RetrofitClient
 import java.math.BigDecimal
 import java.text.DecimalFormat
 

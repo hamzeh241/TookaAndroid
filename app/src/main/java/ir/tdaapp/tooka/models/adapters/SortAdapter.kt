@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemSortOptionBinding
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.util.getCurrentLocale
+import ir.tdaapp.tooka.models.util.getCurrentLocale
 
 typealias SortCallback = (clicked: SortModel, position: Int)->Unit
 

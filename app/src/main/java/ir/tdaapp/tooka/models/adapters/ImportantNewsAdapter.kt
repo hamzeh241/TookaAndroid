@@ -10,9 +10,9 @@ import com.bumptech.glide.Glide
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemImportantNewsBinding
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.util.api.RetrofitClient
-import ir.tdaapp.tooka.util.getCurrentLocale
-import ir.tdaapp.tooka.util.setNewsMargin
+import ir.tdaapp.tooka.models.network.RetrofitClient
+import ir.tdaapp.tooka.models.util.getCurrentLocale
+import ir.tdaapp.tooka.models.util.setNewsMargin
 
 /**
  * Be manzure rahat tar motavajeh shodane barnamenevis

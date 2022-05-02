@@ -1,6 +1,6 @@
 package ir.tdaapp.tooka.models.dataclasses
 
-import ir.tdaapp.tooka.util.Status
+import ir.tdaapp.tooka.models.util.Status
 
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
 

@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.util.NetworkErrors
-import ir.tdaapp.tooka.util.api.ApiService
-import ir.tdaapp.tooka.util.signalr.SignalR
+import ir.tdaapp.tooka.models.util.NetworkErrors
+import ir.tdaapp.tooka.models.network.ApiService
+import ir.tdaapp.tooka.models.util.signalr.SignalR
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

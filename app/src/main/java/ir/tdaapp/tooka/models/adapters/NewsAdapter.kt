@@ -10,9 +10,9 @@ import com.bumptech.glide.Glide
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemBreakingCryptoNewsBinding
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.util.addSpringAnimation
-import ir.tdaapp.tooka.util.api.RetrofitClient
-import ir.tdaapp.tooka.util.getCurrentLocale
+import ir.tdaapp.tooka.models.util.addSpringAnimation
+import ir.tdaapp.tooka.models.network.RetrofitClient
+import ir.tdaapp.tooka.models.util.getCurrentLocale
 
 class NewsAdapter(val action: (clicked: News, position: Int)->Unit):
   RecyclerView.Adapter<NewsAdapter.ViewHolder>() {

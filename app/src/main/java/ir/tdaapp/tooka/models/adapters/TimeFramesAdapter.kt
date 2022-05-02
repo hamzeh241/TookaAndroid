@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemTimeFrameBinding
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.util.getCurrentLocale
-import ir.tdaapp.tooka.util.setCorrectMargins
+import ir.tdaapp.tooka.models.util.getCurrentLocale
+import ir.tdaapp.tooka.models.util.setCorrectMargins
 
 typealias TimeFramesCallback = (clicked: TimeFrameModel, position: Int)->Unit
 

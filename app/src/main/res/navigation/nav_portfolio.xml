@@ -7,7 +7,7 @@
 
   <fragment
     android:id="@+id/relatedNewsFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.RelatedNewsFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.RelatedNewsFragment"
     android:label="RelatedNewsFragment">
     <argument
       android:name="coinName"
@@ -18,7 +18,7 @@
   </fragment>
   <fragment
     android:id="@+id/relatedCoinsFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.RelatedCoinsFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.RelatedCoinsFragment"
     android:label="RelatedCoinsFragment">
     <argument
       android:name="coinId"
@@ -26,7 +26,7 @@
   </fragment>
   <fragment
     android:id="@+id/portfolioFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.PortfolioFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.PortfolioFragment"
     android:label="PortfolioFragment"
     tools:layout="@layout/fragment_portfolio" >
     <action
@@ -38,10 +38,10 @@
   </fragment>
   <fragment
     android:id="@+id/notificationFragment3"
-    android:name="ir.tdaapp.tooka.views.fragments.NotificationFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.NotificationFragment"
     android:label="NotificationFragment" />
   <fragment
     android:id="@+id/searchFragment3"
-    android:name="ir.tdaapp.tooka.views.fragments.SearchFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.SearchFragment"
     android:label="SearchFragment" />
 </navigation>

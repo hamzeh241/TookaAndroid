@@ -49,7 +49,7 @@
           </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <ir.tdaapp.tooka.components.TookaToggleButton
+        <ir.tdaapp.tooka.models.components.TookaToggleButton
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           app:layout_constraintStart_toStartOf="parent"

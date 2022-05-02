@@ -7,7 +7,7 @@
 
   <fragment
     android:id="@+id/settingsFragment"
-    android:name="ir.tdaapp.tooka.views.fragments.SettingsFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.SettingsFragment"
     android:label="SettingsFragment" >
     <action
       android:id="@+id/action_settingsFragment_to_loginActivity"
@@ -16,7 +16,7 @@
   </fragment>
   <activity
     android:id="@+id/loginActivity"
-    android:name="ir.tdaapp.tooka.views.activities.LoginActivity"
+    android:name="ir.tdaapp.tooka.ui.activities.LoginActivity"
     android:label="activity_login"
     tools:layout="@layout/activity_login" />
 </navigation>

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.reflect.TypeToken
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.util.GsonInstance
-import ir.tdaapp.tooka.util.signalr.SignalR
+import ir.tdaapp.tooka.models.util.GsonInstance
+import ir.tdaapp.tooka.models.util.signalr.SignalR
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus

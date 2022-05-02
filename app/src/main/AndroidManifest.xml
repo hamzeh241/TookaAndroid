@@ -11,7 +11,7 @@
     android:required="true" />
 
   <application
-    android:name=".application.App"
+    android:name=".App"
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
@@ -21,7 +21,7 @@
     android:theme="@style/Theme.MyApp"
     android:usesCleartextTraffic="true">
     <activity
-      android:name=".views.activities.LoginActivity"
+      android:name=".ui.activities.LoginActivity"
       android:exported="false"
       android:launchMode="singleTop"
       android:screenOrientation="portrait"/>
@@ -30,7 +30,7 @@
       android:launchMode="singleTop"
       android:screenOrientation="portrait" />
     <activity
-      android:name=".views.activities.SplashActivity"
+      android:name=".ui.activities.SplashActivity"
       android:exported="true"
       android:screenOrientation="portrait">
       <intent-filter>
@@ -41,7 +41,7 @@
     </activity>
 
     <receiver
-      android:name=".util.TookaSmsRetriever"
+      android:name="ir.tdaapp.tooka.models.util.TookaSmsRetriever"
       android:exported="true"
       android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
       <intent-filter>
@@ -50,7 +50,7 @@
     </receiver>
 
     <service
-      android:name=".services.firebase.TookaMessagingService"
+      android:name=".models.firebase.TookaMessagingService"
       android:exported="false">
       <intent-filter>
         <action android:name="com.google.firebase.MESSAGING_EVENT" />

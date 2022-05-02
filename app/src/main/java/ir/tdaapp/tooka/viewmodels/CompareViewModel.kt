@@ -1,19 +1,10 @@
 package ir.tdaapp.tooka.viewmodels
 
-import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
-import com.google.gson.reflect.TypeToken
-import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnectionState
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.util.GsonInstance
-import ir.tdaapp.tooka.util.api.RetrofitClient
-import ir.tdaapp.tooka.util.convertResponse
-import ir.tdaapp.tooka.util.signalr.SignalR
-import kotlinx.coroutines.*
-import org.koin.android.ext.android.inject
-import retrofit2.Call
+import ir.tdaapp.tooka.models.util.convertResponse
+import ir.tdaapp.tooka.models.util.signalr.SignalR
 
 class CompareViewModel: ViewModel() {
 
