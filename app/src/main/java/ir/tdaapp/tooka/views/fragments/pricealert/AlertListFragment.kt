@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
-
 class AlertListFragment: BaseFragmentSecond(), CoroutineScope {
 
   private lateinit var binding: FragmentAlertListBinding

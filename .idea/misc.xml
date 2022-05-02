@@ -94,8 +94,10 @@
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_automatic_bottom_sheet.xml" value="0.33" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_confirmation.xml" value="0.67" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_manual_bottom_sheet.xml" value="0.33" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_news_details.xml" value="0.21621621621621623" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_qr_code_scanner.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_alert_list.xml" value="0.33" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_all_news.xml" value="0.21621621621621623" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_coin_details.xml" value="0.3216216216216216" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_coin_details_final.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_coins_list.xml" value="0.31351351351351353" />

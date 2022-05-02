@@ -24,7 +24,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.components.TookaCandlestickChart
 import ir.tdaapp.tooka.components.TookaLineChart
-import ir.tdaapp.tooka.models.Coin
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.CompoundPosition.*
 import java.math.BigDecimal
 import java.math.RoundingMode

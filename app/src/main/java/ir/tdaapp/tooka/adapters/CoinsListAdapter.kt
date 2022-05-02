@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.databinding.ItemSecondCoinsListBinding
-import ir.tdaapp.tooka.models.Coin
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.api.RetrofitClient
 import ir.tdaapp.tooka.util.getCurrentLocale
 import ir.tdaapp.tooka.util.glideUrl

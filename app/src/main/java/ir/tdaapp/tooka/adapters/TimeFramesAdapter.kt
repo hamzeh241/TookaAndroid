@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemTimeFrameBinding
-import ir.tdaapp.tooka.models.TimeFrameModel
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.getCurrentLocale
 import ir.tdaapp.tooka.util.setCorrectMargins
 

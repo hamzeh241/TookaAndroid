@@ -1,15 +1,14 @@
 package ir.tdaapp.tooka.viewmodels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import ir.tdaapp.tooka.models.*
-import ir.tdaapp.tooka.util.NetworkErrors
+import ir.tdaapp.tooka.models.dataclasses.AutoWalletModel
+import ir.tdaapp.tooka.models.dataclasses.Coin
+import ir.tdaapp.tooka.models.dataclasses.Platform
+import ir.tdaapp.tooka.models.dataclasses.ResponseModel
 import ir.tdaapp.tooka.util.api.ApiService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.IOException
 
 class AutomaticBottomSheetViewModel(private val api: ApiService): ViewModel() {

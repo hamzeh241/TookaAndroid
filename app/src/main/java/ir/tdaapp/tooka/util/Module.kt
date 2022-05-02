@@ -57,6 +57,7 @@ val viewModelModule = module {
   factory { PriceAlertViewModel(get()) }
   factory { PriceAlertListViewModel(get()) }
   factory { CoinsListViewModel(get()) }
+  factory { AllNewsViewModel(get()) }
 }
 
 private fun provideLogging() = HttpLoggingInterceptor()

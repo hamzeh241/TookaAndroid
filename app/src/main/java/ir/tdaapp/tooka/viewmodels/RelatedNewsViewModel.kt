@@ -3,7 +3,7 @@ package ir.tdaapp.tooka.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ir.tdaapp.tooka.models.News
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.NetworkErrors
 import ir.tdaapp.tooka.util.api.ApiService
 import java.io.IOException

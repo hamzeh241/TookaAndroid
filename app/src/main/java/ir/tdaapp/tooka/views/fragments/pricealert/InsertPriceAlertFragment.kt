@@ -21,8 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.FragmentInsertPriceAlertBinding
-import ir.tdaapp.tooka.models.LivePriceListResponse
-import ir.tdaapp.tooka.models.PriceAlertModel
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.*
 import ir.tdaapp.tooka.util.NetworkErrors.*
 import ir.tdaapp.tooka.util.NetworkErrors.NETWORK_ERROR

@@ -7,10 +7,10 @@ import ir.tdaapp.tooka.databinding.ActivityLoginBinding
 import ir.tdaapp.tooka.util.TookaSmsRetriever
 import ir.tdaapp.tooka.util.preference.UserPreferences
 import ir.tdaapp.tooka.viewmodels.LoginActivityViewModel
-import ir.tdaapp.tooka.views.activities.base.BaseActivity
+import ir.tdaapp.tooka.views.activities.base.BaseActivitySecond
 import org.koin.android.ext.android.inject
 
-class LoginActivity: BaseActivity() {
+class LoginActivity: BaseActivitySecond() {
 
   private lateinit var binding: ActivityLoginBinding
 

@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.DialogNewsDetailsBinding
-import ir.tdaapp.tooka.models.NewsDetailsModel
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.getCurrentLocale
 import ir.tdaapp.tooka.util.share
 import ir.tdaapp.tooka.viewmodels.NewsDetailsViewModel

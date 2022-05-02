@@ -18,9 +18,7 @@ import ir.tdaapp.tooka.adapters.PlatformsViewHolder
 import ir.tdaapp.tooka.adapters.TookaAdapter
 import ir.tdaapp.tooka.databinding.DialogAutomaticBottomSheetBinding
 import ir.tdaapp.tooka.databinding.ItemPlatformBinding
-import ir.tdaapp.tooka.models.AutoWalletModel
-import ir.tdaapp.tooka.models.Coin
-import ir.tdaapp.tooka.models.Platform
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.CompoundPosition
 import ir.tdaapp.tooka.util.isLoading
 import ir.tdaapp.tooka.viewmodels.AutomaticBottomSheetViewModel

@@ -14,8 +14,7 @@ import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.adapters.MarketsAdapter
 import ir.tdaapp.tooka.adapters.SortAdapter
 import ir.tdaapp.tooka.databinding.FragmentMarketsBinding
-import ir.tdaapp.tooka.models.Coin
-import ir.tdaapp.tooka.models.LivePriceListResponse
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.*
 import ir.tdaapp.tooka.viewmodels.MarketsViewModel
 import ir.tdaapp.tooka.views.fragments.base.BaseFragment

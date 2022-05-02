@@ -2,7 +2,7 @@ package ir.tdaapp.tooka.adapters
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ir.tdaapp.tooka.models.Coin
+import ir.tdaapp.tooka.models.dataclasses.*
 import java.lang.Exception
 
 abstract class TookaAdapter<VM>:

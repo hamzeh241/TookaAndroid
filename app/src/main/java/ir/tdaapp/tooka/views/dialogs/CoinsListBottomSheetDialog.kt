@@ -11,7 +11,7 @@ import ir.tdaapp.tooka.adapters.CoinsViewHolder
 import ir.tdaapp.tooka.adapters.TookaAdapter
 import ir.tdaapp.tooka.databinding.DialogCoinsListBottomSheetBinding
 import ir.tdaapp.tooka.databinding.ItemCoinsListBinding
-import ir.tdaapp.tooka.models.Coin
+import ir.tdaapp.tooka.models.dataclasses.*
 import java.util.ArrayList
 
 class CoinsListBottomSheetDialog(val models: ArrayList<Coin>):

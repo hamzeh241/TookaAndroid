@@ -16,16 +16,17 @@ class LanguagePreferences {
     val editor: SharedPreferences.Editor =
       context.getSharedPreferences(UserPreferences.PREFERENCE_KEY, Context.MODE_PRIVATE)
         .edit()
+    editor.clear()
     editor.putString(LANG_KEY, lang)
     editor.apply()
   }
 
-  fun getLang(context: Context): String? {
+  fun getLang(context: Context): String {
     val editor: SharedPreferences = context.getSharedPreferences(
-      UserPreferences.PREFERENCE_KEY,
+      PREFERENCE_KEY,
       Context.MODE_PRIVATE
     )
-    return editor.getString(LANG_KEY, "en")
+    return editor.getString(LANG_KEY, "en") ?: "en"
   }
 
 }

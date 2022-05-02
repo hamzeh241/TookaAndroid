@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import ir.tdaapp.tooka.models.LivePriceListResponse
-import ir.tdaapp.tooka.models.PriceAlertModel
-import ir.tdaapp.tooka.models.ResponseModel
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.NetworkErrors
 import ir.tdaapp.tooka.util.api.ApiService
 import java.io.IOException

@@ -16,8 +16,7 @@ import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.DialogManualBottomSheetBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
-import ir.tdaapp.tooka.models.Coin
-import ir.tdaapp.tooka.models.ManualWalletModel
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.CompoundPosition
 import ir.tdaapp.tooka.util.isLoading
 import ir.tdaapp.tooka.util.toEnglishNumbers

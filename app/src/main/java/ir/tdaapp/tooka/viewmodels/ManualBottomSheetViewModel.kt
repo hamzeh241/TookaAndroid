@@ -6,9 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import ir.tdaapp.tooka.models.Coin
-import ir.tdaapp.tooka.models.ManualWalletModel
-import ir.tdaapp.tooka.models.ResponseModel
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.api.ApiService
 import ir.tdaapp.tooka.util.api.RetrofitClient
 import org.koin.android.ext.android.inject

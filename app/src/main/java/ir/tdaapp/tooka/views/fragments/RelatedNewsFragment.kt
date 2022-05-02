@@ -15,7 +15,7 @@ import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.adapters.NewsAdapter
 import ir.tdaapp.tooka.databinding.FragmentRelatedNewsBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
-import ir.tdaapp.tooka.models.News
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.NetworkErrors
 import ir.tdaapp.tooka.util.openWebpage
 import ir.tdaapp.tooka.viewmodels.RelatedNewsViewModel

@@ -6,10 +6,7 @@ import androidx.lifecycle.*
 import com.google.gson.reflect.TypeToken
 import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnectionState
-import ir.tdaapp.tooka.models.Coin
-import ir.tdaapp.tooka.models.CompareModel
-import ir.tdaapp.tooka.models.CompareOHLCVModel
-import ir.tdaapp.tooka.models.ResponseModel
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.GsonInstance
 import ir.tdaapp.tooka.util.api.RetrofitClient
 import ir.tdaapp.tooka.util.convertResponse

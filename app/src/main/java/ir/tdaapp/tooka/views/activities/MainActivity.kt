@@ -1,5 +1,6 @@
 package ir.tdaapp.tooka
 
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Process
@@ -8,7 +9,6 @@ import android.transition.TransitionManager
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -17,16 +17,16 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationBarView
 import ir.tdaapp.tooka.application.App
 import ir.tdaapp.tooka.databinding.ActivityMainBinding
-import ir.tdaapp.tooka.util.LocaleHelper
 import ir.tdaapp.tooka.util.preference.UserPreferences
 import ir.tdaapp.tooka.util.signalr.SignalR
 import ir.tdaapp.tooka.viewmodels.MainActivityViewModel
 import ir.tdaapp.tooka.viewmodels.SharedViewModel
+import ir.tdaapp.tooka.views.activities.base.BaseActivity
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 import java.util.*
 
-class MainActivity: AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
+class MainActivity: BaseActivity(), NavigationBarView.OnItemSelectedListener,
   NavigationBarView.OnItemReselectedListener, SignalR.OnSignalRCallback {
 
   companion object {
@@ -35,9 +35,9 @@ class MainActivity: AppCompatActivity(), NavigationBarView.OnItemSelectedListene
     private const val TAG = "MainActivity"
   }
 
-  init {
-    LocaleHelper.updateConfig(this)
-  }
+//  init {
+//    LocaleHelper.updateConfig(this)
+//  }
 
   private lateinit var binding: ActivityMainBinding
   lateinit var userPrefs: UserPreferences
@@ -72,6 +72,17 @@ class MainActivity: AppCompatActivity(), NavigationBarView.OnItemSelectedListene
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     binding = ActivityMainBinding.inflate(layoutInflater)
+
+    val config = resources.configuration
+    val lang = (application as App).langPreferences.getLang(this)
+    val locale = Locale(lang)
+    Locale.setDefault(locale)
+    config.setLocale(locale)
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+      createConfigurationContext(config)
+    resources.updateConfiguration(config, resources.displayMetrics)
+
     setContentView(binding.root)
 
     val navHostFragment = supportFragmentManager.findFragmentById(
@@ -85,7 +96,7 @@ class MainActivity: AppCompatActivity(), NavigationBarView.OnItemSelectedListene
       setOf(R.id.home, R.id.markets, R.id.portfolio, R.id.news, R.id.settings)
     )
 
-    App.preferenceHelper!!.nightModeLive.observe(this) { nightMode ->
+    (application as App).preferenceHelper.nightModeLive.observe(this) { nightMode ->
       nightMode?.let {
         delegate.localNightMode = it
       }

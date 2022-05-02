@@ -1,51 +1,22 @@
 package ir.tdaapp.tooka.views.activities.base
 
-import android.os.Build
-import android.os.Bundle
-import android.transition.TransitionManager
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewbinding.ViewBinding
+import ir.tdaapp.tooka.util.LocaleHelper
 import ir.tdaapp.tooka.util.preference.LanguagePreferences
-import java.util.*
 
 
-abstract class BaseActivity: AppCompatActivity() {
+open class BaseActivity: AppCompatActivity() {
 
-  private val langPreference = LanguagePreferences()
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(getLayout().root)
-    init()
-    initToolbar()
-    initTransitions()
-    initTheme()
+  companion object {
+    const val TAG = "BaseActivity"
   }
 
-  fun getCurrentLocale(): Locale? {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-      resources.configuration.locales[0]
-    } else {
-      resources.configuration.locale
-    }
+  override fun attachBaseContext(newBase: Context?) {
+    if (newBase != null) {
+      val prefs = LanguagePreferences()
+      val lang = prefs.getLang(newBase)
+      super.attachBaseContext(LocaleHelper.localeUpdateResources(newBase, lang))
+    } else super.attachBaseContext(newBase)
   }
-
-  abstract fun init()
-
-  /**
-   * Dar inja har Animation ya Transitioni ke baiad dar shoru'e app ejra shavad inja
-   * neveshte mishavad
-   * @see TransitionManager
-   * @see Transition
-   * @see Animation
-   */
-  abstract fun initTransitions()
-
-  abstract fun initToolbar()
-
-  abstract fun initLanguage()
-
-  abstract fun initTheme()
-
-  abstract fun getLayout(): ViewBinding
 }

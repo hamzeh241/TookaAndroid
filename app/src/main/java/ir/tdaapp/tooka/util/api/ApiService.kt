@@ -1,6 +1,6 @@
 package ir.tdaapp.tooka.util.api
 
-import ir.tdaapp.tooka.models.*
+import ir.tdaapp.tooka.models.dataclasses.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -124,4 +124,7 @@ interface ApiService {
   @GET("search/everywhere")
   suspend fun search(@Query("input") input: String):
     Response<ResponseModel<SearchResponse>>
+
+  @GET("news/allnews")
+  suspend fun allNews(@Query("page") page: Int = 0): Response<ResponseModel<List<News>>>
 }

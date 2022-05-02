@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import ir.tdaapp.tooka.models.GoogleLoginModel
-import ir.tdaapp.tooka.models.LoginModel
-import ir.tdaapp.tooka.models.ResponseModel
-import ir.tdaapp.tooka.models.UserInfoResponse
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.UserErrors
 import ir.tdaapp.tooka.util.api.ApiService
 import java.io.IOException

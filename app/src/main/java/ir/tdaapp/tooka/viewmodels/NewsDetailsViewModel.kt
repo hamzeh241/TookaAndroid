@@ -5,8 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.microsoft.signalr.HubConnectionState
-import ir.tdaapp.tooka.models.News
-import ir.tdaapp.tooka.models.NewsDetailsModel
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.api.RetrofitClient
 import ir.tdaapp.tooka.util.convertResponse
 import ir.tdaapp.tooka.util.signalr.SignalR

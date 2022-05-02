@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ir.tdaapp.tooka.models.Coin
-import ir.tdaapp.tooka.models.HomeContentResponse
-import ir.tdaapp.tooka.models.News
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.NetworkErrors
 import ir.tdaapp.tooka.util.api.ApiService
 import kotlinx.coroutines.Dispatchers

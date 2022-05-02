@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ir.tdaapp.tooka.R;
-import ir.tdaapp.tooka.models.Coin;
+import ir.tdaapp.tooka.models.dataclasses.*;
 import ir.tdaapp.tooka.util.api.RetrofitClient;
 
 public class TookaSpinnerAdapter extends BaseAdapter implements Filterable {

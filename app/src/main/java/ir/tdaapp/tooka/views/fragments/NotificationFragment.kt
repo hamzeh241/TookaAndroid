@@ -15,7 +15,7 @@ import ir.tdaapp.tooka.adapters.TookaAdapter
 import ir.tdaapp.tooka.databinding.FragmentNotificationBinding
 import ir.tdaapp.tooka.databinding.ItemNotificationBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
-import ir.tdaapp.tooka.models.Notification
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.NetworkErrors
 import ir.tdaapp.tooka.viewmodels.NotificationsViewModel
 import ir.tdaapp.tooka.views.fragments.base.BaseFragment

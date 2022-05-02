@@ -15,7 +15,7 @@ import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.adapters.MarketsAdapter
 import ir.tdaapp.tooka.databinding.FragmentRelatedCoinsBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
-import ir.tdaapp.tooka.models.LivePriceListResponse
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.NetworkErrors
 import ir.tdaapp.tooka.util.getCurrentLocale
 import ir.tdaapp.tooka.viewmodels.RelatedCoinsViewModel

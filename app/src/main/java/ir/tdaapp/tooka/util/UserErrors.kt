@@ -1,7 +1,6 @@
 package ir.tdaapp.tooka.util
 
 enum class UserErrors {
-
   DATABASE_EXCEPTION,
   SMS_EXCEPTION,
   INVALID_ARGS_EXCEPTION,

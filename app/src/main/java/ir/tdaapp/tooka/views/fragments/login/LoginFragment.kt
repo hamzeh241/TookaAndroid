@@ -27,7 +27,7 @@ import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.components.TookaSnackBar
 import ir.tdaapp.tooka.databinding.FragmentLoginBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
-import ir.tdaapp.tooka.models.GoogleLoginModel
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.UserErrors.*
 import ir.tdaapp.tooka.util.toPx
 import ir.tdaapp.tooka.viewmodels.LoginActivityViewModel

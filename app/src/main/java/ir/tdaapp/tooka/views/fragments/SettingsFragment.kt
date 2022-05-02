@@ -64,7 +64,7 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
   }
 
   private fun initObservables() {
-    App.preferenceHelper!!.isDarkThemeLive.observe(viewLifecycleOwner) { isDarkTheme ->
+    (requireActivity().application as App).preferenceHelper.isDarkThemeLive.observe(viewLifecycleOwner) { isDarkTheme ->
       isDarkTheme?.let {
         isNightMode(it)
       }
@@ -116,17 +116,16 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
           }.show()
         }
         dialog.show(requireActivity().supportFragmentManager, AppLanguageBottomSheetDialog.TAG)
-
       }
     }
   }
 
   override fun onLightModeClicked() {
-    App.preferenceHelper!!.isDarkTheme = false
+    (requireActivity().application as App).preferenceHelper.isDarkTheme = false
   }
 
   override fun onDarkModeClicked() {
-    App.preferenceHelper!!.isDarkTheme = true
+    (requireActivity().application as App).preferenceHelper.isDarkTheme = true
   }
 
   private fun isNightMode(boolean: Boolean) {

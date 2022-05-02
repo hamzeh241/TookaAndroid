@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.databinding.ItemWatchlistSelectionBinding
-import ir.tdaapp.tooka.models.Coin
+import ir.tdaapp.tooka.models.dataclasses.*
 
 class WatchlistSelectionAdapter: RecyclerView.Adapter<WatchlistSelectionAdapter.ViewHolder>() {
 

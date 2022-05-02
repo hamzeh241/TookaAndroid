@@ -11,7 +11,7 @@ import ir.tdaapp.tooka.adapters.AlternateCoinsAdapter
 import ir.tdaapp.tooka.adapters.ImportantNewsAdapter
 import ir.tdaapp.tooka.adapters.TopCoinsAdapter
 import ir.tdaapp.tooka.databinding.FragmentHomeBinding
-import ir.tdaapp.tooka.models.LivePriceListResponse
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.getCurrentLocale
 import ir.tdaapp.tooka.viewmodels.HomeViewModel
 import ir.tdaapp.tooka.viewmodels.SharedViewModel

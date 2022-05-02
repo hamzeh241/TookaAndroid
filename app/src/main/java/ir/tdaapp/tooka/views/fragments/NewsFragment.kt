@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +11,7 @@ import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.adapters.NewsAdapter
 import ir.tdaapp.tooka.adapters.SliderNewsAdapter
 import ir.tdaapp.tooka.databinding.FragmentNewsBinding
-import ir.tdaapp.tooka.models.News
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.openWebpage
 import ir.tdaapp.tooka.viewmodels.NewsViewModel
 import ir.tdaapp.tooka.views.dialogs.NewsDetailsDialog
@@ -25,11 +24,11 @@ import kotlin.coroutines.CoroutineContext
 
 class NewsFragment: BaseFragment(), CoroutineScope, View.OnClickListener {
 
-  lateinit var binding: FragmentNewsBinding
+  private lateinit var binding: FragmentNewsBinding
 
-  lateinit var sliderAdapter: SliderNewsAdapter
-  lateinit var breakingAdapter: NewsAdapter
-  lateinit var cryptoNewsAdapter: NewsAdapter
+  private lateinit var sliderAdapter: SliderNewsAdapter
+  private lateinit var breakingAdapter: NewsAdapter
+  private lateinit var cryptoNewsAdapter: NewsAdapter
 
   private val viewModel: NewsViewModel by inject()
 
@@ -54,9 +53,8 @@ class NewsFragment: BaseFragment(), CoroutineScope, View.OnClickListener {
     initCryptoNews()
     initObservables()
 
-    lifecycleScope.launchWhenCreated {
-      viewModel.getData()
-    }
+    binding.includeBreakingNews.txtBreakingSeeMore.setOnClickListener(this)
+    binding.includeCryptoNews.txtCryptoNewsSeeMore.setOnClickListener(this)
   }
 
   private fun initAdapters() {
@@ -179,7 +177,7 @@ class NewsFragment: BaseFragment(), CoroutineScope, View.OnClickListener {
 
       }
       R.id.txtCryptoNewsSeeMore -> {
-
+        findNavController().navigate(NewsFragmentDirections.actionNewsFragmentToAllNewsFragment())
       }
     }
   }

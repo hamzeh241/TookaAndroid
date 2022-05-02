@@ -3,10 +3,11 @@ package ir.tdaapp.tooka.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ir.tdaapp.tooka.models.News
-import ir.tdaapp.tooka.models.SliderNews
+import androidx.lifecycle.viewModelScope
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.NetworkErrors
 import ir.tdaapp.tooka.util.api.ApiService
+import kotlinx.coroutines.launch
 import java.io.IOException
 
 class NewsViewModel(private val api: ApiService): ViewModel() {
@@ -26,6 +27,12 @@ class NewsViewModel(private val api: ApiService): ViewModel() {
   private val _error = MutableLiveData<NetworkErrors>()
   val error: LiveData<NetworkErrors>
     get() = _error
+
+  init {
+    viewModelScope.launch {
+      getData()
+    }
+  }
 
   suspend fun getData() {
     try {

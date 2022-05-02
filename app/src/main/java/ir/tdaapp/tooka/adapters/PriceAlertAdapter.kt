@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemAlertBinding
-import ir.tdaapp.tooka.models.PriceAlert
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.api.RetrofitClient
 import ir.tdaapp.tooka.util.glideUrl
 import ir.tdaapp.tooka.util.toPersianNumbers

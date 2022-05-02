@@ -15,9 +15,7 @@ import ir.tdaapp.tooka.adapters.TookaAdapter
 import ir.tdaapp.tooka.adapters.TimeFramesViewHolder
 import ir.tdaapp.tooka.databinding.FragmentCompareBinding
 import ir.tdaapp.tooka.databinding.ItemTimeFrameBinding
-import ir.tdaapp.tooka.models.Coin
-import ir.tdaapp.tooka.models.CompareModel
-import ir.tdaapp.tooka.models.TimeFrameModel
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.*
 import ir.tdaapp.tooka.util.api.RetrofitClient
 import ir.tdaapp.tooka.viewmodels.CompareViewModel

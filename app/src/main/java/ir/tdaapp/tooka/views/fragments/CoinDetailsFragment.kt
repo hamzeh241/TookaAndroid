@@ -28,10 +28,7 @@ import ir.tdaapp.tooka.adapters.ImportantNewsAdapter
 import ir.tdaapp.tooka.adapters.TimeFramesAdapter
 import ir.tdaapp.tooka.databinding.FragmentCoinDetailsFinalBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
-import ir.tdaapp.tooka.models.CandleUpdateModel
-import ir.tdaapp.tooka.models.CoinDetailsModel
-import ir.tdaapp.tooka.models.LivePriceListResponse
-import ir.tdaapp.tooka.models.TimeFrameModel
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.*
 import ir.tdaapp.tooka.util.ChartType.CANDLESTICK
 import ir.tdaapp.tooka.util.ChartType.LINEAR

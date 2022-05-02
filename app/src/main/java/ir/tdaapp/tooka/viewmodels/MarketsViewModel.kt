@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
-import ir.tdaapp.tooka.models.Coin
-import ir.tdaapp.tooka.models.ResponseModel
-import ir.tdaapp.tooka.models.SortModel
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.util.NetworkErrors
 import ir.tdaapp.tooka.util.api.ApiService
 import kotlinx.coroutines.launch

@@ -7,6 +7,7 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import ir.tdaapp.tooka.application.App
+import timber.log.Timber
 import java.util.*
 
 class TookaMessagingService: FirebaseMessagingService() {
@@ -21,7 +22,7 @@ class TookaMessagingService: FirebaseMessagingService() {
    */
   override fun onNewToken(token: String) {
     super.onNewToken(token)
-
+    Timber.i("token: $token")
     (application as App).tokenPreferences.add(applicationContext, token)
   }
 

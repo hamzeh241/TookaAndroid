@@ -36,10 +36,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemImportantNewsBinding
-import ir.tdaapp.tooka.models.Coin
-import ir.tdaapp.tooka.models.CoinDetailsModel
-import ir.tdaapp.tooka.models.CompareOHLCVModel
-import ir.tdaapp.tooka.models.ResponseModel
+import ir.tdaapp.tooka.models.dataclasses.*
 import java.text.DecimalFormat
 import java.util.*
 
