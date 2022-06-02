@@ -3,7 +3,6 @@ package ir.tdaapp.tooka.ui.fragments
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,17 +10,22 @@ import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.models.adapters.TookaAdapter
-import ir.tdaapp.tooka.models.adapters.TimeFramesViewHolder
 import ir.tdaapp.tooka.databinding.FragmentCompareBinding
 import ir.tdaapp.tooka.databinding.ItemTimeFrameBinding
-import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.models.util.*
+import ir.tdaapp.tooka.models.adapters.TimeFramesViewHolder
+import ir.tdaapp.tooka.models.adapters.TookaAdapter
+import ir.tdaapp.tooka.models.dataclasses.Coin
+import ir.tdaapp.tooka.models.dataclasses.CompareModel
+import ir.tdaapp.tooka.models.dataclasses.TimeFrameModel
 import ir.tdaapp.tooka.models.network.RetrofitClient
+import ir.tdaapp.tooka.models.util.getCurrentLocale
+import ir.tdaapp.tooka.models.util.separatePrice
+import ir.tdaapp.tooka.models.util.setCompareChartData
 import ir.tdaapp.tooka.models.viewmodels.CompareViewModel
 import ir.tdaapp.tooka.ui.dialogs.CoinsListBottomSheetDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragmentSecond
 import kotlinx.coroutines.*
+import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
 class CompareFragment: BaseFragmentSecond(), View.OnClickListener, CoroutineScope {
@@ -39,10 +43,7 @@ class CompareFragment: BaseFragmentSecond(), View.OnClickListener, CoroutineScop
     GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
   }
 
-  private val viewModel by lazy {
-    val viewModelFactory = ViewModelFactory()
-    ViewModelProvider(this, viewModelFactory).get(CompareViewModel::class.java)
-  }
+  private val viewModel: CompareViewModel by inject()
 
   private var firstCoinId = 0
   private var secondCoinId = 0

@@ -1,20 +1,28 @@
 package ir.tdaapp.tooka.ui.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
+import ir.tdaapp.tooka.databinding.FragmentHomeBinding
 import ir.tdaapp.tooka.models.adapters.AlternateCoinsAdapter
 import ir.tdaapp.tooka.models.adapters.ImportantNewsAdapter
 import ir.tdaapp.tooka.models.adapters.TopCoinsAdapter
-import ir.tdaapp.tooka.databinding.FragmentHomeBinding
-import ir.tdaapp.tooka.models.dataclasses.*
+import ir.tdaapp.tooka.models.components.TookaSnackBar
+import ir.tdaapp.tooka.models.dataclasses.LivePriceListResponse
+import ir.tdaapp.tooka.models.dataclasses.News
+import ir.tdaapp.tooka.models.util.getAttributeColor
 import ir.tdaapp.tooka.models.util.getCurrentLocale
+import ir.tdaapp.tooka.models.util.openWebpage
 import ir.tdaapp.tooka.models.viewmodels.HomeViewModel
 import ir.tdaapp.tooka.models.viewmodels.SharedViewModel
+import ir.tdaapp.tooka.ui.dialogs.NewsDetailsDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -120,21 +128,18 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
   }
 
   fun initObservables() {
-    viewModel.topCoinsList.observe(viewLifecycleOwner) {
+    viewModel.data.observe(viewLifecycleOwner) {
       showTopList()
-      topCoinAdapter.differ.submitList(it)
-    }
-    viewModel.breakingNewsList.observe(viewLifecycleOwner) {
-      importantNewsAdapter.differ.submitList(it)
+      topCoinAdapter.differ.submitList(it.topCoins)
+
+      importantNewsAdapter.differ.submitList(it.breakingNews)
       showNewsList()
-    }
-    viewModel.gainersLosersList.observe(viewLifecycleOwner) {
-      gainersLosersAdapter.differ.submitList(it)
+
+      gainersLosersAdapter.differ.submitList(it.gainersLosers)
       showGainersList()
-    }
-    viewModel.watchList.observe(viewLifecycleOwner) {
-      if (it.size > 0) {
-        watchlistAdapter.differ.submitList(it)
+
+      if (it.watchlist.size > 0) {
+        watchlistAdapter.differ.submitList(it.watchlist)
         showWatchlist()
       } else homeBinding.includeWatchlist.apply {
         noWatchlistRoot.visibility = View.VISIBLE
@@ -165,28 +170,69 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
       )
     }
     gainersLosersAdapter = AlternateCoinsAdapter { clicked, position ->
-
+      findNavController().navigate(
+        HomeFragmentDirections.actionHomeFragmentToCoinDetailsFragment(
+          clicked.id,
+          "asdasda",
+          when (getCurrentLocale(requireContext())) {
+            "fa" -> if (clicked.persianName != null) clicked.persianName!! else clicked.name
+            else -> clicked.name
+          },
+          clicked.icon
+        )
+      )
     }
     watchlistAdapter = AlternateCoinsAdapter { clicked, position ->
-
+      findNavController().navigate(
+        HomeFragmentDirections.actionHomeFragmentToCoinDetailsFragment(
+          clicked.id,
+          "asdasda",
+          when (getCurrentLocale(requireContext())) {
+            "fa" -> if (clicked.persianName != null) clicked.persianName!! else clicked.name
+            else -> clicked.name
+          },
+          clicked.icon
+        )
+      )
     }
     importantNewsAdapter = ImportantNewsAdapter { clicked, position ->
-
+      newsClicked(clicked)
     }
   }
 
-  private fun initializeLists() {
-    homeBinding.includeImportantNews.importantNewsList.layoutManager = newsLayoutManager
-    homeBinding.includeImportantNews.importantNewsList.adapter = importantNewsAdapter
+  private fun newsClicked(clicked: News) {
+    when (clicked.newsKind) {
+      News.EXTERNAL_NEWS -> {
+        openWebpage(requireActivity(), clicked.url)
+      }
+      News.INTERNAL_NEWS -> {
+        findNavController().navigate(
+          NewsFragmentDirections.actionNewsFragmentToNewsDetailsFragment2(
+            clicked.id
+          )
+        )
+      }
+      News.SHORT_NEWS -> {
+        NewsDetailsDialog(clicked.id).show(
+          requireActivity().supportFragmentManager,
+          NewsDetailsDialog.TAG
+        )
+      }
+    }
+  }
 
-    homeBinding.includeTopCoins.topCoinsList.layoutManager = topCoinsLayoutManager
-    homeBinding.includeTopCoins.topCoinsList.adapter = topCoinAdapter
+  private fun initializeLists() = homeBinding.run {
+    includeImportantNews.importantNewsList.layoutManager = newsLayoutManager
+    includeImportantNews.importantNewsList.adapter = importantNewsAdapter
 
-    homeBinding.includeGainersLosers.gainersLosersList.layoutManager = gainersLosersManager
-    homeBinding.includeGainersLosers.gainersLosersList.adapter = gainersLosersAdapter
+    includeTopCoins.topCoinsList.layoutManager = topCoinsLayoutManager
+    includeTopCoins.topCoinsList.adapter = topCoinAdapter
 
-    homeBinding.includeWatchlist.watchlistList.layoutManager = watchlistManager
-    homeBinding.includeWatchlist.watchlistList.adapter = watchlistAdapter
+    includeGainersLosers.gainersLosersList.layoutManager = gainersLosersManager
+    includeGainersLosers.gainersLosersList.adapter = gainersLosersAdapter
+
+    includeWatchlist.watchlistList.layoutManager = watchlistManager
+    includeWatchlist.watchlistList.adapter = watchlistAdapter
   }
 
   override fun onClick(v: View?) {
@@ -198,7 +244,24 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
         findNavController().navigate(R.id.action_homeFragment_to_compareFragment)
       }
       R.id.alerts -> {
-        findNavController().navigate(R.id.action_homeFragment_to_alertListFragment)
+        if ((requireActivity() as MainActivity).userPrefs.hasAccount(requireContext()))
+          findNavController().navigate(R.id.action_homeFragment_to_alertListFragment)
+        else {
+          val colorOnError = getAttributeColor(homeBinding.root.context, R.attr.colorOnError)
+          TookaSnackBar(
+            homeBinding.root,
+            getString(R.string.not_logged_in),
+            Snackbar.LENGTH_LONG
+          ).textConfig { textView ->
+            textView.typeface = Typeface.createFromAsset(
+              requireActivity().assets,
+              "iranyekan_medium.ttf"
+            )
+            textView.setTextColor(colorOnError)
+          }.backgroundConfig {
+            it.setBackgroundColor(resources.getColor(R.color.red_200))
+          }.show()
+        }
       }
       R.id.addWatchlist -> {
         Timber.i("addWatchlist")

@@ -160,6 +160,12 @@
   <string name="lang_change_message">Language will change the next time you enter the app</string>
   <string name="below">Below</string>
   <string name="above">Above</string>
+  <string name="invalid_args">Data supplied was not valid</string>
+  <string name="wallet_not_found">Wallet address was not valid</string>
+  <string name="empty_portfolio">Your portfolio is empty. Please add some coins</string>
+  <string name="not_logged_in">You are not logged in, please submit your login via the Settings page</string>
+  <string name="are_you_sure">Are you sure?</string>
+  <string name="lang_change_restart">Changing the language requires the app to close. After opening it again you will see your preferred language set. Do you want to continue?</string>
 
 
 </resources>

@@ -1,6 +1,5 @@
 package ir.tdaapp.tooka.models.adapters
 
-import ContextUtils
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.cardview.widget.CardView

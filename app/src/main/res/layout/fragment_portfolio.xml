@@ -166,4 +166,36 @@
     </androidx.cardview.widget.CardView>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/noPortfolio">
+
+    <TextView
+      android:text="@string/empty_portfolio"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:id="@+id/textView17"
+      app:layout_constraintStart_toEndOf="@+id/imageView6"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginEnd="16dp"
+      android:layout_marginStart="16dp"
+      android:textAppearance="@style/TextAppearance.MyTheme.Headline6" />
+
+    <ImageView
+      android:layout_width="@dimen/size48"
+      android:layout_height="@dimen/size48"
+      app:srcCompat="@drawable/ic_cloud_off_white_24dp"
+      android:id="@+id/imageView6"
+      android:tint="?colorOnSurface"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      android:layout_marginStart="32dp" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

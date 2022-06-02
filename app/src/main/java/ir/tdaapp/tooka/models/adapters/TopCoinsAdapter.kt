@@ -1,6 +1,5 @@
 package ir.tdaapp.tooka.models.adapters
 
-import ContextUtils
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup

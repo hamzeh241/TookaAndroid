@@ -4,37 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ir.tdaapp.tooka.models.dataclasses.*
+import ir.tdaapp.tooka.models.dataclasses.HomeContentResponse
+import ir.tdaapp.tooka.models.repositories.HomeRepository
 import ir.tdaapp.tooka.models.util.NetworkErrors
-import ir.tdaapp.tooka.models.network.ApiService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.IOException
+import timber.log.Timber
 
-class HomeViewModel(private val api: ApiService): ViewModel() {
+class HomeViewModel(private val repositoy: HomeRepository): ViewModel() {
 
-  private val _breakingNewsList = MutableLiveData<List<News>>()
-  val breakingNewsList: LiveData<List<News>>
-    get() = _breakingNewsList
-
-  private val _topCoinsList = MutableLiveData<List<Coin>>()
-  val topCoinsList: LiveData<List<Coin>>
-    get() = _topCoinsList
-
-  private val _gainersLosersList = MutableLiveData<List<Coin>>()
-  val gainersLosersList: LiveData<List<Coin>>
-    get() = _gainersLosersList
-
-  private val _watchList = MutableLiveData<List<Coin>>()
-  val watchList: LiveData<List<Coin>>
-    get() = _watchList
+  private val _data = MutableLiveData<HomeContentResponse>()
+  val data: LiveData<HomeContentResponse>
+    get() = _data
 
   private val _error = MutableLiveData<NetworkErrors>()
   val error: LiveData<NetworkErrors>
     get() = _error
-
-  private var data: HomeContentResponse? = null
 
   init {
     viewModelScope.launch {
@@ -43,29 +27,27 @@ class HomeViewModel(private val api: ApiService): ViewModel() {
   }
 
   suspend fun getData() {
-    try {
-      if (data == null) {
-        val data = api.homeData()
-
-        if (data.isSuccessful) {
-          this.data = data.body()?.result!!
-          viewModelScope.launch(Dispatchers.IO) {
-            _topCoinsList.postValue(data.body()!!.result.topCoins)
-            delay(200)
-            _breakingNewsList.postValue(data.body()!!.result.breakingNews)
-            delay(200)
-            _gainersLosersList.postValue(data.body()!!.result.gainersLosers)
-            delay(200)
-            _watchList.postValue(data.body()!!.result.watchlist)
-          }
-        } else {
-          _error.postValue(NetworkErrors.SERVER_ERROR)
-        }
+    if (repositoy.isEmpty()) {
+      Timber.i("is empty")
+      repositoy.getData().collect {
+        if (it.status) {
+          _data.value = it.result!!
+          repositoy.addToDatabase(it.result)
+        } else _error.postValue(it.errorType)
       }
-    } catch (e: Exception) {
-      if (e is IOException)
-        _error.postValue(NetworkErrors.NETWORK_ERROR)
-      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+    } else {
+      Timber.i("is not empty")
+      repositoy.getLocalData().collect {
+        _data.value = it
+      }
+
+      repositoy.getData().collect {
+        if (it.status) {
+          _data.value = it.result!!
+          repositoy.updateDatabase(it.result)
+        } else _error.postValue(it.errorType)
+      }
     }
   }
+
 }

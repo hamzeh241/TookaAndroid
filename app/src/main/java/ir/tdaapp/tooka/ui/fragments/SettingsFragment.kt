@@ -1,19 +1,18 @@
 package ir.tdaapp.tooka.ui.fragments
 
-import android.content.res.Resources
-import android.graphics.Typeface
+import android.app.Dialog
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.ColorInt
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
+import io.github.achmadhafid.lottie_dialog.core.*
+import io.github.achmadhafid.lottie_dialog.dismissLottieDialog
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
+import io.github.achmadhafid.lottie_dialog.model.onClick
+import ir.tdaapp.tooka.App
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.App
-import ir.tdaapp.tooka.models.components.TookaSnackBar
 import ir.tdaapp.tooka.databinding.FragmentSettingsBinding
 import ir.tdaapp.tooka.models.preference.LanguagePreferences
 import ir.tdaapp.tooka.models.util.toast
@@ -22,6 +21,7 @@ import ir.tdaapp.tooka.ui.dialogs.AppLanguageBottomSheetDialog.Language.ENGLISH
 import ir.tdaapp.tooka.ui.dialogs.AppLanguageBottomSheetDialog.Language.PERSIAN
 import ir.tdaapp.tooka.ui.dialogs.AppThemeBottomSheetDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
+import java.util.*
 
 class SettingsFragment: BaseFragment(), View.OnClickListener,
   AppThemeBottomSheetDialog.AppThemeBottomSheetCallback {
@@ -40,6 +40,17 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
       binding = FragmentSettingsBinding.inflate(inflater, container, false)
       binding.root
     }
+
+  override fun onResume() {
+    super.onResume()
+    if ((requireActivity() as MainActivity).userPrefs.hasAccount(requireContext())) {
+      // user is signed in
+      binding.includeUserSettings.txtUserSettings.text = getString(R.string.user_settings)
+    } else {
+      // user is not signed in
+      binding.includeUserSettings.txtUserSettings.text = getString(R.string.login_or_signup)
+    }
+  }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -64,7 +75,9 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
   }
 
   private fun initObservables() {
-    (requireActivity().application as App).preferenceHelper.isDarkThemeLive.observe(viewLifecycleOwner) { isDarkTheme ->
+    (requireActivity().application as App).preferenceHelper.isDarkThemeLive.observe(
+      viewLifecycleOwner
+    ) { isDarkTheme ->
       isDarkTheme?.let {
         isNightMode(it)
       }
@@ -88,32 +101,50 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
         }
       }
       R.id.vg_change_lang -> {
+        val en: (Dialog)->Unit = {
+          (requireActivity() as MainActivity).updateLocale(Locale("en"))
+        }
+        val fa: (Dialog)->Unit = {
+          (requireActivity() as MainActivity).updateLocale(Locale("fa"))
+        }
         val dialog = AppLanguageBottomSheetDialog {
+          var onClick: (Dialog)->Unit = {}
           when (it) {
             ENGLISH -> {
-              langPrefs.add(requireContext(), "en")
+              onClick = en
             }
 
             PERSIAN -> {
-              langPrefs.add(requireContext(), "fa")
+              onClick = fa
             }
           }
 
-          val typedValue = TypedValue()
-          val theme: Resources.Theme = binding.root.context.theme
-          theme.resolveAttribute(R.attr.colorOnSurface, typedValue, true)
-          @ColorInt val colorOnSurface = typedValue.data
-          TookaSnackBar(
-            binding.root,
-            getString(R.string.lang_change_message),
-            Snackbar.LENGTH_LONG
-          ).textConfig { textView ->
-            textView.typeface = Typeface.createFromAsset(
-              requireActivity().assets,
-              "iranyekan_medium.ttf"
-            )
-//            textView.setTextColor(colorOnSurface)
-          }.show()
+          lottieConfirmationDialog {
+            type = LottieDialogType.DIALOG
+            withTitle {
+              textRes = R.string.are_you_sure
+              styleRes = R.style.TextAppearance_MyTheme_Body1
+            }
+            withAnimation {
+              fileRes = R.raw.btc_eth
+            }
+            withContent {
+              textRes = R.string.lang_change_restart
+              styleRes = R.style.TextAppearance_MyTheme_Body2
+            }
+            withPositiveButton {
+              textRes = R.string.yes
+              iconRes = R.drawable.ic_baseline_check_24
+              onClick(onClick)
+            }
+            withNegativeButton {
+              textRes = R.string.no
+              iconRes = R.drawable.ic_baseline_close_24
+              onClick {
+                dismissLottieDialog()
+              }
+            }
+          }
         }
         dialog.show(requireActivity().supportFragmentManager, AppLanguageBottomSheetDialog.TAG)
       }

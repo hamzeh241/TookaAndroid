@@ -1,3 +1,5 @@
+package ir.tdaapp.tooka.models.util
+
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.res.Configuration
@@ -37,6 +39,8 @@ class ContextUtils(val base: Context): ContextWrapper(base) {
       }
       return ContextUtils(context)
     }
+
+
   }
 
   fun getDimen(@DimenRes id: Int): Int =

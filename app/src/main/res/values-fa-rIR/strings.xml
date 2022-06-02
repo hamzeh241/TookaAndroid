@@ -136,4 +136,10 @@
   <string name="lang_change_message">زبان برنامه در ورود بعدی شما تغییر خواهد کرد</string>
   <string name="below">زیر</string>
   <string name="above">بالای</string>
+  <string name="invalid_args">اطلاعات وارد شده صحیح نیست</string>
+  <string name="wallet_not_found">آدرس کیف پول شما صحیح نیست</string>
+  <string name="empty_portfolio">پورتفوی شما خالی است. لطفا چند ارز اضافه کنید</string>
+  <string name="not_logged_in">شما حسابی ندارید یا تا کنون وارد نشده اید، لطفا نسبت به ورود خود اقدام فرمایید</string>
+  <string name="are_you_sure">مطمئنید؟</string>
+  <string name="lang_change_restart">برای عوض شدن برنامه به زبان مورد نظر شما باید اپلیکیشن بسته شود. ادامه میدهید؟</string>
 </resources>

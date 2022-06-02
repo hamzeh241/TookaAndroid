@@ -1,6 +1,5 @@
 package ir.tdaapp.tooka
 
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Process
@@ -33,10 +32,6 @@ class MainActivity: BaseActivity(), NavigationBarView.OnItemSelectedListener,
     private const val SECOND_1: Long = 1000
     private const val TAG = "MainActivity"
   }
-
-//  init {
-//    LocaleHelper.updateConfig(this)
-//  }
 
   private lateinit var binding: ActivityMainBinding
   lateinit var userPrefs: UserPreferences
@@ -71,17 +66,6 @@ class MainActivity: BaseActivity(), NavigationBarView.OnItemSelectedListener,
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     binding = ActivityMainBinding.inflate(layoutInflater)
-
-    val config = resources.configuration
-    val lang = (application as App).langPreferences.getLang(this)
-    val locale = Locale(lang)
-    Locale.setDefault(locale)
-    config.setLocale(locale)
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-      createConfigurationContext(config)
-    resources.updateConfiguration(config, resources.displayMetrics)
-
     setContentView(binding.root)
 
     val navHostFragment = supportFragmentManager.findFragmentById(

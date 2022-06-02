@@ -1,6 +1,5 @@
 package ir.tdaapp.tooka.models.util
 
-import ContextUtils
 import android.graphics.Color
 import android.graphics.drawable.Animatable
 import android.text.InputType

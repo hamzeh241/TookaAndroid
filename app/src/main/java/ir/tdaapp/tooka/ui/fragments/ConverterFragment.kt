@@ -5,23 +5,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.FragmentConverterBinding
-import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.models.util.*
+import ir.tdaapp.tooka.models.dataclasses.Coin
 import ir.tdaapp.tooka.models.network.RetrofitClient
+import ir.tdaapp.tooka.models.util.getCurrentLocale
+import ir.tdaapp.tooka.models.util.toEnglishNumbers
+import ir.tdaapp.tooka.models.util.toPersianNumbers
 import ir.tdaapp.tooka.models.viewmodels.ConverterViewModel
 import ir.tdaapp.tooka.ui.dialogs.CoinsListBottomSheetDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragmentSecond
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import java.lang.StringBuilder
+import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
 class ConverterFragment: BaseFragmentSecond(), View.OnClickListener, View.OnLongClickListener,
@@ -29,10 +30,7 @@ class ConverterFragment: BaseFragmentSecond(), View.OnClickListener, View.OnLong
 
   private lateinit var binding: FragmentConverterBinding
 
-  private val viewModel by lazy {
-    val viewModelFactory = ViewModelFactory()
-    ViewModelProvider(this, viewModelFactory).get(ConverterViewModel::class.java)
-  }
+  private val viewModel:ConverterViewModel by inject()
 
   private lateinit var coinList: List<Coin>
   private lateinit var firstCoin: Coin

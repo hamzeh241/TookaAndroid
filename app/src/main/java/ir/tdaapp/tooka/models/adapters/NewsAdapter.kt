@@ -1,6 +1,5 @@
 package ir.tdaapp.tooka.models.adapters
 
-import ContextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -9,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemBreakingCryptoNewsBinding
-import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.models.util.addSpringAnimation
+import ir.tdaapp.tooka.models.dataclasses.News
 import ir.tdaapp.tooka.models.network.RetrofitClient
+import ir.tdaapp.tooka.models.util.addSpringAnimation
 import ir.tdaapp.tooka.models.util.getCurrentLocale
 
 class NewsAdapter(val action: (clicked: News, position: Int)->Unit):
@@ -47,7 +46,7 @@ class NewsAdapter(val action: (clicked: News, position: Int)->Unit):
     }
 
     holder.binding.txtNewsTitle.text =
-      when (ContextUtils.getLocale(holder.binding.root.context).toString()) {
+      when (getCurrentLocale(holder.binding.root.context)) {
         "en" -> data.titleEn
         "fa" -> data.titleFa
         else -> data.titleEn

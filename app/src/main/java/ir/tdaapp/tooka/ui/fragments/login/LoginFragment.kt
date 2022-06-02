@@ -19,25 +19,31 @@ import com.google.android.gms.auth.api.credentials.Credentials
 import com.google.android.gms.auth.api.credentials.CredentialsApi
 import com.google.android.gms.auth.api.credentials.HintRequest
 import com.google.android.gms.auth.api.phone.SmsRetriever
-import com.google.android.gms.auth.api.signin.*
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
+import io.github.achmadhafid.lottie_dialog.core.*
+import io.github.achmadhafid.lottie_dialog.dismissLottieDialog
+import io.github.achmadhafid.lottie_dialog.model.LottieDialogType
+import io.github.achmadhafid.lottie_dialog.model.onClick
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.models.components.TookaSnackBar
 import ir.tdaapp.tooka.databinding.FragmentLoginBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
-import ir.tdaapp.tooka.models.dataclasses.*
+import ir.tdaapp.tooka.models.components.TookaSnackBar
+import ir.tdaapp.tooka.models.dataclasses.GoogleLoginModel
 import ir.tdaapp.tooka.models.util.UserErrors.*
 import ir.tdaapp.tooka.models.util.toPx
 import ir.tdaapp.tooka.models.viewmodels.LoginActivityViewModel
-import ir.tdaapp.tooka.ui.dialogs.ConfirmationDialog
-import ir.tdaapp.tooka.ui.dialogs.ConfirmationDialog.ConfirmationChoice.*
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragmentSecond
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import java.lang.Exception
-import java.lang.StringBuilder
 import kotlin.coroutines.CoroutineContext
 
 @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
@@ -248,34 +254,45 @@ class LoginFragment: BaseFragmentSecond(), View.OnClickListener, CoroutineScope 
           val correctPhone = credential?.id.let {
             it?.replace("+98", "0")
           }
-          val dialog = ConfirmationDialog.Builder()
-            .title(getString(R.string.do_you_confirm))
-            .message(
-              StringBuilder(getString(R.string.phone_number_confirm_1))
+
+          lottieConfirmationDialog {
+            type = LottieDialogType.DIALOG
+            withTitle {
+              textRes = R.string.do_you_confirm
+              styleRes = R.style.TextAppearance_MyTheme_Body1
+            }
+            withAnimation {
+              fileRes = R.raw.phone
+            }
+            withContent {
+              text = StringBuilder(getString(R.string.phone_number_confirm_1))
                 .append(" ")
                 .append(correctPhone)
                 .append(" ")
                 .append(getString(R.string.phone_number_confirm_2))
                 .toString()
-            )
-            .positiveText(getString(R.string.user_confirms_phone))
-            .negativeText(getString(R.string.user_doesnt_confirm_phone))
-            .listener {
-              when (it) {
-                Positive -> {
-                  binding.edtPhone.setText(correctPhone)
-                  binding.edtPhone.isEnabled = false
-                  launch {
-                    activityViewModel.loginOrSignup(correctPhone!!)
-                    activityViewModel.setPhoneNumber(binding.edtPhone.text.toString())
-                  }
+              styleRes = R.style.TextAppearance_MyTheme_Body2
+            }
+            withPositiveButton {
+              textRes = R.string.user_confirms_phone
+              iconRes = R.drawable.ic_baseline_check_24
+              onClick{
+                binding.edtPhone.setText(correctPhone)
+                binding.edtPhone.isEnabled = false
+                launch {
+                  activityViewModel.loginOrSignup(correctPhone!!)
+                  activityViewModel.setPhoneNumber(binding.edtPhone.text.toString())
                 }
-                Negative -> {}
               }
-            }.build()
-
-          dialog.show(requireActivity().supportFragmentManager, ConfirmationDialog.TAG)
-
+            }
+            withNegativeButton {
+              textRes = R.string.user_doesnt_confirm_phone
+              iconRes = R.drawable.ic_baseline_close_24
+              onClick {
+                dismissLottieDialog()
+              }
+            }
+          }
         }
         Activity.RESULT_CANCELED -> log("canceled")
         CredentialsApi.ACTIVITY_RESULT_OTHER_ACCOUNT -> log("other account")

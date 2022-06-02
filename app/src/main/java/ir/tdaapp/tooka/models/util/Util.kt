@@ -1,6 +1,5 @@
 package ir.tdaapp.tooka.models.util
 
-import ContextUtils
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.app.Activity

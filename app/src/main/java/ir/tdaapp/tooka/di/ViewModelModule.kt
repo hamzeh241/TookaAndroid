@@ -14,6 +14,8 @@ val viewModelModule = module {
   single { RelatedCoinsViewModel(get()) }
   single { SharedViewModel(get()) }
   factory { NotificationsViewModel(get()) }
+  factory { CompareViewModel() }
+  factory { ConverterViewModel() }
   factory { ManualBottomSheetViewModel(get()) }
   factory { AutomaticBottomSheetViewModel(get()) }
   factory { CoinDetailsViewModel(get()) }

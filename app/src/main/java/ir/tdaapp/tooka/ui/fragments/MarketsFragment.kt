@@ -11,11 +11,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.tdaapp.tooka.R
+import ir.tdaapp.tooka.databinding.FragmentMarketsBinding
 import ir.tdaapp.tooka.models.adapters.MarketsAdapter
 import ir.tdaapp.tooka.models.adapters.SortAdapter
-import ir.tdaapp.tooka.databinding.FragmentMarketsBinding
-import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.models.util.*
+import ir.tdaapp.tooka.models.dataclasses.Coin
+import ir.tdaapp.tooka.models.dataclasses.LivePriceListResponse
+import ir.tdaapp.tooka.models.util.TookaSwipeCallback
+import ir.tdaapp.tooka.models.util.VIEW_TYPE_GRID
+import ir.tdaapp.tooka.models.util.VIEW_TYPE_LINEAR
+import ir.tdaapp.tooka.models.util.getName
 import ir.tdaapp.tooka.models.viewmodels.MarketsViewModel
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.CoroutineName
@@ -92,12 +96,10 @@ class MarketsFragment: BaseFragment(), View.OnClickListener, CoroutineScope {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     initAdapters()
     initMarketCoinsList()
-    initSortList()
     initSwipeGesture()
     initSwipeRefreshLayout()
     initObservables()
 
-    Timber.i("position: ${viewModel.lastScrollPosition.value}")
     binding.toolbar.title = getString(R.string.markets)
   }
 
@@ -122,7 +124,6 @@ class MarketsFragment: BaseFragment(), View.OnClickListener, CoroutineScope {
 
     viewModel.sortList.observe(viewLifecycleOwner) {
       sortAdapter.differ.submitList(it)
-      binding.includeMarketsSort.sortOptionList.visibility = View.VISIBLE
     }
     viewModel.selectedSort.observe(viewLifecycleOwner) {
       listVisibility = false
@@ -162,7 +163,6 @@ class MarketsFragment: BaseFragment(), View.OnClickListener, CoroutineScope {
       val coin = adapter.differ.currentList[position]
       coin.isWatchlist = true
       adapter.notifyItemChanged(position)
-//      viewModel.addToWatchlist(2, coin.id)
 
     }, { decorator ->
 
@@ -188,76 +188,6 @@ class MarketsFragment: BaseFragment(), View.OnClickListener, CoroutineScope {
         )
       )
     }
-
-    sortAdapter = SortAdapter { model, position ->
-      if (model.isSelected) {
-        model.isAscend = !model.isAscend
-        viewModel.setSelected(model)
-        adapter.notifyDataSetChanged()
-      } else {
-        for (item in sortAdapter.differ.currentList) {
-          item.isSelected = false
-          item.isAscend = false
-        }
-
-        model.isSelected = true
-        viewModel.setSelected(model)
-        adapter.notifyDataSetChanged()
-      }
-      listVisibility = false
-
-      launch(Dispatchers.Default) {
-        val list = sortAdapter.differ.currentList
-        for (item in list) {
-          Timber.i("${item.nameEn} - selected: ${item.isSelected} - ascend: ${item.isAscend}")
-        }
-      }
-//      launch(Dispatchers.IO) {
-//        if (!model.isSelected) {
-//          val oldPosition =
-//            sortAdapter.differ.currentList.singleOrNull { it.isSelected }.let {
-//              sortAdapter.differ.currentList.indexOf(it)
-//            }
-//
-//          sortAdapter.differ.currentList.forEach {
-//            it.isSelected = false
-//            it.isAscend = false
-//          }
-//
-//          sortAdapter.differ.currentList[position].apply {
-//            this.isSelected = true
-//            this.isAscend = true
-//          }
-//
-//          withContext(Dispatchers.Main) {
-//            listVisibility = false
-//            sortAdapter.notifyItemChanged(position)
-//            sortAdapter.notifyItemChanged(oldPosition)
-//          }
-//          StaticFields.selectedSortModel = model
-//          viewModel.getCoins(model.isAscend, model.id)
-//        }
-//        else {
-//
-//          sortAdapter.differ.currentList.forEach {
-//            if (it.id != model.id) {
-//              it.isSelected = false
-//              it.isAscend = false
-//            }
-//          }
-//
-//          sortAdapter.differ.currentList[position].isAscend =
-//            !sortAdapter.differ.currentList[position].isAscend
-//
-//          withContext(Dispatchers.Main) {
-//            listVisibility = false
-//            sortAdapter.notifyItemChanged(position)
-//          }
-//          StaticFields.selectedSortModel = model
-//          viewModel.getCoins(model.isAscend, model.id)
-//        }
-//      }
-    }
   }
 
   private val linearManager by lazy {
@@ -279,14 +209,6 @@ class MarketsFragment: BaseFragment(), View.OnClickListener, CoroutineScope {
   private val sortManager by lazy {
     LinearLayoutManager(requireContext()).apply {
       orientation = LinearLayoutManager.HORIZONTAL
-    }
-  }
-
-  private fun initSortList() {
-    binding.includeMarketsSort.sortOptionList.apply {
-      addItemDecoration(TookaMarginDecorator(8, orientation = GridLayoutManager.HORIZONTAL))
-      layoutManager = sortManager
-      adapter = sortAdapter
     }
   }
 

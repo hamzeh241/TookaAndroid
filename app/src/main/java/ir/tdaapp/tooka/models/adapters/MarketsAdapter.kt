@@ -1,9 +1,7 @@
 package ir.tdaapp.tooka.models.adapters
 
 import android.annotation.SuppressLint
-import android.content.res.Resources.Theme
 import android.graphics.Color
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +14,11 @@ import com.bumptech.glide.Glide
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemMarketCoinsFlatBinding
 import ir.tdaapp.tooka.databinding.ItemMarketCoinsGridBinding
-import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.models.util.*
+import ir.tdaapp.tooka.models.dataclasses.Coin
+import ir.tdaapp.tooka.models.dataclasses.LivePriceListResponse
+import ir.tdaapp.tooka.models.dataclasses.PriceChange
 import ir.tdaapp.tooka.models.network.RetrofitClient
+import ir.tdaapp.tooka.models.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -163,15 +163,8 @@ class MarketsAdapter(val action: CoinCallback):
     if (payloads.isNullOrEmpty())
       super.onBindViewHolder(holder, position, payloads)
 
-    val typedValueUsd = TypedValue()
-    val themeUsd: Theme = holder.binding.root.context.theme
-    themeUsd.resolveAttribute(R.attr.colorOnSurface, typedValueUsd, true)
-    @ColorInt val colorUsd = typedValueUsd.data
-
-    val typedValue = TypedValue()
-    val theme: Theme = holder.binding.root.context.theme
-    theme.resolveAttribute(R.attr.colorOnSurface, typedValue, true)
-    @ColorInt val colorTmn = typedValue.data
+    @ColorInt val colorUsd = getAttributeColor(holder.binding.root.context,R.attr.colorOnSurface)
+    @ColorInt val colorTmn = getAttributeColor(holder.binding.root.context,R.attr.colorOnSurface)
 
     if (payloads.any { it is PriceChange }) {
       if (holder.binding is ItemMarketCoinsFlatBinding) {
