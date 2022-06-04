@@ -166,6 +166,8 @@
   <string name="not_logged_in">You are not logged in, please submit your login via the Settings page</string>
   <string name="are_you_sure">Are you sure?</string>
   <string name="lang_change_restart">Changing the language requires the app to close. After opening it again you will see your preferred language set. Do you want to continue?</string>
+  <string name="add_watchlist">Add Watchlist</string>
+  <string name="add_watchlist_not_saved">Your coin was not added to watchlist, please try again later</string>
 
 
 </resources>

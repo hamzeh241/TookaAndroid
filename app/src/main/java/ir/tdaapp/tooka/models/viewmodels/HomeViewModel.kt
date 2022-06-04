@@ -3,11 +3,9 @@ package ir.tdaapp.tooka.models.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import ir.tdaapp.tooka.models.dataclasses.HomeContentResponse
 import ir.tdaapp.tooka.models.repositories.HomeRepository
 import ir.tdaapp.tooka.models.util.NetworkErrors
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class HomeViewModel(private val repositoy: HomeRepository): ViewModel() {
@@ -20,16 +18,10 @@ class HomeViewModel(private val repositoy: HomeRepository): ViewModel() {
   val error: LiveData<NetworkErrors>
     get() = _error
 
-  init {
-    viewModelScope.launch {
-      getData()
-    }
-  }
-
-  suspend fun getData() {
+  suspend fun getData(userId: Int) {
     if (repositoy.isEmpty()) {
       Timber.i("is empty")
-      repositoy.getData().collect {
+      repositoy.getData(userId).collect {
         if (it.status) {
           _data.value = it.result!!
           repositoy.addToDatabase(it.result)
@@ -41,7 +33,7 @@ class HomeViewModel(private val repositoy: HomeRepository): ViewModel() {
         _data.value = it
       }
 
-      repositoy.getData().collect {
+      repositoy.getData(userId).collect {
         if (it.status) {
           _data.value = it.result!!
           repositoy.updateDatabase(it.result)

@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemAlternateCoinsBinding
-import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.models.util.*
+import ir.tdaapp.tooka.models.dataclasses.Coin
+import ir.tdaapp.tooka.models.dataclasses.LivePriceListResponse
+import ir.tdaapp.tooka.models.dataclasses.PriceChange
 import ir.tdaapp.tooka.models.network.RetrofitClient
+import ir.tdaapp.tooka.models.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -72,14 +74,24 @@ class AlternateCoinsAdapter( /*  */val action: CoinCallback):
       }
 
     holder.binding.txtPriceTMN.text =
-      StringBuilder(separatePrice(data.priceTMN.toInt())).toString()
+        getCorrectNumberFormat(
+          separatePrice(data.priceTMN.toInt()),
+          holder.binding.root.context
+        )
     holder.binding.txtPriceUSD.text =
-      StringBuilder(separatePrice(data.priceUSD.toFloat())).toString()
+        getCorrectNumberFormat(
+          separatePrice(data.priceUSD),
+          holder.binding.root.context
+        )
     holder.binding.txtCoinPercentage.text =
-      StringBuilder(data.percentage.toString())
-        .append(" ")
-        .append("%")
-        .toString()
+      getCorrectNumberFormat(
+        StringBuilder(data.percentage.toString())
+          .append(" ")
+          .append("%")
+          .toString(),
+        holder.binding.root.context
+      )
+
 
     if (data.percentage > 0) {
       holder.binding.txtCoinPercentage.setTextColor(holder.binding.root.resources.getColor(R.color.green_400))
@@ -115,7 +127,7 @@ class AlternateCoinsAdapter( /*  */val action: CoinCallback):
           1000L
         )
 
-        holder.binding.txtPriceTMN.setPrice(item.priceTMN)
+        holder.binding.txtPriceTMN.setPrice(item.priceTMN.toInt())
         holder.binding.txtPriceTMN.animateColor(
           holder.binding.root.resources.getColor(R.color.gray_400),
           Color.GREEN,
@@ -129,7 +141,7 @@ class AlternateCoinsAdapter( /*  */val action: CoinCallback):
           1000L
         )
 
-        holder.binding.txtPriceTMN.setPrice(item.priceTMN)
+        holder.binding.txtPriceTMN.setPrice(item.priceTMN.toInt())
         holder.binding.txtPriceTMN.animateColor(
           holder.binding.root.resources.getColor(R.color.gray_400),
           Color.RED,
@@ -156,7 +168,7 @@ class AlternateCoinsAdapter( /*  */val action: CoinCallback):
 
         also {
           differ.currentList[it].priceUSD = livePrice.priceUSD
-          differ.currentList[it].priceTMN = livePrice.priceTMN!!
+          differ.currentList[it].priceTMN = livePrice.priceTMN
           withContext(Dispatchers.Main) {
             notifyItemChanged(this@with, PriceChange(ascend))
           }

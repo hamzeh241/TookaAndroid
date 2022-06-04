@@ -1,5 +1,6 @@
 package ir.tdaapp.tooka.models.util
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Animatable
 import android.text.InputType
@@ -23,7 +24,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.models.components.TookaCandlestickChart
 import ir.tdaapp.tooka.models.components.TookaLineChart
-import ir.tdaapp.tooka.models.dataclasses.*
+import ir.tdaapp.tooka.models.dataclasses.Coin
 import ir.tdaapp.tooka.models.util.CompoundPosition.*
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -40,6 +41,12 @@ infix fun ImageView.glideUrl(url: String) {
     .load(url)
     .placeholder(R.drawable.ic_baseline_circle_24)
     .into(this)
+}
+
+fun getCorrectNumberFormat(input: String, c: Context): String = when (getCurrentLocale(c)) {
+  "en" -> toEnglishNumbers(input)
+  "fa" -> toPersianNumbers(input)
+  else -> toEnglishNumbers(input)
 }
 
 fun View.addSpringAnimation() {
@@ -61,11 +68,11 @@ fun View.addSpringAnimation() {
       MotionEvent.ACTION_CANCEL -> {
         scaleXAnim.cancel()
         scaleYAnim.cancel()
-        val reverseScaleXAnim = SpringAnimation(this,DynamicAnimation.SCALE_X,1f)
+        val reverseScaleXAnim = SpringAnimation(this, DynamicAnimation.SCALE_X, 1f)
         reverseScaleXAnim.spring.stiffness = SpringForce.STIFFNESS_LOW
         reverseScaleXAnim.spring.dampingRatio = SpringForce.DAMPING_RATIO_LOW_BOUNCY
         reverseScaleXAnim.start()
-        val reverseScaleYAnim = SpringAnimation(this,DynamicAnimation.SCALE_Y,1f)
+        val reverseScaleYAnim = SpringAnimation(this, DynamicAnimation.SCALE_Y, 1f)
         reverseScaleYAnim.spring.stiffness = SpringForce.STIFFNESS_LOW
         reverseScaleYAnim.spring.dampingRatio = SpringForce.DAMPING_RATIO_LOW_BOUNCY
         reverseScaleYAnim.start()
@@ -189,7 +196,7 @@ fun EditText.disableKeyboard() = this.apply {
 }
 
 fun TextView.setPrice(price: Number) {
-  text = StringBuilder(separatePrice(price)).toString()
+  text = StringBuilder(getCorrectNumberFormat(separatePrice(price),context)).toString()
 }
 
 fun TextView.setCoinName(model: Coin) {

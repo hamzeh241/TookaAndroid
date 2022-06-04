@@ -76,19 +76,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginStart="@dimen/margin8"
             android:gravity="center_vertical"
-            android:paddingStart="@dimen/elev4"
             android:paddingEnd="@dimen/elev4">
 
             <TextView
               android:id="@+id/txtCoinPercentage"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:fontFamily="@font/iran_yekan_reqular_mobile_fa_num"
               android:textSize="12sp"
               android:textStyle="bold"
-              android:layout_marginEnd="@dimen/margin8" />
+              android:layout_marginEnd="@dimen/margin8"
+              android:textAppearance="@style/TextAppearance.MyTheme.Subtitle1"
+              android:layout_marginStart="@dimen/margin8" />
 
             <ImageView
               android:id="@+id/imgAscend"
@@ -116,11 +115,14 @@
 
           <TextView
             android:id="@+id/txtPriceTMN"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:textAppearance="@style/TextAppearance.MyTheme.Price1"
-            android:textColor="?colorOnSurface" />
+            android:textAppearance="@style/TextAppearance.MyTheme.Subtitle1"
+            android:textColor="?colorOnSurface"
+            android:textSize="14sp"
+            android:lines="1"
+            android:singleLine="true" />
 
         </LinearLayout>
 
@@ -133,11 +135,14 @@
 
           <TextView
             android:id="@+id/txtPriceUSD"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:textAppearance="@style/TextAppearance.MyTheme.Price2"
-            android:textColor="?colorOnSurface" />
+            android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+            android:textColor="?colorOnSurface"
+            android:textSize="12sp"
+            android:lines="1"
+            android:singleLine="true" />
 
         </LinearLayout>
 

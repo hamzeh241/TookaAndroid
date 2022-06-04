@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
-import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.models.util.NetworkErrors
+import ir.tdaapp.tooka.models.dataclasses.AddWatchlistResult
+import ir.tdaapp.tooka.models.dataclasses.Coin
+import ir.tdaapp.tooka.models.dataclasses.ResponseModel
+import ir.tdaapp.tooka.models.dataclasses.SortModel
 import ir.tdaapp.tooka.models.network.ApiService
+import ir.tdaapp.tooka.models.util.NetworkErrors
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -21,8 +24,8 @@ class MarketsViewModel(private val api: ApiService): ViewModel() {
   val sortList: LiveData<List<SortModel>>
     get() = _sortList
 
-  private val _watchList = MutableLiveData<Boolean>()
-  val watchList: LiveData<Boolean>
+  private val _watchList = MutableLiveData<AddWatchlistResult>()
+  val watchList: LiveData<AddWatchlistResult>
     get() = _watchList
 
   private val _error = MutableLiveData<NetworkErrors>()
@@ -87,7 +90,7 @@ class MarketsViewModel(private val api: ApiService): ViewModel() {
     try {
       val result = api.addWatchlist(coinId, userId)
       if (result.isSuccessful)
-        _watchList.postValue(true)
+        _watchList.postValue(result.body()!!.result!!)
       else {
         val error = Gson().fromJson(
           result.errorBody()?.string(),

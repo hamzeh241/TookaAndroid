@@ -29,7 +29,7 @@ class LoginActivity: BaseActivity() {
     intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
     bReceiver = TookaSmsRetriever()
 
-    userPrefs = UserPreferences()
+    userPrefs = UserPreferences(this)
 
     bReceiver.listener = TookaSmsRetriever.OnSmsReceived {
       viewModel.recieveVerificationCode(it)

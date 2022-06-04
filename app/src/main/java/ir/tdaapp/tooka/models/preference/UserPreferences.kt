@@ -3,14 +3,14 @@ package ir.tdaapp.tooka.models.preference
 import android.content.Context
 import android.content.SharedPreferences
 
-class UserPreferences {
+class UserPreferences(private val context: Context) {
 
   companion object {
     const val PREFERENCE_KEY = "TOOKA_PREFS"
     const val USER_KEY = "TOOKA_USER_KEY"
   }
 
-  fun add(context: Context, userId: Int) {
+  fun add(userId: Int) {
     val editor: SharedPreferences.Editor =
       context.getSharedPreferences(PREFERENCE_KEY, Context.MODE_PRIVATE)
         .edit()
@@ -18,9 +18,9 @@ class UserPreferences {
     editor.apply()
   }
 
-  fun hasAccount(context: Context): Boolean = getUserId(context) > 0
+  fun hasAccount(): Boolean = getUserId() > 0
 
-  fun getUserId(context: Context): Int {
+  fun getUserId(): Int {
     val editor: SharedPreferences = context.getSharedPreferences(
       PREFERENCE_KEY,
       Context.MODE_PRIVATE

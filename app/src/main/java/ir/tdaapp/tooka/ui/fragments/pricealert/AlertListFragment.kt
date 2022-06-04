@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.models.adapters.PriceAlertAdapter
 import ir.tdaapp.tooka.databinding.FragmentAlertListBinding
+import ir.tdaapp.tooka.models.adapters.PriceAlertAdapter
 import ir.tdaapp.tooka.models.viewmodels.PriceAlertListViewModel
 import ir.tdaapp.tooka.models.viewmodels.PriceAlertListViewModel.AlertDisableState.*
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragmentSecond
@@ -38,7 +38,7 @@ class AlertListFragment: BaseFragmentSecond(), CoroutineScope {
   override fun init() {
     (requireActivity() as MainActivity).bottomNavVisibility = false
     lifecycleScope.launchWhenResumed {
-      userId = (requireActivity() as MainActivity).userPrefs.getUserId(requireContext())
+      userId = (requireActivity() as MainActivity).userPrefs.getUserId()
       viewModel.getData(userId)
     }
 

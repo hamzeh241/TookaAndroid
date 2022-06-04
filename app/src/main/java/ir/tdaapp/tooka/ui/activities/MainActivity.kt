@@ -87,7 +87,7 @@ class MainActivity: BaseActivity(), NavigationBarView.OnItemSelectedListener,
     lifecycleScope.launchWhenCreated {
       viewModel.subscribeToLivePrice()
     }
-    userPrefs = UserPreferences()
+    userPrefs = UserPreferences(this)
 
     binding.bottomNav.setOnItemReselectedListener(this)
   }

@@ -9,8 +9,8 @@ class HomeRemoteDataSource(private val api: ApiService) {
     const val TAG = "HomeRemoteDataSource"
   }
 
-  suspend fun data() =
+  suspend fun data(userId:Int) =
     callApi {
-      api.homeData()
+      api.homeData(userId)
     }
 }

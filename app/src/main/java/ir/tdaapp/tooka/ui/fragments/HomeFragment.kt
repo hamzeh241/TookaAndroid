@@ -4,6 +4,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,12 +20,12 @@ import ir.tdaapp.tooka.models.dataclasses.LivePriceListResponse
 import ir.tdaapp.tooka.models.dataclasses.News
 import ir.tdaapp.tooka.models.util.getAttributeColor
 import ir.tdaapp.tooka.models.util.getCurrentLocale
+import ir.tdaapp.tooka.models.util.navigate
 import ir.tdaapp.tooka.models.util.openWebpage
 import ir.tdaapp.tooka.models.viewmodels.HomeViewModel
 import ir.tdaapp.tooka.models.viewmodels.SharedViewModel
 import ir.tdaapp.tooka.ui.dialogs.NewsDetailsDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,41 +49,23 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
   private lateinit var watchlistAdapter: AlternateCoinsAdapter
   private lateinit var importantNewsAdapter: ImportantNewsAdapter
 
-  private val newsLayoutManager by lazy {
-    GridLayoutManager(requireActivity(), 2, GridLayoutManager.HORIZONTAL, false)
-  }
-  private val topCoinsLayoutManager by lazy {
-    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-  }
-  private val gainersLosersManager by lazy {
-    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-  }
-  private val watchlistManager by lazy {
-    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-  }
-
   private val viewModel: HomeViewModel by inject()
   private val sharedViewModel: SharedViewModel by inject()
 
   override val coroutineContext: CoroutineContext
-    get() = Dispatchers.IO + handler
+    get() = Dispatchers.IO
 
-  val handler = CoroutineExceptionHandler { _, exception ->
-    Timber.i("Coroutine Exception: " + exception + " handled !")
-  }
-
-  init {
-    EventBus.getDefault().register(this)
-  }
+  private var isAlreadyCreated = false
 
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View {
-    if (this::homeBinding.isInitialized)
+    if (this::homeBinding.isInitialized) {
+      isAlreadyCreated = true
       return homeBinding.root
-    else {
+    } else {
       homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
       return homeBinding.root
     }
@@ -90,13 +73,20 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     setHasOptionsMenu(true)
-    initializeAdapters()
-    initializeLists()
-    initListeners()
-    initScroll()
-    initObservables()
-    homeBinding.toolbar.title = getString(R.string.app_name_translatable)
-    homeBinding.toolbar.setOnMenuItemClickListener(this)
+    if (!isAlreadyCreated) {
+      EventBus.getDefault().register(this)
+      initializeAdapters()
+      initializeLists()
+      initListeners()
+      initScroll()
+      initObservables()
+      homeBinding.toolbar.title = getString(R.string.app_name_translatable)
+      homeBinding.toolbar.setOnMenuItemClickListener(this)
+    }
+
+    lifecycleScope.launchWhenCreated {
+      viewModel.getData(getUserId())
+    }
   }
 
   private fun initScroll() {
@@ -183,7 +173,7 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
       )
     }
     watchlistAdapter = AlternateCoinsAdapter { clicked, position ->
-      findNavController().navigate(
+      navigate(
         HomeFragmentDirections.actionHomeFragmentToCoinDetailsFragment(
           clicked.id,
           "asdasda",
@@ -207,7 +197,7 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
       }
       News.INTERNAL_NEWS -> {
         findNavController().navigate(
-          NewsFragmentDirections.actionNewsFragmentToNewsDetailsFragment2(
+          HomeFragmentDirections.actionHomeFragmentToNewsDetailsFragment(
             clicked.id
           )
         )
@@ -222,6 +212,18 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
   }
 
   private fun initializeLists() = homeBinding.run {
+    val newsLayoutManager =
+      GridLayoutManager(requireActivity(), 2, GridLayoutManager.HORIZONTAL, false)
+
+    val topCoinsLayoutManager =
+      LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+    val gainersLosersManager =
+      LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+    val watchlistManager =
+      LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
     includeImportantNews.importantNewsList.layoutManager = newsLayoutManager
     includeImportantNews.importantNewsList.adapter = importantNewsAdapter
 
@@ -244,7 +246,7 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
         findNavController().navigate(R.id.action_homeFragment_to_compareFragment)
       }
       R.id.alerts -> {
-        if ((requireActivity() as MainActivity).userPrefs.hasAccount(requireContext()))
+        if ((requireActivity() as MainActivity).userPrefs.hasAccount())
           findNavController().navigate(R.id.action_homeFragment_to_alertListFragment)
         else {
           val colorOnError = getAttributeColor(homeBinding.root.context, R.attr.colorOnError)
@@ -314,5 +316,6 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
       visibility = View.GONE
       pauseAnimation()
     }
+    homeBinding.includeWatchlist.noWatchlistRoot.visibility = View.GONE
   }
 }

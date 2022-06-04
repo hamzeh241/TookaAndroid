@@ -47,6 +47,12 @@
       <item name="cornerSize">12dp</item>
     </style>
 
+    <style name="ShapeAppearance.MyTheme.CircleMediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <!--Your custom shape here-->
+      <item name="cornerFamily">rounded</item>
+      <item name="cornerSize">16dp</item>
+    </style>
+
     <!--Shape Appearance for large components like side and bottom navigation drawers-->
     <style name="ShapeAppearance.MyTheme.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
         <!--Your custom shape here-->

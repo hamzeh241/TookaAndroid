@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.models.adapters.NotificationsViewHolder
-import ir.tdaapp.tooka.models.adapters.TookaAdapter
 import ir.tdaapp.tooka.databinding.FragmentNotificationBinding
 import ir.tdaapp.tooka.databinding.ItemNotificationBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
-import ir.tdaapp.tooka.models.dataclasses.*
+import ir.tdaapp.tooka.models.adapters.NotificationsViewHolder
+import ir.tdaapp.tooka.models.adapters.TookaAdapter
+import ir.tdaapp.tooka.models.dataclasses.Notification
 import ir.tdaapp.tooka.models.util.NetworkErrors
 import ir.tdaapp.tooka.models.viewmodels.NotificationsViewModel
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
@@ -51,7 +51,7 @@ class NotificationFragment: BaseFragment(), CoroutineScope {
     initObservables()
 
     launch {
-      viewModel.getData((requireActivity() as MainActivity).userPrefs.getUserId(requireContext()))
+      viewModel.getData((requireActivity() as MainActivity).userPrefs.getUserId())
     }
   }
 

@@ -66,8 +66,10 @@
           android:layout_marginStart="@dimen/margin8"
           android:layout_marginEnd="@dimen/margin4"
           android:layout_weight="1"
-          android:textAppearance="@style/TextAppearance.MyTheme.Price1"
-          android:textColor="@color/gray_400" />
+          android:textAppearance="@style/TextAppearance.MyTheme.Subtitle1"
+          android:textColor="@color/gray_400"
+          android:textSize="14sp"
+          android:textStyle="bold" />
 
         <TextView
           android:layout_width="wrap_content"
@@ -92,7 +94,8 @@
           android:layout_marginEnd="@dimen/margin4"
           android:layout_weight="1"
           android:textStyle="normal"
-          android:textAppearance="@style/TextAppearance.MyTheme.Price2" />
+          android:textAppearance="@style/TextAppearance.MyTheme.Subtitle1"
+          android:textSize="12sp" />
 
         <TextView
           android:layout_width="wrap_content"

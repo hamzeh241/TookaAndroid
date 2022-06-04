@@ -132,6 +132,7 @@ dependencies {
     //endregion
 
     //region SwipeDecorator
+    implementation 'com.github.tsuryo:Swipeable-RecyclerView:1.1'
     implementation 'com.github.xabaras:RecyclerViewSwipeDecorator:1.3'
     //endregion
 

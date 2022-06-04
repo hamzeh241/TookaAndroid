@@ -43,7 +43,7 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
 
   override fun onResume() {
     super.onResume()
-    if ((requireActivity() as MainActivity).userPrefs.hasAccount(requireContext())) {
+    if ((requireActivity() as MainActivity).userPrefs.hasAccount()) {
       // user is signed in
       binding.includeUserSettings.txtUserSettings.text = getString(R.string.user_settings)
     } else {
@@ -59,7 +59,7 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
     langPrefs = LanguagePreferences()
     initListeners()
     initObservables()
-    if ((requireActivity() as MainActivity).userPrefs.hasAccount(requireContext())) {
+    if ((requireActivity() as MainActivity).userPrefs.hasAccount()) {
       // user is signed in
     } else {
       // user is not signed in
@@ -92,7 +92,7 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
         dialog.show(requireActivity().supportFragmentManager, AppThemeBottomSheetDialog.TAG)
       }
       R.id.cardUserSettings -> {
-        if ((requireActivity() as MainActivity).userPrefs.hasAccount(requireContext())) {
+        if ((requireActivity() as MainActivity).userPrefs.hasAccount()) {
           toast(requireContext(), "user is signed in")
         } else {
           findNavController().navigate(

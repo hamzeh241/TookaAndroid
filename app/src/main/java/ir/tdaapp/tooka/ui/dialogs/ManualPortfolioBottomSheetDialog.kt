@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +17,8 @@ import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.DialogManualBottomSheetBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
-import ir.tdaapp.tooka.models.dataclasses.*
+import ir.tdaapp.tooka.models.dataclasses.Coin
+import ir.tdaapp.tooka.models.dataclasses.ManualWalletModel
 import ir.tdaapp.tooka.models.util.isLoading
 import ir.tdaapp.tooka.models.viewmodels.ManualBottomSheetViewModel
 import ir.tdaapp.tooka.models.viewmodels.ManualBottomSheetViewModel.ManualPortfolioErrors.*
@@ -179,7 +183,7 @@ class ManualPortfolioBottomSheetDialog: BottomSheetDialogFragment(), CoroutineSc
           launch {
             val model = ManualWalletModel(
               "apikey",
-              (requireActivity() as MainActivity).userPrefs.getUserId(requireContext()),
+              (requireActivity() as MainActivity).userPrefs.getUserId(),
               selectedCoin!!.id,
               binding.textInputEditText.text.toString().toDouble(),
               isBought

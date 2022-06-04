@@ -12,9 +12,9 @@ import androidx.annotation.DrawableRes
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.models.components.TookaSnackBar
 import ir.tdaapp.tooka.databinding.FragmentVerificationBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
+import ir.tdaapp.tooka.models.components.TookaSnackBar
 import ir.tdaapp.tooka.models.util.UserErrors
 import ir.tdaapp.tooka.models.util.toPx
 import ir.tdaapp.tooka.models.viewmodels.LoginActivityViewModel
@@ -158,7 +158,7 @@ class VerificationFragment: BaseFragmentSecond(), CoroutineScope {
 
     activityViewModel.verification.observe(viewLifecycleOwner) {
       launch(Dispatchers.IO) {
-        (requireActivity() as LoginActivity).userPrefs.add(requireContext(), it.id)
+        (requireActivity() as LoginActivity).userPrefs.add(it.id)
         withContext(Dispatchers.Main) {
           submitLoading = true
           TookaSnackBar(

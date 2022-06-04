@@ -8,10 +8,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.tdaapp.tooka.R
+import ir.tdaapp.tooka.databinding.FragmentNewsBinding
 import ir.tdaapp.tooka.models.adapters.NewsAdapter
 import ir.tdaapp.tooka.models.adapters.SliderNewsAdapter
-import ir.tdaapp.tooka.databinding.FragmentNewsBinding
-import ir.tdaapp.tooka.models.dataclasses.*
+import ir.tdaapp.tooka.models.dataclasses.News
 import ir.tdaapp.tooka.models.util.openWebpage
 import ir.tdaapp.tooka.models.viewmodels.NewsViewModel
 import ir.tdaapp.tooka.ui.dialogs.NewsDetailsDialog
@@ -32,29 +32,33 @@ class NewsFragment: BaseFragment(), CoroutineScope, View.OnClickListener {
 
   private val viewModel: NewsViewModel by inject()
 
+  private var isAlreadyCreated = false
+
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View =
-    if (this::binding.isInitialized)
+    if (this::binding.isInitialized) {
+      isAlreadyCreated = true
       binding.root
-    else {
+    } else {
       binding = FragmentNewsBinding.inflate(inflater, container, false)
       binding.root
     }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    binding.toolbar.title = getString(R.string.news)
-    initAdapters()
-    initViewPager()
-    initBreakingList()
-    initCryptoNews()
-    initObservables()
-
-    binding.includeBreakingNews.txtBreakingSeeMore.setOnClickListener(this)
-    binding.includeCryptoNews.txtCryptoNewsSeeMore.setOnClickListener(this)
+    if (!isAlreadyCreated) {
+      binding.toolbar.title = getString(R.string.news)
+      initAdapters()
+      initViewPager()
+      initBreakingList()
+      initCryptoNews()
+      initObservables()
+      binding.includeBreakingNews.txtBreakingSeeMore.setOnClickListener(this)
+      binding.includeCryptoNews.txtCryptoNewsSeeMore.setOnClickListener(this)
+    }
   }
 
   private fun initAdapters() {
@@ -143,28 +147,21 @@ class NewsFragment: BaseFragment(), CoroutineScope, View.OnClickListener {
       binding.includeSlider.dotsIndicator.setViewPager2(this)
     }
 
-  private val breakingManager by lazy {
-    GridLayoutManager(
-      requireContext(), 2,
-      GridLayoutManager.HORIZONTAL, false
-    )
-  }
-
   private fun initBreakingList() =
     binding.includeBreakingNews.breakingNewsList.apply {
-      layoutManager = breakingManager
+      layoutManager = GridLayoutManager(
+        requireContext(), 2,
+        GridLayoutManager.HORIZONTAL, false
+      )
       adapter = breakingAdapter
     }
 
-  private val cryptoManager by lazy {
-    object: LinearLayoutManager(requireContext()) {
-      override fun canScrollVertically(): Boolean = false
-    }
-  }
 
   private fun initCryptoNews() =
     binding.includeCryptoNews.cryptoNewsList.apply {
-      layoutManager = cryptoManager
+      layoutManager = object: LinearLayoutManager(requireContext()) {
+        override fun canScrollVertically(): Boolean = false
+      }
       adapter = cryptoNewsAdapter
     }
 

@@ -9,16 +9,6 @@
     android:id="@+id/marketCoinsList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutAnimation="@anim/layout_animation"
-    android:visibility="gone" />
+    android:layoutAnimation="@anim/layout_animation"/>
 
-  <com.airbnb.lottie.LottieAnimationView
-    android:id="@+id/loading"
-    android:layout_width="@dimen/size64"
-    android:layout_height="@dimen/size64"
-    app:lottie_rawRes="@raw/loading"
-    app:lottie_autoPlay="true"
-    app:lottie_loop="true"
-    app:lottie_speed="0.6"
-    android:layout_centerInParent="true" />
 </RelativeLayout>

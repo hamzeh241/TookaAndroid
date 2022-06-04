@@ -7,7 +7,7 @@ import retrofit2.http.*
 interface ApiService {
 
   @GET("home/data")
-  suspend fun homeData(): Response<ResponseModel<HomeContentResponse>>
+  suspend fun homeData(@Query("userId") userId:Int): Response<ResponseModel<HomeContentResponse>>
 
   @GET("markets/allcoins")
   suspend fun allCoins(
@@ -44,7 +44,7 @@ interface ApiService {
   suspend fun addWatchlist(
     @Query("coinId") coinId: Int,
     @Query("userId") userId: Int
-  ): Response<ResponseModel<Boolean>>
+  ): Response<ResponseModel<AddWatchlistResult>>
 
   @GET("markets/randomcoins")
   suspend fun randomCoins(

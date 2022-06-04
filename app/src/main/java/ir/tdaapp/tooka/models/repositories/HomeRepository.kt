@@ -49,5 +49,5 @@ class HomeRepository(
 
   suspend fun addToDatabase(response: HomeContentResponse) = local.addToDatabase(response)
 
-  suspend fun getData() = flowOf(remote.data())
+  suspend fun getData(userId:Int) = flowOf(remote.data(userId))
 }

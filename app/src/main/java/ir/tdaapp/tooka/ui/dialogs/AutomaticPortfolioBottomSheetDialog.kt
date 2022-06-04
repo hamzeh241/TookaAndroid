@@ -14,11 +14,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.models.adapters.PlatformsViewHolder
-import ir.tdaapp.tooka.models.adapters.TookaAdapter
 import ir.tdaapp.tooka.databinding.DialogAutomaticBottomSheetBinding
 import ir.tdaapp.tooka.databinding.ItemPlatformBinding
-import ir.tdaapp.tooka.models.dataclasses.*
+import ir.tdaapp.tooka.models.adapters.PlatformsViewHolder
+import ir.tdaapp.tooka.models.adapters.TookaAdapter
+import ir.tdaapp.tooka.models.dataclasses.AutoWalletModel
+import ir.tdaapp.tooka.models.dataclasses.Coin
+import ir.tdaapp.tooka.models.dataclasses.Platform
 import ir.tdaapp.tooka.models.util.CompoundPosition
 import ir.tdaapp.tooka.models.util.isLoading
 import ir.tdaapp.tooka.models.viewmodels.AutomaticBottomSheetViewModel
@@ -245,7 +247,7 @@ class AutomaticPortfolioBottomSheetDialog: BottomSheetDialogFragment(), Coroutin
           val model =
             AutoWalletModel(
               "",
-              (requireActivity() as MainActivity).userPrefs.getUserId(requireContext()),
+              (requireActivity() as MainActivity).userPrefs.getUserId(),
               binding.edtWallet.text.toString(),
               selectedPlatform!!.id,
               selectedCoin!!.id

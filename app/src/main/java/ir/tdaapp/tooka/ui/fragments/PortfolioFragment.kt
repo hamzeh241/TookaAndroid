@@ -74,9 +74,7 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
 
     lifecycleScope.launchWhenCreated {
       viewModel.getAllBalances(
-        (requireActivity() as MainActivity).userPrefs.getUserId(
-          requireContext()
-        )
+        (requireActivity() as MainActivity).userPrefs.getUserId()
       )
     }
   }
@@ -183,7 +181,7 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
   override fun onClick(v: View?) {
     when (v?.id) {
       R.id.fabPortfolioAdd -> {
-        if ((requireActivity() as MainActivity).userPrefs.hasAccount(requireContext())){
+        if ((requireActivity() as MainActivity).userPrefs.hasAccount()){
 
         val dialog = PortfolioChoiceBottomSheetDialog()
         dialog.callback = this
@@ -219,9 +217,7 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
       override fun onResult() {
         launch {
           viewModel.getAllBalances(
-            (requireActivity() as MainActivity).userPrefs.getUserId(
-              requireContext()
-            )
+            (requireActivity() as MainActivity).userPrefs.getUserId()
           )
         }
       }

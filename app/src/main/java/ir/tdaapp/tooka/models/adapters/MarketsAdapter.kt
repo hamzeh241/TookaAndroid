@@ -3,7 +3,6 @@ package ir.tdaapp.tooka.models.adapters
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -63,75 +62,102 @@ class MarketsAdapter(val action: CoinCallback):
     if (data.viewType == VIEW_TYPE_LINEAR) {
       holder.binding as ItemMarketCoinsFlatBinding
 
-      holder.binding.watchlistIndicator.visibility = when (data.isWatchlist) {
-        true -> View.VISIBLE
-        false -> View.GONE
-      }
-
-      holder.binding.txtCoinName.text = formatSymbol(
-        when (getCurrentLocale(holder.binding.root.context)) {
-          "fa" -> data.persianName ?: data.name
-          else -> data.name
-        }, data.symbol
-      )
-
-      holder.binding.txtCoinPriceTMN.text =
-        formatPrice(
-          toPersianNumbers(separatePrice(data.priceTMN.toInt())),
-          currency = holder.binding.root.context.getString(R.string.toomans)
+      holder.binding.run {
+        watchlistIndicator.setImageResource(
+          when (data.isWatchlist) {
+            true -> R.drawable.ic_baseline_bookmark_24
+            false -> R.drawable.ic_baseline_bookmark_border_24
+          }
         )
 
-      holder.binding.txtCoinPriceUSD.text =
-        formatPrice(
-          toPersianNumbers(separatePrice(data.priceUSD)),
-          holder.binding.root.context.getString(R.string.dollars)
+        txtCoinName.text = formatSymbol(
+          when (getCurrentLocale(root.context)) {
+            "fa" -> data.persianName ?: data.name
+            else -> data.name
+          }, data.symbol
         )
 
-      holder.binding.txtCoinPercentage.text =
-        StringBuilder(data.percentage.toString()).append(" %").toString()
+        txtCoinPriceTMN.text =
+          formatPrice(
+            getCorrectNumberFormat(
+              separatePrice(data.priceTMN.toInt()),
+              root.context
+            ),
+            currency = root.context.getString(R.string.toomans)
+          )
 
-      if (data.percentage > 0) {
-        holder.binding.txtCoinPercentage.setTextColor(holder.binding.root.resources.getColor(R.color.green_400))
-        holder.binding.imgAscend.setColorFilter(holder.binding.root.resources.getColor(R.color.green_400))
-        holder.binding.imgAscend.setImageResource(R.drawable.ic_ascend)
-      } else if (data.percentage < 0) {
-        holder.binding.txtCoinPercentage.setTextColor(holder.binding.root.resources.getColor(R.color.red_600))
-        holder.binding.imgAscend.setColorFilter(holder.binding.root.resources.getColor(R.color.red_600))
-        holder.binding.imgAscend.setImageResource(R.drawable.ic_descend)
-      } else {
-        holder.binding.txtCoinPercentage.setTextColor(holder.binding.root.resources.getColor(R.color.white_900))
-        holder.binding.imgAscend.setColorFilter(holder.binding.root.resources.getColor(R.color.white_900))
-        holder.binding.imgAscend.setImageResource(R.drawable.ic_remove)
+        txtCoinPriceUSD.text =
+          formatPrice(
+            getCorrectNumberFormat(separatePrice(data.priceUSD), root.context),
+            root.context.getString(R.string.dollars)
+          )
+
+        txtCoinPercentage.text =
+          StringBuilder(
+            getCorrectNumberFormat(
+              data.percentage.toString(),
+              root.context
+            )
+          ).append(" %").toString()
+
+        if (data.percentage > 0) {
+          txtCoinPercentage.setTextColor(root.resources.getColor(R.color.green_400))
+          imgAscend.setColorFilter(root.resources.getColor(R.color.green_400))
+          imgAscend.setImageResource(R.drawable.ic_ascend)
+        } else if (data.percentage < 0) {
+          txtCoinPercentage.setTextColor(root.resources.getColor(R.color.red_600))
+          imgAscend.setColorFilter(root.resources.getColor(R.color.red_600))
+          imgAscend.setImageResource(R.drawable.ic_descend)
+        } else {
+          txtCoinPercentage.setTextColor(root.resources.getColor(R.color.white_900))
+          imgAscend.setColorFilter(root.resources.getColor(R.color.white_900))
+          imgAscend.setImageResource(R.drawable.ic_remove)
+        }
+
+        val imageUrl = RetrofitClient.COIN_IMAGES + data.icon
+
+        Glide.with(root.context)
+          .load(imageUrl)
+          .placeholder(R.drawable.ic_baseline_circle_24)
+          .into(imgCoin)
+
       }
-
-      val imageUrl = RetrofitClient.COIN_IMAGES + data.icon
-
-      Glide.with(holder.binding.root.context)
-        .load(imageUrl)
-        .placeholder(R.drawable.ic_baseline_circle_24)
-        .into(holder.binding.imgCoin)
-
     } else {
       holder.binding as ItemMarketCoinsGridBinding
 
-      holder.binding.txtCoinName.text = when (getCurrentLocale(holder.binding.root.context)) {
-        "fa" -> data.persianName ?: data.name
-        else -> data.name
+      holder.binding.run {
+        txtCoinName.text = when (getCurrentLocale(root.context)) {
+          "fa" -> data.persianName ?: data.name
+          else -> data.name
+        }
+
+        txtPriceTMN.text =
+          formatPrice(
+            getCorrectNumberFormat(
+              separatePrice(data.priceTMN.toInt()),
+              root.context
+            ),
+            currency = root.context.getString(R.string.toomans)
+          )
+
+        txtPriceUSD.text =
+          formatPrice(
+            getCorrectNumberFormat(separatePrice(data.priceUSD), root.context),
+            root.context.getString(R.string.dollars)
+          )
+
+        txtCoinPercentage.text = getCorrectNumberFormat(
+          data.percentage.toString(),
+          root.context
+        )
+
+        val imageUrl = RetrofitClient.COIN_IMAGES + data.icon
+
+        Glide.with(root.context)
+          .load(imageUrl)
+          .placeholder(R.drawable.ic_baseline_circle_24)
+          .into(imgCoin)
       }
-
-      holder.binding.txtPriceTMN.text =
-        StringBuilder(separatePrice(data.priceTMN.toInt())).toString()
-      holder.binding.txtPriceUSD.text =
-        StringBuilder(separatePrice(data.priceUSD.toFloat())).toString()
-
-      holder.binding.txtCoinPercentage.text = data.percentage.toString()
-
-      val imageUrl = RetrofitClient.COIN_IMAGES + data.icon
-
-      Glide.with(holder.binding.root.context)
-        .load(imageUrl)
-        .placeholder(R.drawable.ic_baseline_circle_24)
-        .into(holder.binding.imgCoin)
     }
   }
 
@@ -163,105 +189,101 @@ class MarketsAdapter(val action: CoinCallback):
     if (payloads.isNullOrEmpty())
       super.onBindViewHolder(holder, position, payloads)
 
-    @ColorInt val colorUsd = getAttributeColor(holder.binding.root.context,R.attr.colorOnSurface)
-    @ColorInt val colorTmn = getAttributeColor(holder.binding.root.context,R.attr.colorOnSurface)
+    @ColorInt val colorUsd = getAttributeColor(holder.binding.root.context, R.attr.colorOnSurface)
+    @ColorInt val colorTmn = getAttributeColor(holder.binding.root.context, R.attr.colorOnSurface)
 
     if (payloads.any { it is PriceChange }) {
       if (holder.binding is ItemMarketCoinsFlatBinding) {
         val item = differ.currentList[position]
 
-        if ((payloads.last() as PriceChange).ascend) {
-          holder.binding.txtCoinPriceUSD.text =
+        holder.binding.run {
+          txtCoinPriceUSD.text =
             formatPrice(
-              toPersianNumbers(separatePrice(item.priceUSD.toFloat())),
-              holder.binding.root.context.getString(R.string.dollars)
+              getCorrectNumberFormat(
+                separatePrice(item.priceUSD.toFloat()),
+                root.context
+              ),
+              root.context.getString(R.string.dollars)
             )
-          holder.binding.txtCoinPriceUSD.animateColor(
-            colorUsd,
-            Color.GREEN,
-            1000L
-          )
+          txtCoinPriceTMN.text =
+            formatPrice(
+              getCorrectNumberFormat(
+                separatePrice(item.priceTMN.toInt()),
+                root.context
+              ),
+              currency = root.context.getString(R.string.toomans)
+            )
+          if ((payloads.last() as PriceChange).ascend) {
+            txtCoinPriceUSD.animateColor(
+              colorUsd,
+              Color.GREEN,
+              1000L
+            )
 
-          holder.binding.txtCoinPriceTMN.text =
-            formatPrice(
-              toPersianNumbers(separatePrice(item.priceTMN.toInt())),
-              currency = holder.binding.root.context.getString(R.string.toomans)
+            txtCoinPriceTMN.animateColor(
+              colorTmn,
+              Color.GREEN,
+              1000L
             )
-          holder.binding.txtCoinPriceTMN.animateColor(
-            colorTmn,
-            Color.GREEN,
-            1000L
-          )
-        } else {
-          holder.binding.txtCoinPriceUSD.text = formatPrice(
-            toPersianNumbers(separatePrice(item.priceUSD)),
-            holder.binding.root.context.getString(R.string.dollars)
-          )
-          holder.binding.txtCoinPriceUSD.animateColor(
-            colorUsd,
-            Color.RED,
-            1000L
-          )
-
-          holder.binding.txtCoinPriceTMN.text =
-            formatPrice(
-              toPersianNumbers(separatePrice(item.priceTMN.toInt())),
-              currency = holder.binding.root.context.getString(R.string.toomans)
+          } else {
+            txtCoinPriceUSD.animateColor(
+              colorUsd,
+              Color.RED,
+              1000L
             )
-          holder.binding.txtCoinPriceTMN.animateColor(
-            colorTmn,
-            Color.RED,
-            1000L
-          )
+            txtCoinPriceTMN.animateColor(
+              colorTmn,
+              Color.RED,
+              1000L
+            )
+          }
         }
       } else {
         holder.binding as ItemMarketCoinsGridBinding
         val item = differ.currentList[position]
 
-        if ((payloads.last() as PriceChange).ascend) {
-          holder.binding.txtPriceUSD.text =
+        holder.binding.run {
+          txtPriceUSD.text =
             formatPrice(
-              toPersianNumbers(separatePrice(item.priceUSD)),
-              currency = holder.binding.root.context.getString(R.string.dollars)
+              getCorrectNumberFormat(
+                separatePrice(item.priceUSD.toFloat()),
+                root.context
+              ),
+              root.context.getString(R.string.dollars)
             )
-          holder.binding.txtPriceUSD.animateColor(
-            colorUsd,
-            Color.GREEN,
-            1000L
-          )
+          txtPriceTMN.text =
+            formatPrice(
+              getCorrectNumberFormat(
+                separatePrice(item.priceTMN.toInt()),
+                root.context
+              ),
+              currency = root.context.getString(R.string.toomans)
+            )
+          if ((payloads.last() as PriceChange).ascend) {
+            txtPriceUSD.animateColor(
+              colorUsd,
+              Color.GREEN,
+              1000L
+            )
 
-          holder.binding.txtPriceTMN.text =
-            formatPrice(
-              toPersianNumbers(separatePrice(item.priceTMN.toInt())),
-              currency = holder.binding.root.context.getString(R.string.toomans)
+            txtPriceTMN.animateColor(
+              colorTmn,
+              Color.GREEN,
+              1000L
             )
-          holder.binding.txtPriceTMN.animateColor(
-            colorTmn,
-            Color.GREEN,
-            1000L
-          )
-        } else {
-          holder.binding.txtPriceUSD.text =
-            formatPrice(
-              toPersianNumbers(separatePrice(item.priceTMN)),
-              currency = holder.binding.root.context.getString(R.string.dollars)
+          } else {
+            txtPriceUSD.animateColor(
+              colorUsd,
+              Color.RED,
+              1000L
             )
-          holder.binding.txtPriceUSD.animateColor(
-            colorUsd,
-            Color.RED,
-            1000L
-          )
 
-          holder.binding.txtPriceTMN.text =
-            formatPrice(
-              toPersianNumbers(separatePrice(item.priceTMN.toInt())),
-              currency = holder.binding.root.context.getString(R.string.toomans)
+            txtPriceTMN.animateColor(
+              colorTmn,
+              Color.RED,
+              1000L
             )
-          holder.binding.txtPriceTMN.animateColor(
-            colorTmn,
-            Color.RED,
-            1000L
-          )
+          }
         }
       }
     }

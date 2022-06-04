@@ -21,12 +21,15 @@ import com.google.android.material.snackbar.Snackbar
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.FragmentInsertPriceAlertBinding
-import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.models.util.*
+import ir.tdaapp.tooka.models.dataclasses.LivePriceListResponse
+import ir.tdaapp.tooka.models.dataclasses.PriceAlertModel
+import ir.tdaapp.tooka.models.util.FormatPrice
 import ir.tdaapp.tooka.models.util.NetworkErrors.*
 import ir.tdaapp.tooka.models.util.NetworkErrors.NETWORK_ERROR
 import ir.tdaapp.tooka.models.util.NetworkErrors.SERVER_ERROR
 import ir.tdaapp.tooka.models.util.NetworkErrors.UNKNOWN_ERROR
+import ir.tdaapp.tooka.models.util.toEnglishNumbers
+import ir.tdaapp.tooka.models.util.toPx
 import ir.tdaapp.tooka.models.viewmodels.PriceAlertViewModel
 import ir.tdaapp.tooka.models.viewmodels.PriceAlertViewModel.AlertStatus.*
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragmentSecond
@@ -35,7 +38,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
-import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
 import kotlin.math.truncate
 
@@ -298,7 +300,7 @@ class InsertPriceAlertFragment: BaseFragmentSecond(), View.OnClickListener, Coro
             mPrice,
             !isIrt,
             if (isIrt) mPrice > coinModel?.priceTMN!! else mPrice > coinModel?.priceUSD!!,
-            (requireActivity() as MainActivity).userPrefs.getUserId(requireContext()),
+            (requireActivity() as MainActivity).userPrefs.getUserId(),
             coinId
           )
           viewModel.submitAlert(model)

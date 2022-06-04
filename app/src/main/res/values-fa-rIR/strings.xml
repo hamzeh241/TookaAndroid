@@ -142,4 +142,6 @@
   <string name="not_logged_in">شما حسابی ندارید یا تا کنون وارد نشده اید، لطفا نسبت به ورود خود اقدام فرمایید</string>
   <string name="are_you_sure">مطمئنید؟</string>
   <string name="lang_change_restart">برای عوض شدن برنامه به زبان مورد نظر شما باید اپلیکیشن بسته شود. ادامه میدهید؟</string>
+  <string name="add_watchlist">زیر نظر گرفتن</string>
+  <string name="add_watchlist_not_saved">ارز مورد نظر به لیست زیرنظر اضافه نشد، لطفا بعدا تلاش کنید</string>
 </resources>
