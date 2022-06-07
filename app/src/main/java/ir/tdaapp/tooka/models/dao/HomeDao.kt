@@ -14,13 +14,21 @@ import kotlinx.coroutines.flow.Flow
 interface HomeDao {
 
   @Query("SELECT COUNT(*) from top_coins")
-  suspend fun count(): Int
+  suspend fun topCount(): Int
+  @Query("SELECT COUNT(*) from gainers_losers")
+  suspend fun gainersCount(): Int
+  @Query("SELECT COUNT(*) from home_news")
+  suspend fun newsCount(): Int
 
   @Insert
   suspend fun addTopCoins(coins: List<TopCoin>)
 
   @Update
   suspend fun updateTopCoins(coins: List<TopCoin>)
+  @Update
+  suspend fun updateGainersLosers(coins: List<GainersLosers>)
+  @Update
+  suspend fun updateWatchlistCoins(coins: List<WatchlistCoin>)
 
   @Query("SELECT * from top_coins ORDER BY rank")
   fun topCoins(): Flow<List<TopCoin>>
@@ -31,7 +39,7 @@ interface HomeDao {
   @Insert
   suspend fun addBreakingNews(news: List<HomeNews>)
 
-  @Query("SELECT * from home_news ORDER BY news_id DESC")
+  @Query("SELECT * from home_news ORDER BY news_id DESC LIMIT 6")
   fun breakingNews(): Flow<List<HomeNews>>
 
   @Query("DELETE from home_news")

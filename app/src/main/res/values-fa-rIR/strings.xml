@@ -144,4 +144,10 @@
   <string name="lang_change_restart">برای عوض شدن برنامه به زبان مورد نظر شما باید اپلیکیشن بسته شود. ادامه میدهید؟</string>
   <string name="add_watchlist">زیر نظر گرفتن</string>
   <string name="add_watchlist_not_saved">ارز مورد نظر به لیست زیرنظر اضافه نشد، لطفا بعدا تلاش کنید</string>
+  <string name="your_wallets">کیف پول های شما</string>
+  <string name="no_wallets">شما کیف پولی تا بحال ثبت نکرده اید! در بخش پورتفوی اتوماتیک کیف پول خود را اضافه کنید</string>
+  <string name="please_wait">لطفا صبر کنید</string>
+  <string name="loading_wallets">در حال جمع آوری کیف پول های شما هستیم...</string>
+  <string name="grid_view">نمایش جدولی</string>
+  <string name="linear_view">نمایش خطی</string>
 </resources>

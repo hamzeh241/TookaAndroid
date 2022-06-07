@@ -168,6 +168,12 @@
   <string name="lang_change_restart">Changing the language requires the app to close. After opening it again you will see your preferred language set. Do you want to continue?</string>
   <string name="add_watchlist">Add Watchlist</string>
   <string name="add_watchlist_not_saved">Your coin was not added to watchlist, please try again later</string>
+  <string name="your_wallets">Your Wallets</string>
+  <string name="no_wallets">You haven\'t registered any wallets yet! Add them via automatic coin insertion</string>
+  <string name="please_wait">Please Wait</string>
+  <string name="loading_wallets">We are loading your wallets...</string>
+  <string name="grid_view">Grid View</string>
+  <string name="linear_view">Linear View</string>
 
 
 </resources>

@@ -32,9 +32,6 @@ data class GainersLosers(
   @ColumnInfo(name = "coin_icon")
   @SerializedName("coin_icon")
   var icon: String,
-  @ColumnInfo(name = "ohlc")
-  @SerializedName("ohlc")
-  var ohlc: List<Double>,
   @ColumnInfo(name = "rank")
   @SerializedName("rank") var rank: Int,
   @ColumnInfo(name = "percentage")

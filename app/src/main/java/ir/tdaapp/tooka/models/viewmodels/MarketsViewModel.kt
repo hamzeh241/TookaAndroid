@@ -4,17 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import ir.tdaapp.tooka.models.dataclasses.AddWatchlistResult
 import ir.tdaapp.tooka.models.dataclasses.Coin
-import ir.tdaapp.tooka.models.dataclasses.ResponseModel
 import ir.tdaapp.tooka.models.dataclasses.SortModel
-import ir.tdaapp.tooka.models.network.ApiService
+import ir.tdaapp.tooka.models.repositories.MarketsRepository
 import ir.tdaapp.tooka.models.util.NetworkErrors
+import ir.tdaapp.tooka.models.util.WatchlistErrors
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import java.io.IOException
 
-class MarketsViewModel(private val api: ApiService): ViewModel() {
+class MarketsViewModel(private val repository: MarketsRepository): ViewModel() {
 
   private val _coinsList = MutableLiveData<List<Coin>>()
   val coinsList: LiveData<List<Coin>>
@@ -49,95 +49,63 @@ class MarketsViewModel(private val api: ApiService): ViewModel() {
     Grid
   }
 
-  enum class WatchlistErrors {
-    COIN_NOT_FOUND,
-    USER_NOT_FOUND,
-    DATA_NOT_SAVED,
-    INVALID_ARGS,
-    NETWORK_ERROR,
-    SERVER_ERROR,
-    UNKNOWN_ERROR
-  }
-
   init {
-    viewModelScope.launch {
+    viewModelScope.launch(Dispatchers.IO) {
       getSortOptions()
     }
     viewType.value = ViewType.Linear
   }
 
-  fun setSelected(model: SortModel) = _selectedSort.postValue(model)
-
   suspend fun getSortOptions() {
-    try {
-      val options = api.sortOptions()
-      if (options.isSuccessful) {
-        val list = options.body()!!.result as ArrayList
-        list[0].isSelected = true
-        _sortList.postValue(list)
-        setSelected(list[0])
-      } else {
-        _error.postValue(NetworkErrors.SERVER_ERROR)
-      }
-    } catch (e: Exception) {
-      if (e is IOException)
-        _error.postValue(NetworkErrors.NETWORK_ERROR)
-      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
+    val options = repository.getSortOptions()
+    if (options.status) {
+      val list = options.result as ArrayList
+      list[0].isSelected = true
+      _sortList.postValue(list)
+      setSelected(list[0])
+    } else {
+      _error.postValue(options.errorType)
     }
   }
 
-  suspend fun addToWatchlist(userId: Int, coinId: Int) {
-    try {
-      val result = api.addWatchlist(coinId, userId)
-      if (result.isSuccessful)
-        _watchList.postValue(result.body()!!.result!!)
-      else {
-        val error = Gson().fromJson(
-          result.errorBody()?.string(),
-          ResponseModel
-          ::class.java
-        )
-
-        when (error.code) {
-          -1 -> _watchlistError.postValue(WatchlistErrors.INVALID_ARGS)
-          -2 -> _watchlistError.postValue(WatchlistErrors.DATA_NOT_SAVED)
-          -3 -> _watchlistError.postValue(WatchlistErrors.USER_NOT_FOUND)
-          -4 -> _watchlistError.postValue(WatchlistErrors.COIN_NOT_FOUND)
-          -5 -> _watchlistError.postValue(WatchlistErrors.SERVER_ERROR)
-          else -> _watchlistError.postValue(WatchlistErrors.UNKNOWN_ERROR)
-        }
-      }
-    } catch (e: Exception) {
-      if (e is IOException)
-        _watchlistError.postValue(WatchlistErrors.NETWORK_ERROR)
-      else
-        _watchlistError.postValue(WatchlistErrors.UNKNOWN_ERROR)
-    }
+  suspend fun addWatchlist(userId: Int, coinId: Int) {
+    val (result, error) = repository.addWatchlist(userId, coinId)
+    if (result.status) {
+      _watchList.postValue(result.result!!)
+    } else _watchlistError.postValue(error)
   }
 
   suspend fun getCoins(
     ascend: Boolean,
     sortOptions: Int,
-    userId: Int = 0
+    userId: Int = 0,
+    refresh: Boolean = false
   ) {
-    try {
-      callCoins(ascend, sortOptions, userId)
-    } catch (e: Exception) {
-      if (e is IOException)
-        _error.postValue(NetworkErrors.NETWORK_ERROR)
-      else _error.postValue(NetworkErrors.UNKNOWN_ERROR)
-    }
-  }
-
-  private suspend fun callCoins(ascend: Boolean, sortOptions: Int, userId: Int = 0) {
-    val coins = api.allCoins(ascend, userId, sortOptions)
-    if (coins.isSuccessful) {
-      _coinsList.postValue(coins.body()!!.result!!)
+    if (repository.isEmpty()) {
+      val result = repository.getData(ascend, sortOptions, userId)
+      if (result.status) {
+        _coinsList.postValue(result.result!!)
+        repository.addToDatabase(result.result)
+      } else _error.postValue(result.errorType)
     } else {
-      when (coins.code()) {
-        400 -> _error.postValue(NetworkErrors.UNKNOWN_ERROR)
-        500 -> _error.postValue(NetworkErrors.SERVER_ERROR)
+      if (!refresh) {
+        val local = repository.getLocalData().firstOrNull() ?: emptyList()
+        _coinsList.postValue(local)
+        val remote = repository.getData(ascend, sortOptions, userId)
+        if (remote.status) {
+          _coinsList.postValue(remote.result!!)
+          repository.updateDatabase(remote.result)
+        } else _error.postValue(remote.errorType)
+      } else {
+        val result = repository.getData(ascend, sortOptions, userId)
+        if (result.status) {
+          _coinsList.postValue(result.result!!)
+          repository.updateDatabase(result.result)
+        } else _error.postValue(result.errorType)
       }
     }
   }
+
+  fun setSelected(model: SortModel) = _selectedSort.postValue(model)
+
 }

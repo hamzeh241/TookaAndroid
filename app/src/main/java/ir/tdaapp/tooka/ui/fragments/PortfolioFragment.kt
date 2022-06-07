@@ -4,11 +4,13 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,15 +28,15 @@ import ir.tdaapp.tooka.models.adapters.PortfolioCoinsViewHolder
 import ir.tdaapp.tooka.models.adapters.TookaAdapter
 import ir.tdaapp.tooka.models.components.TookaSnackBar
 import ir.tdaapp.tooka.models.dataclasses.PortfolioInfo
-import ir.tdaapp.tooka.models.util.getAttributeColor
-import ir.tdaapp.tooka.models.util.separatePrice
+import ir.tdaapp.tooka.models.enums.ManualPortfolioErrors
+import ir.tdaapp.tooka.models.util.*
 import ir.tdaapp.tooka.models.viewmodels.AutomaticBottomSheetViewModel
 import ir.tdaapp.tooka.models.viewmodels.AutomaticBottomSheetViewModel.PortfolioErrors.*
-import ir.tdaapp.tooka.models.viewmodels.ManualBottomSheetViewModel
 import ir.tdaapp.tooka.models.viewmodels.PortfolioViewModel
 import ir.tdaapp.tooka.ui.dialogs.AutomaticPortfolioBottomSheetDialog
 import ir.tdaapp.tooka.ui.dialogs.ManualPortfolioBottomSheetDialog
 import ir.tdaapp.tooka.ui.dialogs.PortfolioChoiceBottomSheetDialog
+import ir.tdaapp.tooka.ui.dialogs.WalletsBottomSheetDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,12 +46,14 @@ import kotlin.coroutines.CoroutineContext
 
 
 class PortfolioFragment: BaseFragment(), View.OnClickListener,
-  PortfolioChoiceBottomSheetDialog.PortfolioChoiceBottomSheetCallback, CoroutineScope {
+  PortfolioChoiceBottomSheetDialog.PortfolioChoiceBottomSheetCallback,
+  Toolbar.OnMenuItemClickListener, CoroutineScope {
 
   lateinit var binding: FragmentPortfolioBinding
   lateinit var adapter: TookaAdapter<PortfolioInfo.Balance>
 
-  var isPortfolioActivated: Boolean = false
+  private var isAlreadyCreated = false
+  private var wallets = arrayListOf<String>()
 
   private val viewModel: PortfolioViewModel by inject()
 
@@ -58,21 +62,25 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View =
-    if (this::binding.isInitialized)
+    if (this::binding.isInitialized) {
+      isAlreadyCreated = true
       binding.root
-    else {
+    } else {
       binding = FragmentPortfolioBinding.inflate(inflater, container, false)
       binding.root
     }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    initPortfolioCoins()
-    initToolbar()
-    initListeners()
-    initObservables()
+    if (!isAlreadyCreated) {
+      initPortfolioCoins()
+      initToolbar()
+      initListeners()
+      initObservables()
+      binding.toolbar.setOnMenuItemClickListener(this)
+    }
 
-    lifecycleScope.launchWhenCreated {
+    lifecycleScope.launchWhenResumed {
       viewModel.getAllBalances(
         (requireActivity() as MainActivity).userPrefs.getUserId()
       )
@@ -112,13 +120,11 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
       isEnabled = false
     }
     binding.lineChart.apply {
-
-      setDragDecelerationFrictionCoef(0.9f);
-      setRotationAngle(0f);
-      setHighlightPerTapEnabled(true);
+      setDragDecelerationFrictionCoef(0.9f)
+      setRotationAngle(0f)
+      setHighlightPerTapEnabled(true)
       animateY(1400)
-      setUsePercentValues(true);
-
+      setUsePercentValues(true)
       setEntryLabelTextSize(10f)
       setDrawEntryLabels(true)
       setData(pieData)
@@ -131,15 +137,13 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
   }
 
   private fun initListeners() {
-    binding.fabPortfolioAdd.setOnClickListener(this)
-    binding.addToPortfolio.setOnClickListener(this)
-
     adapter.callback = TookaAdapter.Callback { vm, pos ->
+
     }
   }
 
   private fun initObservables() {
-    viewModel.capitals.observe(viewLifecycleOwner, {
+    viewModel.capitals.observe(viewLifecycleOwner) {
       if (it.balances.size > 0)
         binding.noPortfolio.visibility = View.GONE
       adapter.models = it.balances as ArrayList<PortfolioInfo.Balance>
@@ -152,17 +156,66 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
       showPieChart(it)
 
       binding.txtCapitalTMN.text =
-        StringBuilder(separatePrice(it.total_balance_tooman.toBigDecimal().toFloat()))
-          .append(" تومان")
-          .toString()
-      binding.txtCapitalUSD.text = StringBuilder(separatePrice(it.total_balance_dollar))
-        .append(" دلار")
-        .toString()
-    })
+        StringBuilder(
+          formatPrice(
+            getCorrectNumberFormat(
+              separatePrice(
+                it.total_balance_tooman.toBigDecimal().toFloat()
+              ), requireContext()
+            ), getString(R.string.toomans)
+          )
+        ).toString()
+      binding.txtCapitalUSD.text = StringBuilder(
+        formatPrice(
+          getCorrectNumberFormat(
+            separatePrice(
+              it.total_balance_dollar.toBigDecimal().toFloat()
+            ), requireContext()
+          ), getString(R.string.dollars)
+        )
+      ).toString()
+    }
 
-    viewModel.isPortfolio.observe(viewLifecycleOwner, {
-      isPortfolioActivated = it
-    })
+    viewModel.error.observe(viewLifecycleOwner) {
+      val message: String
+      @DrawableRes val icon: Int
+      when (it) {
+        NetworkErrors.NETWORK_ERROR -> {
+          message = getString(R.string.network_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.CLIENT_ERROR -> {
+          message = getString(R.string.unknown_error_desc)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+        }
+        NetworkErrors.NOT_FOUND_ERROR -> {
+          message = getString(R.string.coin_not_found)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+          requireActivity().onBackPressed()
+        }
+        NetworkErrors.SERVER_ERROR -> {
+          message = getString(R.string.server_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.UNAUTHORIZED_ERROR -> {
+          message = getString(R.string.network_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.UNKNOWN_ERROR -> {
+          message = getString(R.string.unknown_error_desc)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+        }
+      }
+
+      Toast(requireContext()).apply {
+        setDuration(Toast.LENGTH_LONG)
+        setView(ToastLayoutBinding.inflate(layoutInflater).apply {
+          this.message.text = message
+          image.setImageResource(icon)
+        }.root)
+        show()
+      }
+    }
   }
 
   fun initPortfolioCoins() {
@@ -175,39 +228,6 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
             false
           )
         )
-    }
-  }
-
-  override fun onClick(v: View?) {
-    when (v?.id) {
-      R.id.fabPortfolioAdd -> {
-        if ((requireActivity() as MainActivity).userPrefs.hasAccount()){
-
-        val dialog = PortfolioChoiceBottomSheetDialog()
-        dialog.callback = this
-        dialog.show(requireActivity().supportFragmentManager, PortfolioChoiceBottomSheetDialog.TAG)
-        }else{
-
-
-        @ColorInt val colorOnError = getAttributeColor(binding.root.context,R.attr.colorOnError)
-        TookaSnackBar(
-          binding.root,
-          getString(R.string.not_logged_in),
-          Snackbar.LENGTH_LONG
-        ).textConfig { textView ->
-          textView.typeface = Typeface.createFromAsset(
-            requireActivity().assets,
-            "iranyekan_medium.ttf"
-          )
-          textView.setTextColor(colorOnError)
-        }.backgroundConfig {
-          it.setBackgroundColor(resources.getColor(R.color.red_200))
-        }.show()
-        }
-      }
-      R.id.addToPortfolio -> {
-        binding.fabPortfolioAdd.performClick()
-      }
     }
   }
 
@@ -273,33 +293,38 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
     val dialog = ManualPortfolioBottomSheetDialog()
     dialog.callback = object: ManualPortfolioBottomSheetDialog.ManualPortfolioDialogCallback {
       override fun onResult() {
+        launch {
+          viewModel.getAllBalances(
+            (requireActivity() as MainActivity).userPrefs.getUserId()
+          )
+        }
       }
 
-      override fun onError(error: ManualBottomSheetViewModel.ManualPortfolioErrors) {
+      override fun onError(error: ManualPortfolioErrors) {
         val message: String
         @DrawableRes val icon: Int
         when (error) {
-          ManualBottomSheetViewModel.ManualPortfolioErrors.NO_ARGS -> {
+          ManualPortfolioErrors.NO_ARGS -> {
             message = getString(R.string.unknown_error_desc)
             icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
           }
-          ManualBottomSheetViewModel.ManualPortfolioErrors.INVALID_ARGS -> {
+          ManualPortfolioErrors.INVALID_ARGS -> {
             message = getString(R.string.invalid_args)
             icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
           }
-          ManualBottomSheetViewModel.ManualPortfolioErrors.NOT_SAVED -> {
+          ManualPortfolioErrors.NOT_SAVED -> {
             message = getString(R.string.user_database_error)
             icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
           }
-          ManualBottomSheetViewModel.ManualPortfolioErrors.NETWORK_ERROR -> {
+          ManualPortfolioErrors.NETWORK_ERROR -> {
             message = getString(R.string.network_error_desc)
             icon = R.drawable.ic_dns_white_24dp
           }
-          ManualBottomSheetViewModel.ManualPortfolioErrors.SERVER_ERROR -> {
+          ManualPortfolioErrors.SERVER_ERROR -> {
             message = getString(R.string.server_error_desc)
             icon = R.drawable.ic_dns_white_24dp
           }
-          ManualBottomSheetViewModel.ManualPortfolioErrors.UNKNOWN_ERROR -> {
+          ManualPortfolioErrors.UNKNOWN_ERROR -> {
             message = getString(R.string.unknown_error_desc)
             icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
           }
@@ -321,4 +346,65 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
 
   override val coroutineContext: CoroutineContext
     get() = Dispatchers.IO
+
+  override fun onMenuItemClick(item: MenuItem?): Boolean {
+    when (item?.itemId) {
+      R.id.wallets -> {
+//        launch {
+//          viewModel.getWallets(getUserId())
+//        }
+//        lottieLoadingDialog(1, id = "wallet_loading") {
+//          withAnimation(R.raw.wallet)
+//          withTitle {
+//            fontRes = R.font.medium
+//            text = getString(R.string.please_wait)
+//          }
+//          withContent {
+//            fontRes = R.font.regular
+//            text = getString(R.string.loading_wallets)
+//          }
+//          onDismiss {
+//
+//          }
+//        }
+//
+//        viewModel.wallets.observe(viewLifecycleOwner) {
+//          dismissLottieDialog("wallet_loading")
+//          wallets = it as ArrayList<String>
+//        }
+        val dialog = WalletsBottomSheetDialog(emptyList())
+        dialog.show(requireActivity().supportFragmentManager, WalletsBottomSheetDialog.TAG)
+      }
+      R.id.add -> {
+        if (getUserId() > 0) {
+          val dialog = PortfolioChoiceBottomSheetDialog()
+          dialog.callback = this
+          dialog.show(
+            requireActivity().supportFragmentManager,
+            PortfolioChoiceBottomSheetDialog.TAG
+          )
+        } else {
+          @ColorInt val colorOnError = getAttributeColor(binding.root.context, R.attr.colorOnError)
+          TookaSnackBar(
+            binding.root,
+            getString(R.string.not_logged_in),
+            Snackbar.LENGTH_LONG
+          ).textConfig { textView ->
+            textView.typeface = Typeface.createFromAsset(
+              requireActivity().assets,
+              "iranyekan_medium.ttf"
+            )
+            textView.setTextColor(colorOnError)
+          }.backgroundConfig {
+            it.setBackgroundColor(resources.getColor(R.color.red_200))
+          }.show()
+        }
+      }
+    }
+    return true
+  }
+
+  override fun onClick(v: View?) {
+
+  }
 }

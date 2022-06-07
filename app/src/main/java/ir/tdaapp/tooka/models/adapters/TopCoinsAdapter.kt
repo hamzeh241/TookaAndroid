@@ -132,7 +132,9 @@ class TopCoinsAdapter(val action: CoinCallback):
       if ((payloads.last() as PriceChange).ascend) {
         holder.binding.txtPriceUSD.text =
           formatPrice(
-            toPersianNumbers(separatePrice(item.priceUSD)),
+            getCorrectNumberFormat(
+              separatePrice(item.priceUSD), holder.binding.root.context
+            ),
             currency = holder.binding.root.context.getString(R.string.dollars)
           )
         holder.binding.txtPriceUSD.animateColor(
@@ -143,7 +145,9 @@ class TopCoinsAdapter(val action: CoinCallback):
 
         holder.binding.txtPriceTMN.text =
           formatPrice(
-            toPersianNumbers(separatePrice(item.priceTMN.toInt())),
+            getCorrectNumberFormat(
+              separatePrice(item.priceTMN.toInt()), holder.binding.root.context
+            ),
             currency = holder.binding.root.context.getString(R.string.toomans)
           )
         holder.binding.txtPriceTMN.animateColor(
@@ -154,7 +158,9 @@ class TopCoinsAdapter(val action: CoinCallback):
       } else {
         holder.binding.txtPriceUSD.text =
           formatPrice(
-            toPersianNumbers(separatePrice(item.priceUSD)),
+            getCorrectNumberFormat(
+              separatePrice(item.priceUSD), holder.binding.root.context
+            ),
             currency = holder.binding.root.context.getString(R.string.dollars)
           )
         holder.binding.txtPriceUSD.animateColor(
@@ -165,7 +171,9 @@ class TopCoinsAdapter(val action: CoinCallback):
 
         holder.binding.txtPriceTMN.text =
           formatPrice(
-            toPersianNumbers(separatePrice(item.priceTMN.toInt())),
+            getCorrectNumberFormat(
+              separatePrice(item.priceTMN.toInt()), holder.binding.root.context
+            ),
             currency = holder.binding.root.context.getString(R.string.toomans)
           )
         holder.binding.txtPriceTMN.animateColor(

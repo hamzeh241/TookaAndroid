@@ -23,7 +23,7 @@
       android:layout_height="wrap_content"
       android:id="@+id/txtTimeFrameNum"
       android:gravity="center"
-      android:fontFamily="@font/iranyekan_black"
+      android:fontFamily="@font/black"
       android:textColor="@color/black"
       android:textSize="20sp" />
 

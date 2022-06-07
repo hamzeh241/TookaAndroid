@@ -14,6 +14,6 @@ data class HomeNews(
   @ColumnInfo(name = "news_kind") val news_kind: Int,
   @ColumnInfo(name = "news_title_en") val news_title_en: String,
   @ColumnInfo(name = "news_title_fa") val news_title_fa: String,
-  @ColumnInfo(name = "news_url") val news_url: String,
+  @ColumnInfo(name = "news_url") val news_url: String?,
   @ColumnInfo(name = "news_write_date") val news_write_date: String
 )

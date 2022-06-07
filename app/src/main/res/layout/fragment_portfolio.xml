@@ -6,196 +6,136 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
+  <androidx.appcompat.widget.Toolbar
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="?attr/actionBarTheme"
+    android:minHeight="?attr/actionBarSize"
+    android:id="@+id/toolbar"
+    app:menu="@menu/portfolio_toolbar_items" />
+
   <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_below="@id/toolbar">
 
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical">
 
-      <RelativeLayout
+      <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible">
 
-
-        <androidx.appcompat.widget.Toolbar
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:theme="?attr/actionBarTheme"
-          android:minHeight="?attr/actionBarSize"
-          android:id="@+id/toolbar"
-          android:layout_alignParentTop="true"
-          app:menu="@menu/home_toolbar_items" />
-
         <LinearLayout
           android:orientation="vertical"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_below="@id/toolbar">
+          android:layout_height="120dp"
+          android:gravity="center">
 
           <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:gravity="center">
-
-            <LinearLayout
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center">
-
-              <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txtCapitalTMN"
-                android:textAppearance="@style/TextAppearance.MyTheme.Body1"
-                android:textSize="16sp" />
-
-              <ImageButton
-                android:layout_width="@dimen/size16"
-                android:layout_height="@dimen/size16"
-                app:srcCompat="@drawable/ic_visibility"
-                android:id="@+id/imgVisibility"
-                android:layout_marginStart="@dimen/margin8"
-                android:scaleType="centerInside"
-                app:tint="@color/gray_400" />
-            </LinearLayout>
 
             <TextView
               android:text="TextView"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:id="@+id/txtCapitalUSD"
-              android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
-              android:textColor="?colorOnSurface"
-              android:layout_marginTop="8dp" />
-          </LinearLayout>
+              android:id="@+id/txtCapitalTMN"
+              android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+              android:textSize="16sp" />
 
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.github.mikephil.charting.charts.PieChart
-              android:layout_width="match_parent"
-              android:layout_height="150dp"
-              android:id="@+id/lineChart" />
-
+            <ImageButton
+              android:layout_width="@dimen/size16"
+              android:layout_height="@dimen/size16"
+              app:srcCompat="@drawable/ic_visibility"
+              android:id="@+id/imgVisibility"
+              android:layout_marginStart="@dimen/margin8"
+              android:scaleType="centerInside"
+              app:tint="@color/gray_400" />
           </LinearLayout>
 
           <TextView
-            android:text="@string/my_capital"
+            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView14"
-            android:layout_marginTop="@dimen/margin8"
-            android:layout_marginStart="@dimen/margin16"
-            android:textAppearance="@style/TextAppearance.MyTheme.Body1" />
-
-          <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/portfolioCoinsList"
-            android:padding="4dp" />
+            android:id="@+id/txtCapitalUSD"
+            android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+            android:textColor="?colorOnSurface"
+            android:layout_marginTop="8dp" />
         </LinearLayout>
 
-      </RelativeLayout>
-    </LinearLayout>
-  </ScrollView>
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
 
-  <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:id="@+id/fabPortfolioAdd"
-    android:layout_marginEnd="@dimen/margin16"
-    android:layout_marginBottom="@dimen/margin16"
-    app:icon="@drawable/ic_baseline_add_24"
-    android:text="@string/add_crypto"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentEnd="true" />
+          <com.github.mikephil.charting.charts.PieChart
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:id="@+id/lineChart" />
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:visibility="gone">
-
-    <com.airbnb.lottie.LottieAnimationView
-      android:layout_width="142dp"
-      android:layout_height="142dp"
-      app:lottie_speed="0.5"
-      app:lottie_autoPlay="true"
-      app:lottie_rawRes="@raw/portfolio"
-      app:lottie_repeatCount="0"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      android:id="@+id/lottieAnimationView" />
-
-    <androidx.cardview.widget.CardView
-      android:layout_width="wrap_content"
-      android:layout_height="@dimen/size48"
-      app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView"
-      android:layout_marginTop="16dp"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:cardBackgroundColor="?colorPrimary"
-      app:cardElevation="@dimen/elev0"
-      android:id="@+id/addToPortfolio">
-
-      <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center">
+        </LinearLayout>
 
         <TextView
-          android:text="@string/add_to_portfolio"
+          android:text="@string/my_capital"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
-          android:textColor="@color/white"
-          android:layout_marginStart="@dimen/margin24"
-          android:layout_marginEnd="@dimen/margin24" />
-      </LinearLayout>
-    </androidx.cardview.widget.CardView>
+          android:id="@+id/textView14"
+          android:layout_marginTop="@dimen/margin8"
+          android:layout_marginStart="@dimen/margin16"
+          android:textAppearance="@style/TextAppearance.MyTheme.Body1" />
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:id="@+id/portfolioCoinsList"
+          android:padding="4dp" />
+      </LinearLayout>
+
+    </LinearLayout>
+  </ScrollView>
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:id="@+id/noPortfolio">
+    android:id="@+id/noPortfolio"
+    android:visibility="visible"
+    android:layout_below="@id/toolbar">
+
+    <com.airbnb.lottie.LottieAnimationView
+      android:layout_width="@dimen/size80"
+      android:layout_height="@dimen/size80"
+      app:lottie_rawRes="@raw/wallet"
+      app:lottie_autoPlay="true"
+      app:lottie_loop="true"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      android:id="@+id/lottieAnimationView2" />
 
     <TextView
       android:text="@string/empty_portfolio"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:id="@+id/textView17"
-      app:layout_constraintStart_toEndOf="@+id/imageView6"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       android:layout_marginEnd="16dp"
-      android:layout_marginStart="16dp"
-      android:textAppearance="@style/TextAppearance.MyTheme.Headline6" />
-
-    <ImageView
-      android:layout_width="@dimen/size48"
-      android:layout_height="@dimen/size48"
-      app:srcCompat="@drawable/ic_cloud_off_white_24dp"
-      android:id="@+id/imageView6"
-      android:tint="?colorOnSurface"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
+      android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+      app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView2"
       app:layout_constraintStart_toStartOf="parent"
-      android:layout_marginStart="32dp" />
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="16dp"
+      android:textAlignment="center" />
+
   </androidx.constraintlayout.widget.ConstraintLayout>
+
 </RelativeLayout>

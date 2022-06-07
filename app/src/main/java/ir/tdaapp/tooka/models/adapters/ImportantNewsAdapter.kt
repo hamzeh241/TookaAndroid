@@ -10,6 +10,7 @@ import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemImportantNewsBinding
 import ir.tdaapp.tooka.models.dataclasses.News
 import ir.tdaapp.tooka.models.network.RetrofitClient
+import ir.tdaapp.tooka.models.util.getCorrectNumberFormat
 import ir.tdaapp.tooka.models.util.getCurrentLocale
 import ir.tdaapp.tooka.models.util.setNewsMargin
 
@@ -71,7 +72,7 @@ class ImportantNewsAdapter(val action: ImportantNewsCallback):
       .append(" ")
       .append(holder.binding.root.context.getString(R.string.bullet))
       .append(" ")
-      .append(data.writeDate).toString()
+      .append(getCorrectNumberFormat(data.writeDate, holder.binding.root.context)).toString()
 
     val imageUrl = StringBuilder(RetrofitClient.NEWS_IMAGES).append(data.imageUrl).toString()
     Glide.with(holder.binding.root.context)

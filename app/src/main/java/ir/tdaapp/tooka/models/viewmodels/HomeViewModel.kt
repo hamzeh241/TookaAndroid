@@ -6,9 +6,8 @@ import androidx.lifecycle.ViewModel
 import ir.tdaapp.tooka.models.dataclasses.HomeContentResponse
 import ir.tdaapp.tooka.models.repositories.HomeRepository
 import ir.tdaapp.tooka.models.util.NetworkErrors
-import timber.log.Timber
 
-class HomeViewModel(private val repositoy: HomeRepository): ViewModel() {
+class HomeViewModel(private val repository: HomeRepository): ViewModel() {
 
   private val _data = MutableLiveData<HomeContentResponse>()
   val data: LiveData<HomeContentResponse>
@@ -18,27 +17,31 @@ class HomeViewModel(private val repositoy: HomeRepository): ViewModel() {
   val error: LiveData<NetworkErrors>
     get() = _error
 
-  suspend fun getData(userId: Int) {
-    if (repositoy.isEmpty()) {
-      Timber.i("is empty")
-      repositoy.getData(userId).collect {
+  suspend fun getData(userId: Int, refresh: Boolean = false) {
+    if (repository.isEmpty()) {
+      repository.getData(userId).collect {
         if (it.status) {
-          _data.value = it.result!!
-          repositoy.addToDatabase(it.result)
+          _data.postValue(it.result!!)
+          repository.addToDatabase(it.result)
         } else _error.postValue(it.errorType)
       }
     } else {
-      Timber.i("is not empty")
-      repositoy.getLocalData().collect {
-        _data.value = it
-      }
+      if (!refresh)
+        repository.getLocalData().collect {
+          _data.postValue(it)
+          callData(userId)
+        }
+      else
+        callData(userId)
+    }
+  }
 
-      repositoy.getData(userId).collect {
-        if (it.status) {
-          _data.value = it.result!!
-          repositoy.updateDatabase(it.result)
-        } else _error.postValue(it.errorType)
-      }
+  private suspend fun callData(userId: Int) {
+    repository.getData(userId).collect {
+      if (it.status) {
+        _data.postValue(it.result!!)
+        repository.updateDatabase(it.result)
+      } else _error.postValue(it.errorType)
     }
   }
 

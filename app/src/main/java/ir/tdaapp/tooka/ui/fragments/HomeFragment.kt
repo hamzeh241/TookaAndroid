@@ -3,6 +3,8 @@ package ir.tdaapp.tooka.ui.fragments
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -12,22 +14,21 @@ import com.google.android.material.snackbar.Snackbar
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.FragmentHomeBinding
+import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.adapters.AlternateCoinsAdapter
 import ir.tdaapp.tooka.models.adapters.ImportantNewsAdapter
 import ir.tdaapp.tooka.models.adapters.TopCoinsAdapter
 import ir.tdaapp.tooka.models.components.TookaSnackBar
 import ir.tdaapp.tooka.models.dataclasses.LivePriceListResponse
 import ir.tdaapp.tooka.models.dataclasses.News
-import ir.tdaapp.tooka.models.util.getAttributeColor
-import ir.tdaapp.tooka.models.util.getCurrentLocale
-import ir.tdaapp.tooka.models.util.navigate
-import ir.tdaapp.tooka.models.util.openWebpage
+import ir.tdaapp.tooka.models.util.*
 import ir.tdaapp.tooka.models.viewmodels.HomeViewModel
 import ir.tdaapp.tooka.models.viewmodels.SharedViewModel
 import ir.tdaapp.tooka.ui.dialogs.NewsDetailsDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -75,6 +76,7 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
     setHasOptionsMenu(true)
     if (!isAlreadyCreated) {
       EventBus.getDefault().register(this)
+      initSwipeRefresh()
       initializeAdapters()
       initializeLists()
       initListeners()
@@ -84,7 +86,7 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
       homeBinding.toolbar.setOnMenuItemClickListener(this)
     }
 
-    lifecycleScope.launchWhenCreated {
+    lifecycleScope.launchWhenResumed {
       viewModel.getData(getUserId())
     }
   }
@@ -101,6 +103,12 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
     })
   }
 
+  private fun initSwipeRefresh() = homeBinding.swipeRefreshLayout.setOnRefreshListener {
+    launch {
+      viewModel.getData(getUserId(), refresh = true)
+    }
+  }
+
   @Subscribe
   fun onPriceUpdate(livePrice: LivePriceListResponse) {
     launch {
@@ -110,23 +118,28 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
     }
   }
 
-  fun initListeners() {
-    homeBinding.includeHomeMisc.converter.setOnClickListener(this)
-    homeBinding.includeHomeMisc.comparer.setOnClickListener(this)
-    homeBinding.includeHomeMisc.alerts.setOnClickListener(this)
-    homeBinding.includeWatchlist.addWatchlist.setOnClickListener(this)
+  fun initListeners() = homeBinding.run {
+    includeHomeMisc.converter.setOnClickListener(this@HomeFragment)
+    includeHomeMisc.comparer.setOnClickListener(this@HomeFragment)
+    includeHomeMisc.alerts.setOnClickListener(this@HomeFragment)
+    includeWatchlist.addWatchlist.setOnClickListener(this@HomeFragment)
   }
 
   fun initObservables() {
     viewModel.data.observe(viewLifecycleOwner) {
-      showTopList()
-      topCoinAdapter.differ.submitList(it.topCoins)
+      homeBinding.swipeRefreshLayout.isRefreshing = false
+      launch(Dispatchers.Main) {
+        showTopList()
+        topCoinAdapter.differ.submitList(it.topCoins)
+        delay(300)
 
-      importantNewsAdapter.differ.submitList(it.breakingNews)
-      showNewsList()
+        importantNewsAdapter.differ.submitList(it.breakingNews)
+        showNewsList()
+        delay(300)
 
-      gainersLosersAdapter.differ.submitList(it.gainersLosers)
-      showGainersList()
+        gainersLosersAdapter.differ.submitList(it.gainersLosers)
+        showGainersList()
+      }
 
       if (it.watchlist.size > 0) {
         watchlistAdapter.differ.submitList(it.watchlist)
@@ -138,6 +151,46 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
       }
     }
     viewModel.error.observe(viewLifecycleOwner, {
+      homeBinding.swipeRefreshLayout.isRefreshing = false
+
+      val message: String
+      @DrawableRes val icon: Int
+      when (it) {
+        NetworkErrors.NETWORK_ERROR -> {
+          message = getString(R.string.network_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.CLIENT_ERROR -> {
+          message = getString(R.string.unknown_error_desc)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+        }
+        NetworkErrors.NOT_FOUND_ERROR -> {
+          message = getString(R.string.coin_not_found)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+          requireActivity().onBackPressed()
+        }
+        NetworkErrors.SERVER_ERROR -> {
+          message = getString(R.string.server_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.UNAUTHORIZED_ERROR -> {
+          message = getString(R.string.network_error_desc)
+          icon = R.drawable.ic_dns_white_24dp
+        }
+        NetworkErrors.UNKNOWN_ERROR -> {
+          message = getString(R.string.unknown_error_desc)
+          icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+        }
+      }
+
+      Toast(requireContext()).apply {
+        setDuration(Toast.LENGTH_LONG)
+        setView(ToastLayoutBinding.inflate(layoutInflater).apply {
+          this.message.text = message
+          image.setImageResource(icon)
+        }.root)
+        show()
+      }
     })
 
     sharedViewModel.error.observe(viewLifecycleOwner, {
@@ -193,7 +246,7 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
   private fun newsClicked(clicked: News) {
     when (clicked.newsKind) {
       News.EXTERNAL_NEWS -> {
-        openWebpage(requireActivity(), clicked.url)
+        openWebpage(requireActivity(), clicked.url!!)
       }
       News.INTERNAL_NEWS -> {
         findNavController().navigate(
@@ -212,29 +265,25 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
   }
 
   private fun initializeLists() = homeBinding.run {
-    val newsLayoutManager =
-      GridLayoutManager(requireActivity(), 2, GridLayoutManager.HORIZONTAL, false)
+    includeImportantNews.importantNewsList.run {
+      layoutManager = GridLayoutManager(requireActivity(), 2, GridLayoutManager.HORIZONTAL, false)
+      adapter = importantNewsAdapter
+    }
 
-    val topCoinsLayoutManager =
-      LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    includeTopCoins.topCoinsList.run {
+      layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+      adapter = topCoinAdapter
+    }
 
-    val gainersLosersManager =
-      LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    includeGainersLosers.gainersLosersList.run {
+      layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+      adapter = gainersLosersAdapter
+    }
 
-    val watchlistManager =
-      LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-    includeImportantNews.importantNewsList.layoutManager = newsLayoutManager
-    includeImportantNews.importantNewsList.adapter = importantNewsAdapter
-
-    includeTopCoins.topCoinsList.layoutManager = topCoinsLayoutManager
-    includeTopCoins.topCoinsList.adapter = topCoinAdapter
-
-    includeGainersLosers.gainersLosersList.layoutManager = gainersLosersManager
-    includeGainersLosers.gainersLosersList.adapter = gainersLosersAdapter
-
-    includeWatchlist.watchlistList.layoutManager = watchlistManager
-    includeWatchlist.watchlistList.adapter = watchlistAdapter
+    includeWatchlist.watchlistList.run {
+      layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+      adapter = watchlistAdapter
+    }
   }
 
   override fun onClick(v: View?) {
@@ -288,33 +337,29 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
     return true
   }
 
-  private fun showTopList() {
-    homeBinding.includeTopCoins.topCoinsList.visibility = View.VISIBLE
-    homeBinding.includeTopCoins.topCoinsLoading.visibility = View.GONE
-    homeBinding.includeTopCoins.topCoinsLoading.pauseAnimation()
+  private fun showTopList() = homeBinding.includeTopCoins.run {
+    topCoinsLoading.cancelAnimation()
+    topCoinsLoading.visibility = View.GONE
   }
 
-  private fun showNewsList() {
-    homeBinding.includeImportantNews.importantNewsList.visibility = View.VISIBLE
-    homeBinding.includeImportantNews.breakingNewsLoading.apply {
+  private fun showNewsList() = homeBinding.includeImportantNews.run {
+    breakingNewsLoading.apply {
+      cancelAnimation()
       visibility = View.GONE
-      pauseAnimation()
     }
   }
 
   private fun showGainersList() {
-    homeBinding.includeGainersLosers.gainersLosersList.visibility = View.VISIBLE
     homeBinding.includeGainersLosers.breakingNewsLoading.apply {
+      cancelAnimation()
       visibility = View.GONE
-      pauseAnimation()
     }
   }
 
   private fun showWatchlist() {
-    homeBinding.includeWatchlist.watchlistList.visibility = View.VISIBLE
     homeBinding.includeWatchlist.breakingNewsLoading.apply {
+      cancelAnimation()
       visibility = View.GONE
-      pauseAnimation()
     }
     homeBinding.includeWatchlist.noWatchlistRoot.visibility = View.GONE
   }

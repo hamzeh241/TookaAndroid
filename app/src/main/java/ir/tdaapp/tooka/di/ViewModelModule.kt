@@ -17,6 +17,7 @@ val viewModelModule = module {
   factory { CompareViewModel() }
   factory { ConverterViewModel() }
   factory { ManualBottomSheetViewModel(get()) }
+  factory { WalletsBottomSheetViewModel(get()) }
   factory { AutomaticBottomSheetViewModel(get()) }
   factory { CoinDetailsViewModel(get()) }
   factory { PriceAlertViewModel(get()) }

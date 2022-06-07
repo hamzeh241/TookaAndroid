@@ -59,7 +59,6 @@ fun Coin.toWatchlist() =
     symbol,
     nobitexId,
     icon,
-    ohlc,
     rank,
     percentage,
   )
@@ -74,7 +73,6 @@ fun Coin.toGainersLosers() =
     symbol,
     nobitexId,
     icon,
-    ohlc,
     rank,
     percentage,
   )
@@ -107,7 +105,7 @@ fun GainersLosers.toCoin(): Coin =
     this.symbol,
     this.nobitexId,
     this.icon,
-    this.ohlc,
+    emptyList(),
     this.rank,
     this.percentage,
     false,
@@ -125,7 +123,7 @@ fun WatchlistCoin.toCoin(): Coin =
     this.symbol,
     this.nobitexId,
     this.icon,
-    this.ohlc,
+    emptyList(),
     this.rank,
     this.percentage,
     false,

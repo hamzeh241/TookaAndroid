@@ -6,43 +6,43 @@
   </style>
 
   <style name="TextAppearance.MyTheme.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
-    <item name="fontFamily">@font/iranyekan_light</item>
-    <item name="android:fontFamily">@font/iranyekan_light</item>
+    <item name="fontFamily">@font/light</item>
+    <item name="android:fontFamily">@font/light</item>
     <item name="android:textSize">60sp</item>
     <!--Your custom type style here-->
   </style>
 
   <style name="TextAppearance.MyTheme.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
-    <item name="fontFamily">@font/iranyekan_regular</item>
-    <item name="android:fontFamily">@font/iranyekan_regular</item>
+    <item name="fontFamily">@font/regular</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:textSize">48sp</item>
     <!--Your custom type style here-->
   </style>
 
   <style name="TextAppearance.MyTheme.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
-    <item name="fontFamily">@font/iranyekan_regular</item>
-    <item name="android:fontFamily">@font/iranyekan_regular</item>
+    <item name="fontFamily">@font/regular</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:textSize">34sp</item>
     <!--Your custom type style here-->
   </style>
 
   <style name="TextAppearance.MyTheme.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
-    <item name="fontFamily">@font/iranyekan_regular</item>
-    <item name="android:fontFamily">@font/iranyekan_regular</item>
+    <item name="fontFamily">@font/regular</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:textSize">24sp</item>
     <!--Your custom type style here-->
   </style>
 
   <style name="TextAppearance.MyTheme.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
-    <item name="fontFamily">@font/iranyekan_medium</item>
-    <item name="android:fontFamily">@font/iranyekan_medium</item>
+    <item name="fontFamily">@font/medium</item>
+    <item name="android:fontFamily">@font/medium</item>
     <item name="android:textSize">20sp</item>
     <!--Your custom type style here-->
   </style>
 
   <style name="TextAppearance.MyTheme.TabTextAppearance" parent="@android:style/TextAppearance.Widget.TabWidget">
-    <item name="android:fontFamily">@font/iranyekan_bold</item>
-    <item name="fontFamily">@font/iranyekan_bold</item>
+    <item name="android:fontFamily">@font/bold</item>
+    <item name="fontFamily">@font/bold</item>
   </style>
 
   <style name="TextAppearance.MyTheme.Price1" parent="TextAppearance.MaterialComponents.Headline6">
@@ -53,14 +53,14 @@
   </style>
 
   <style name="TextAppearance.MyTheme.ToolbarTitle" parent="TextAppearance.MaterialComponents.Headline6">
-    <item name="fontFamily">@font/iranyekan_medium</item>
-    <item name="android:fontFamily">@font/iranyekan_medium</item>
+    <item name="fontFamily">@font/medium</item>
+    <item name="android:fontFamily">@font/medium</item>
     <item name="android:textSize">20sp</item>
     <!--Your custom type style here-->
   </style>
 
   <style name="TextAppearance.MyTheme.AlternateToolbarTitle" parent="TextAppearance.MaterialComponents.Headline6">
-    <item name="fontFamily">@font/iranyekan_medium</item>
+    <item name="fontFamily">@font/medium</item>
     <item name="android:textSize">20sp</item>
     <!--Your custom type style here-->
   </style>
@@ -74,14 +74,14 @@
 
   <style name="TextAppearance.MyTheme.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
     <!--Your custom type style here-->
-    <item name="fontFamily">@font/iranyekan_regular</item>
-    <item name="android:fontFamily">@font/iranyekan_regular</item>
+    <item name="fontFamily">@font/regular</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:textSize">16sp</item>
   </style>
 
   <style name="TextAppearance.MyTheme.NewsSubtitle" parent="TextAppearance.MaterialComponents.Subtitle1">
-    <item name="fontFamily">@font/iranyekan_regular</item>
-    <item name="android:fontFamily">@font/iranyekan_regular</item>
+    <item name="fontFamily">@font/regular</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:textStyle">normal</item>
     <item name="android:textSize">10sp</item>
     <item name="android:textColor">?subtitleTextColor</item>
@@ -89,8 +89,8 @@
   </style>
 
   <style name="TextAppearance.MyTheme.NewsTitle" parent="TextAppearance.MaterialComponents.Subtitle1">
-    <item name="fontFamily">@font/iranyekan_bold</item>
-    <item name="android:fontFamily">@font/iranyekan_bold</item>
+    <item name="fontFamily">@font/bold</item>
+    <item name="android:fontFamily">@font/bold</item>
     <item name="android:textSize">12sp</item>
     <item name="android:textColor">?colorOnSurface</item>
     <!--Your custom type style here-->
@@ -106,8 +106,8 @@
 
   <style name="TextAppearance.MyTheme.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
     <!--Your custom type style here-->
-    <item name="fontFamily">@font/iranyekan_medium</item>
-    <item name="android:fontFamily">@font/iranyekan_medium</item>
+    <item name="fontFamily">@font/medium</item>
+    <item name="android:fontFamily">@font/medium</item>
     <item name="android:textSize">14sp</item>
   </style>
 
@@ -120,29 +120,29 @@
 
   <style name="TextAppearance.MyTheme.Body1" parent="TextAppearance.MaterialComponents.Body1">
     <!--Your custom type style here-->
-    <item name="fontFamily">@font/iranyekan_regular</item>
-    <item name="android:fontFamily">@font/iranyekan_regular</item>
+    <item name="fontFamily">@font/regular</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:textSize">16sp</item>
   </style>
 
   <style name="TextAppearance.MyTheme.Body2" parent="TextAppearance.MaterialComponents.Body2">
     <!--Your custom type style here-->
-    <item name="fontFamily">@font/iranyekan_regular</item>
-    <item name="android:fontFamily">@font/iranyekan_regular</item>
+    <item name="fontFamily">@font/regular</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:textSize">14sp</item>
   </style>
 
   <style name="TextAppearance.MyTheme.Button" parent="TextAppearance.MaterialComponents.Button">
     <!--Your custom type style here-->
-    <item name="fontFamily">@font/iranyekan_medium</item>
-    <item name="android:fontFamily">@font/iranyekan_medium</item>
+    <item name="fontFamily">@font/medium</item>
+    <item name="android:fontFamily">@font/medium</item>
     <item name="android:textSize">14sp</item>
   </style>
 
   <style name="TextAppearance.MyTheme.Caption" parent="TextAppearance.MaterialComponents.Caption">
     <!--Your custom type style here-->
-    <item name="fontFamily">@font/iranyekan_regular</item>
-    <item name="android:fontFamily">@font/iranyekan_regular</item>
+    <item name="fontFamily">@font/regular</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:textSize">12sp</item>
   </style>
 

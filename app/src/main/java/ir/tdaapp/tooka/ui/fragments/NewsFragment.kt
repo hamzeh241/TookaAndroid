@@ -93,7 +93,7 @@ class NewsFragment: BaseFragment(), CoroutineScope, View.OnClickListener {
   private fun newsClicked(clicked: News) {
     when (clicked.newsKind) {
       News.EXTERNAL_NEWS -> {
-        openWebpage(requireActivity(), clicked.url)
+        openWebpage(requireActivity(), clicked.url!!)
       }
       News.INTERNAL_NEWS -> {
         findNavController().navigate(

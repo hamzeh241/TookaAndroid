@@ -16,7 +16,6 @@ import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.FragmentMarketsBinding
 import ir.tdaapp.tooka.models.adapters.MarketsAdapter
 import ir.tdaapp.tooka.models.components.TookaSnackBar
-import ir.tdaapp.tooka.models.dataclasses.Coin
 import ir.tdaapp.tooka.models.dataclasses.LivePriceListResponse
 import ir.tdaapp.tooka.models.util.TookaSwipeCallback
 import ir.tdaapp.tooka.models.util.VIEW_TYPE_GRID
@@ -71,26 +70,20 @@ class MarketsFragment: BaseFragment(), View.OnClickListener, CoroutineScope {
     binding.toolbar.title = getString(R.string.markets)
   }
 
-  override fun onStart() {
-    super.onStart()
-    if (viewModel.lastScrollPosition.value != null)
-      binding.includeMarketsCoinList.marketCoinsList.scrollToPosition(viewModel.lastScrollPosition.value!!)
-  }
-
   fun initObservables() {
     viewModel.coinsList.observe(viewLifecycleOwner) {
+      Timber.i("observe coin list")
       binding.swipeRefreshLayout.isRefreshing = false
       val isGrid = adapter.differ.currentList.any { it.viewType == VIEW_TYPE_GRID }
-      it as ArrayList<Coin>
       if (isGrid) {
         it.forEach { coin -> coin.viewType = VIEW_TYPE_GRID }
       }
 
       adapter.differ.submitList(it)
-      binding.swipeRefreshLayout.isRefreshing = false
     }
 
     viewModel.selectedSort.observe(viewLifecycleOwner) {
+      Timber.i("observe sort list")
       binding.swipeRefreshLayout.isRefreshing = true
       launch {
         viewModel.getCoins(
@@ -140,7 +133,8 @@ class MarketsFragment: BaseFragment(), View.OnClickListener, CoroutineScope {
         viewModel.getCoins(
           viewModel.selectedSort.value!!.isAscend,
           viewModel.selectedSort.value!!.id,
-          getUserId()
+          getUserId(),
+          refresh = true
         )
       }
     }
@@ -153,7 +147,7 @@ class MarketsFragment: BaseFragment(), View.OnClickListener, CoroutineScope {
       val position = viewHolder.absoluteAdapterPosition
       if (userId > 0)
         launch {
-          viewModel.addToWatchlist(
+          viewModel.addWatchlist(
             getUserId(),
             this@MarketsFragment.adapter.differ.currentList[position].id
           )
@@ -249,14 +243,6 @@ class MarketsFragment: BaseFragment(), View.OnClickListener, CoroutineScope {
 
   override fun onDestroy() {
     super.onDestroy()
-    val manager = binding.includeMarketsCoinList.marketCoinsList.layoutManager
-    if (manager is LinearLayoutManager)
-      viewModel.lastScrollPosition.value =
-        manager.findFirstCompletelyVisibleItemPosition()
-    else if (manager is GridLayoutManager)
-      viewModel.lastScrollPosition.value =
-        manager.findFirstCompletelyVisibleItemPosition()
-
     EventBus.getDefault().unregister(this)
   }
 

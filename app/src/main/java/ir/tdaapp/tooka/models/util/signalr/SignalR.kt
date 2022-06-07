@@ -34,6 +34,10 @@ object SignalR {
    * @see OnSignalRCallback Interface waziate connection
    */
   fun connect(callback: OnSignalRCallback) {
+    if (hubConnection.connectionState == HubConnectionState.CONNECTED){
+      callback.onConnected()
+      return
+    }
     callback.onConnecting()
     hubConnection.start().subscribe({
       callback.onConnected()

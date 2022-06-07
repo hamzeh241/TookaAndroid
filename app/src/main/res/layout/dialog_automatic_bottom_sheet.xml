@@ -173,7 +173,7 @@
         android:background="#00ffffff"
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginEnd="@dimen/margin8"
-        android:fontFamily="@font/iranyekan_regular"
+        android:fontFamily="@font/regular"
         android:textSize="14sp"
         android:gravity="start|center_vertical" />
 

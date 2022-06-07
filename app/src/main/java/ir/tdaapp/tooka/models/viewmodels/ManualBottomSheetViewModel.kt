@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import ir.tdaapp.tooka.models.dataclasses.*
+import ir.tdaapp.tooka.models.dataclasses.Coin
+import ir.tdaapp.tooka.models.dataclasses.ManualWalletModel
+import ir.tdaapp.tooka.models.dataclasses.ResponseModel
+import ir.tdaapp.tooka.models.enums.ManualPortfolioErrors
 import ir.tdaapp.tooka.models.network.ApiService
 import java.io.IOException
 
@@ -21,15 +24,6 @@ class ManualBottomSheetViewModel(private val api: ApiService): ViewModel() {
   private val _error = MutableLiveData<ManualPortfolioErrors>()
   val error: LiveData<ManualPortfolioErrors>
     get() = _error
-
-  enum class ManualPortfolioErrors {
-    NO_ARGS,
-    INVALID_ARGS,
-    NOT_SAVED,
-    NETWORK_ERROR,
-    SERVER_ERROR,
-    UNKNOWN_ERROR
-  }
 
   suspend fun getData() {
     try {

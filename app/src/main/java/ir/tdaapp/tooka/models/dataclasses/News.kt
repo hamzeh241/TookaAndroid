@@ -16,7 +16,7 @@ data class News(
   @SerializedName("author_id") val authorId: Int,
   @SerializedName("news_kind") val newsKind: Int,
   @SerializedName("news_write_date") val writeDate: String,
-  @SerializedName("news_url") val url: String
+  @SerializedName("news_url") val url: String?
 ){
 
   companion object{

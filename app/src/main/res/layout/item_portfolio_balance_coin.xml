@@ -81,7 +81,7 @@
         android:fadingEdgeLength="20dp"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:fontFamily="@font/iranyekan_regular"
+        android:fontFamily="@font/regular"
         android:textColor="?colorOnSurface" />
 
       <TextView
@@ -92,7 +92,7 @@
         android:text="1,354,648,354"
         android:textAppearance="@style/TextAppearance.MyTheme.Price1"
         android:layout_marginStart="@dimen/margin8"
-        android:fontFamily="@font/iranyekan_regular"
+        android:fontFamily="@font/regular"
         android:textColor="?colorOnSurface" />
 
       <com.github.mikephil.charting.charts.LineChart

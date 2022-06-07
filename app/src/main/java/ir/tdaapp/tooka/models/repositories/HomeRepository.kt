@@ -41,7 +41,8 @@ class HomeRepository(
       )
     )
 
-  suspend fun isEmpty() = local.count() <= 0
+  suspend fun isEmpty() =
+    local.topCount() <= 0 && local.gainersCount() <= 0 && local.newsCount() <= 0
 
   suspend fun updateDatabase(response: HomeContentResponse) = local.updateDatabase(response)
 
@@ -49,5 +50,5 @@ class HomeRepository(
 
   suspend fun addToDatabase(response: HomeContentResponse) = local.addToDatabase(response)
 
-  suspend fun getData(userId:Int) = flowOf(remote.data(userId))
+  suspend fun getData(userId: Int) = flowOf(remote.data(userId))
 }

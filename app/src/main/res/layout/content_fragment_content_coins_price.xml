@@ -244,7 +244,7 @@
       android:layout_centerVertical="false"
       android:layout_centerHorizontal="true"
       android:layout_marginBottom="@dimen/margin8"
-      android:fontFamily="@font/iranyekan_black"
+      android:fontFamily="@font/black"
       android:textColor="#66AAAAAA"
       android:textSize="16sp" />
 
@@ -285,7 +285,7 @@
           android:layout_weight="1"
           android:layout_margin="@dimen/margin4"
           android:textColor="@color/dark_blue_900"
-          android:fontFamily="@font/iranyekan_regular"
+          android:fontFamily="@font/regular"
           android:textSize="10sp" />
       </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -6,10 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import ir.tdaapp.tooka.models.dao.HomeDao
-import ir.tdaapp.tooka.models.dataclasses.GainersLosers
-import ir.tdaapp.tooka.models.dataclasses.HomeNews
-import ir.tdaapp.tooka.models.dataclasses.TopCoin
-import ir.tdaapp.tooka.models.dataclasses.WatchlistCoin
+import ir.tdaapp.tooka.models.dao.MarketsDao
+import ir.tdaapp.tooka.models.dataclasses.*
 import ir.tdaapp.tooka.models.util.RoomConverter
 
 @Database(
@@ -17,13 +15,15 @@ import ir.tdaapp.tooka.models.util.RoomConverter
     TopCoin::class,
     HomeNews::class,
     GainersLosers::class,
-    WatchlistCoin::class
+    WatchlistCoin::class,
+    Coin::class
   ), version = 1
 )
 @TypeConverters(RoomConverter::class)
 abstract class TookaDatabase: RoomDatabase() {
 
   abstract fun homeDao(): HomeDao
+  abstract fun marketsDao(): MarketsDao
 
   companion object {
     const val TAG = "TookaDatabase"

@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.models.adapters.NewsAdapter
 import ir.tdaapp.tooka.databinding.FragmentAllNewsBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
-import ir.tdaapp.tooka.models.dataclasses.*
+import ir.tdaapp.tooka.models.adapters.NewsAdapter
+import ir.tdaapp.tooka.models.dataclasses.News
 import ir.tdaapp.tooka.models.util.openWebpage
 import ir.tdaapp.tooka.models.viewmodels.AllNewsViewModel
 import ir.tdaapp.tooka.ui.dialogs.NewsDetailsDialog
@@ -157,7 +157,7 @@ class AllNewsFragment: BaseFragment(), CoroutineScope {
   private fun newsClicked(clicked: News) {
     when (clicked.newsKind) {
       News.EXTERNAL_NEWS -> {
-        openWebpage(requireActivity(), clicked.url)
+        openWebpage(requireActivity(), clicked.url!!)
       }
       News.INTERNAL_NEWS -> {
         findNavController().navigate(

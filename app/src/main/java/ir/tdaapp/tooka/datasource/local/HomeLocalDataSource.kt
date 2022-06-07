@@ -18,7 +18,9 @@ class HomeLocalDataSource(private val dao: HomeDao) {
   fun gainersLosers() = dao.gainersLosers()
   fun watchlistCoins() = dao.watchlistCoins()
 
-  suspend fun count() = dao.count()
+  suspend fun topCount() = dao.topCount()
+  suspend fun newsCount() = dao.newsCount()
+  suspend fun gainersCount() = dao.gainersCount()
 
   suspend fun clearDatabase() = dao.run {
     clearTopCoins()
@@ -29,6 +31,8 @@ class HomeLocalDataSource(private val dao: HomeDao) {
 
   suspend fun updateDatabase(contentResponse: HomeContentResponse) = dao.run {
     updateTopCoins(contentResponse.topCoins.map { it.toTopCoin() })
+    updateWatchlistCoins(contentResponse.watchlist.map { it.toWatchlist() })
+    updateGainersLosers(contentResponse.gainersLosers.map { it.toGainersLosers() })
   }
 
   suspend fun addToDatabase(contentResponse: HomeContentResponse) = dao.run {

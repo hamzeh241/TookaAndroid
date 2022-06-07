@@ -23,7 +23,7 @@
         android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
         android:layout_marginTop="@dimen/margin8"
         android:layout_marginStart="@dimen/margin16"
-        android:fontFamily="@font/iranyekan_medium"
+        android:fontFamily="@font/medium"
         android:textSize="16sp" />
 
       <TextView

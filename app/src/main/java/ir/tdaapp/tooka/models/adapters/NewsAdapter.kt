@@ -11,6 +11,7 @@ import ir.tdaapp.tooka.databinding.ItemBreakingCryptoNewsBinding
 import ir.tdaapp.tooka.models.dataclasses.News
 import ir.tdaapp.tooka.models.network.RetrofitClient
 import ir.tdaapp.tooka.models.util.addSpringAnimation
+import ir.tdaapp.tooka.models.util.getCorrectNumberFormat
 import ir.tdaapp.tooka.models.util.getCurrentLocale
 
 class NewsAdapter(val action: (clicked: News, position: Int)->Unit):
@@ -61,7 +62,7 @@ class NewsAdapter(val action: (clicked: News, position: Int)->Unit):
           .append(" ")
           .append(holder.binding.root.context.getString(R.string.bullet))
           .append(" ")
-          .append(data.writeDate).toString()
+          .append(getCorrectNumberFormat(data.writeDate,holder.binding.root.context)).toString()
 
     val imageUrl = StringBuilder(RetrofitClient.NEWS_IMAGES).append(data.imageUrl).toString()
     Glide.with(holder.binding.root.context)

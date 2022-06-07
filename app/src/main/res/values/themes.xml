@@ -62,6 +62,7 @@
     <item name="toolbarStyle">@style/Base.Widget.Toolbar</item>
     <item name="imageButtonStyle">@style/Base.Widget.ImageButton</item>
     <item name="extendedFloatingActionButtonStyle">@style/Base.Widget.ExtendedFAB</item>
+    <item name="bottomSheetDialogTheme">@style/RoundedBottomSheetDialog</item>
   </style>
 
   <style name="Base.Theme.Tooka" parent="Theme.MaterialComponents.DayNight.NoActionBar">

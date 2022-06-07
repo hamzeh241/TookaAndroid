@@ -19,9 +19,9 @@ import ir.tdaapp.tooka.databinding.DialogManualBottomSheetBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.dataclasses.Coin
 import ir.tdaapp.tooka.models.dataclasses.ManualWalletModel
+import ir.tdaapp.tooka.models.enums.ManualPortfolioErrors
 import ir.tdaapp.tooka.models.util.isLoading
 import ir.tdaapp.tooka.models.viewmodels.ManualBottomSheetViewModel
-import ir.tdaapp.tooka.models.viewmodels.ManualBottomSheetViewModel.ManualPortfolioErrors.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,16 +37,10 @@ class ManualPortfolioBottomSheetDialog: BottomSheetDialogFragment(), CoroutineSc
 
   interface ManualPortfolioDialogCallback {
     fun onResult()
-    fun onError(error: ManualBottomSheetViewModel.ManualPortfolioErrors)
+    fun onError(error: ManualPortfolioErrors)
   }
 
   var callback: ManualPortfolioDialogCallback? = null
-    get() {
-      return field
-    }
-    set(value) {
-      field = value
-    }
 
   private lateinit var binding: DialogManualBottomSheetBinding
 
@@ -99,27 +93,27 @@ class ManualPortfolioBottomSheetDialog: BottomSheetDialogFragment(), CoroutineSc
       val message: String
       @DrawableRes val imageRes: Int
       when (it) {
-        NO_ARGS -> {
+        ManualPortfolioErrors.NO_ARGS -> {
           message = getString(R.string.unknown_error_desc)
           imageRes = R.drawable.ic_white_sentiment_very_dissatisfied_24
         }
-        INVALID_ARGS -> {
+        ManualPortfolioErrors.INVALID_ARGS -> {
           message = getString(R.string.unknown_error_desc)
           imageRes = R.drawable.ic_white_sentiment_very_dissatisfied_24
         }
-        NOT_SAVED -> {
+        ManualPortfolioErrors.NOT_SAVED -> {
           message = getString(R.string.unknown_error_desc)
           imageRes = R.drawable.ic_white_sentiment_very_dissatisfied_24
         }
-        NETWORK_ERROR -> {
+        ManualPortfolioErrors.NETWORK_ERROR -> {
           message = getString(R.string.network_error_desc)
           imageRes = R.drawable.ic_dns_white_24dp
         }
-        SERVER_ERROR -> {
+        ManualPortfolioErrors.SERVER_ERROR -> {
           message = getString(R.string.server_error_desc)
           imageRes = R.drawable.ic_dns_white_24dp
         }
-        UNKNOWN_ERROR -> {
+        ManualPortfolioErrors.UNKNOWN_ERROR -> {
           message = getString(R.string.unknown_error_desc)
           imageRes = R.drawable.ic_white_sentiment_very_dissatisfied_24
         }
@@ -171,7 +165,7 @@ class ManualPortfolioBottomSheetDialog: BottomSheetDialogFragment(), CoroutineSc
       }
       R.id.submit -> {
         if (selectedCoin == null) {
-          binding.textInputCoins.error = getString(R.string.specify_capital)
+          binding.textInputCoins.error = getString(R.string.select_coin)
 
         } else if (binding.textInputEditText.text.toString().isBlank()
           || binding.textInputEditText.text.toString()
@@ -180,11 +174,12 @@ class ManualPortfolioBottomSheetDialog: BottomSheetDialogFragment(), CoroutineSc
           binding.textInputCapital.error = getString(R.string.specify_capital)
         } else {
           binding.txtSubmit.isLoading(true)
-          launch {
+          launch(Dispatchers.Main) {
             val model = ManualWalletModel(
               "apikey",
               (requireActivity() as MainActivity).userPrefs.getUserId(),
               selectedCoin!!.id,
+              2,
               binding.textInputEditText.text.toString().toDouble(),
               isBought
             )

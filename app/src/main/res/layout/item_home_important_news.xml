@@ -30,7 +30,7 @@
         android:layout_marginTop="@dimen/margin16"
         android:textSize="8sp"
         android:gravity="center"
-        android:fontFamily="@font/iranyekan_regular" />
+        android:fontFamily="@font/regular" />
 
       <TextView
         android:text="۲۰ درصد اصلاح شیبا اینو به دنبال واکنش ایلان ماسک"
@@ -40,7 +40,7 @@
         android:textSize="11sp"
         android:textColor="@color/black"
         android:gravity="center"
-        android:fontFamily="@font/iranyekan_medium"
+        android:fontFamily="@font/medium"
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginEnd="@dimen/margin8" />
     </LinearLayout>

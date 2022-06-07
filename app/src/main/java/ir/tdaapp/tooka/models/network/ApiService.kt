@@ -7,7 +7,7 @@ import retrofit2.http.*
 interface ApiService {
 
   @GET("home/data")
-  suspend fun homeData(@Query("userId") userId:Int): Response<ResponseModel<HomeContentResponse>>
+  suspend fun homeData(@Query("userId") userId: Int): Response<ResponseModel<HomeContentResponse>>
 
   @GET("markets/allcoins")
   suspend fun allCoins(
@@ -40,7 +40,7 @@ interface ApiService {
   @GET("markets/coindetails")
   suspend fun coinDetails(@Query("coinId") coinId: Int): Response<ResponseModel<CoinDetailsModel>>
 
-  @GET("markets/addwatchlist")
+  @POST("markets/addwatchlist")
   suspend fun addWatchlist(
     @Query("coinId") coinId: Int,
     @Query("userId") userId: Int
@@ -111,6 +111,21 @@ interface ApiService {
 
   @GET("portfolio/platforms")
   suspend fun platformsByCoin(@Query("coinId") coinId: Int): Response<ResponseModel<List<Platform>>>
+
+  @GET("portfolio/wallets")
+  suspend fun wallets(@Query("userId") userId: Int): Response<ResponseModel<List<String>>>
+
+  @DELETE("portfolio/deletewallet")
+  suspend fun deleteWallet(
+    @Query("userId") userId: Int,
+    @Query("walletAddress") walletAddress: String
+  ): Response<ResponseModel<Boolean>>
+
+  @DELETE("portfolio/deletecoin")
+  suspend fun deleteCoin(
+    @Query("userId") userId: Int,
+    @Query("coinId") coinId: Int
+  ): Response<ResponseModel<Boolean>>
 
   @POST("portfolio/addautoportfolio")
   suspend fun addAutoPortfolio(@Body model: AutoWalletModel): Response<ResponseModel<Boolean>>
