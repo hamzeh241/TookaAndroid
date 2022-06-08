@@ -10,8 +10,8 @@ import com.bumptech.glide.Glide
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.*
 import ir.tdaapp.tooka.models.dataclasses.*
-import ir.tdaapp.tooka.models.util.*
 import ir.tdaapp.tooka.models.network.RetrofitClient
+import ir.tdaapp.tooka.models.util.*
 import java.math.BigDecimal
 import java.text.DecimalFormat
 
@@ -324,6 +324,57 @@ class NotificationsViewHolder(val binding: ItemNotificationBinding):
       true
     }
   }
+}
+
+class PortfolioBalanceViewHolder(val binding: ItemPortfolioBalanceBinding):
+  RecyclerView.ViewHolder(binding.root), TookaAdapter.Binder<PortfolioInfo.Balance> {
+  override fun bind(
+    data: PortfolioInfo.Balance,
+    callback: TookaAdapter.Callback<PortfolioInfo.Balance>,
+    longCallback: TookaAdapter.LongCallback<PortfolioInfo.Balance>?,
+    models: ArrayList<PortfolioInfo.Balance>,
+    position: Int
+  ) {
+    val locale = getCurrentLocale(binding.root.context)
+    binding.txtCoinName.text = locale.let {
+      when (it) {
+        "fa" -> {
+          if (data.coin_persian_name != null) data.coin_persian_name
+          else data.coin_name
+        }
+        else -> data.coin_name
+      }
+    }
+    val dec = DecimalFormat("#,###.000000")
+    binding.txtCapital.text =
+      StringBuilder(dec.format(data.balance).toString())
+        .append(" ")
+        .append(data.coin_symbol)
+
+    val a = BigDecimal(data.price_toman)
+    val b = BigDecimal(data.price_dollar)
+
+    binding.root.context.run {
+      binding.txtPriceTMN.text =
+        formatPrice(
+          getCorrectNumberFormat(separatePrice(a.toInt().toFloat()), this),
+          getString(R.string.toomans)
+        )
+
+      binding.txtPriceUSD.text =
+        formatPrice(
+          getCorrectNumberFormat(b.toFloat(), this),
+          getString(R.string.dollars)
+        )
+
+      val imageUrl = RetrofitClient.COIN_IMAGES + data.coin_icon
+      Glide.with(this)
+        .load(imageUrl)
+        .into(binding.imgCoin)
+    }
+
+  }
+
 }
 
 class PortfolioCoinsViewHolder(val binding: ItemPortfolioBalanceCoinBinding):

@@ -23,16 +23,19 @@ import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
+import ir.tdaapp.tooka.databinding.FragmentCoinDetailsFinalBinding
+import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.adapters.AlternateCoinsAdapter
 import ir.tdaapp.tooka.models.adapters.ImportantNewsAdapter
 import ir.tdaapp.tooka.models.adapters.TimeFramesAdapter
-import ir.tdaapp.tooka.databinding.FragmentCoinDetailsFinalBinding
-import ir.tdaapp.tooka.databinding.ToastLayoutBinding
-import ir.tdaapp.tooka.models.dataclasses.*
+import ir.tdaapp.tooka.models.dataclasses.CandleUpdateModel
+import ir.tdaapp.tooka.models.dataclasses.CoinDetailsModel
+import ir.tdaapp.tooka.models.dataclasses.LivePriceListResponse
+import ir.tdaapp.tooka.models.dataclasses.TimeFrameModel
+import ir.tdaapp.tooka.models.network.RetrofitClient
 import ir.tdaapp.tooka.models.util.*
 import ir.tdaapp.tooka.models.util.ChartType.CANDLESTICK
 import ir.tdaapp.tooka.models.util.ChartType.LINEAR
-import ir.tdaapp.tooka.models.network.RetrofitClient
 import ir.tdaapp.tooka.models.viewmodels.CoinDetailsViewModel
 import ir.tdaapp.tooka.models.viewmodels.MainActivityViewModel
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
@@ -130,6 +133,18 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
       field = value
     }
 
+  private var priceDetailsVisibility = true
+    set(value) {
+      with(binding.includeCoinChart) {
+        if (value) {
+          priceDetails.visibility = View.VISIBLE
+          candleDetails.visibility = View.GONE
+          cardCandleDetails.visibility = View.GONE
+        } else priceDetails.visibility = View.GONE
+      }
+      field = value
+    }
+
   private val newsManager by lazy {
     GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
   }
@@ -186,12 +201,12 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
       if (coin?.stats!!.id == response.id) {
         binding.includeCoinChart.txtCoinPriceUSD.text =
           formatPrice(
-            toPersianNumbers(separatePrice(response.priceUSD)),
+            getCorrectNumberFormat(separatePrice(response.priceUSD), requireContext()),
             currency = getString(R.string.dollars)
           )
         binding.includeCoinChart.txtCoinPriceTMN.text =
           formatPrice(
-            toPersianNumbers(separatePrice(response.priceTMN)),
+            getCorrectNumberFormat(separatePrice(response.priceTMN), requireContext()),
             currency = getString(R.string.toomans)
           )
         animateChanges(coin!!, response)
@@ -586,6 +601,7 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
         }
         when (chartType) {
           CANDLESTICK -> {
+            priceDetailsVisibility = true
             changeImageWithAnimation(
               requireContext(),
               binding.imgToggleChart,
@@ -598,6 +614,7 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
             }
           }
           LINEAR -> {
+            priceDetailsVisibility = true
             changeImageWithAnimation(
               requireContext(),
               binding.imgToggleChart,
@@ -636,15 +653,20 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
   private fun setData(model: CoinDetailsModel) {
     binding.includeCoinChart.txtCoinPriceTMN.text =
       formatPrice(
-        toPersianNumbers(separatePrice(model.priceTMN)),
+        getCorrectNumberFormat(separatePrice(model.priceTMN), requireContext()),
         currency = getString(R.string.toomans)
       )
     binding.includeCoinChart.txtCoinPriceUSD.text = formatPrice(
-      toPersianNumbers(separatePrice(model.priceUSD)),
+      getCorrectNumberFormat(separatePrice(model.priceUSD), requireContext()),
       currency = getString(R.string.dollars)
     )
     binding.includeCoinChart.txtCoinPercentage.text =
-      StringBuilder(separatePrice(model.percentage.toFloat()))
+      StringBuilder(
+        getCorrectNumberFormat(
+          separatePrice(model.percentage.toFloat()),
+          requireContext()
+        )
+      )
         .append(" ")
         .append("%")
         .toString()
@@ -676,26 +698,28 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
       setCompoundDrawablesRelative(startDrawable, topDrawable, endDrawable, bottomDrawable)
     }
 
-    binding.includeCoinStats.txtMarketCap.text = if (model.stats.marketCap != "0"
-      && model.stats.marketCap != "0.0"
-    ) separatePrice(model.stats.marketCap.toFloat()) else "-"
-    binding.includeCoinStats.txt24HVolume.text = if (model.stats.vol24 != "0"
-      && model.stats.vol24 != "0.0"
-    ) separatePrice(model.stats.vol24.toFloat()) else "-"
-    binding.includeCoinStats.txtCircSupply.text = if (model.stats.circSupply != "0"
-      && model.stats.circSupply != "0.0"
-    ) separatePrice(model.stats.circSupply.toFloat()) else "-"
-    binding.includeCoinStats.txtROI.text = if (model.stats.roi != "0"
-      && model.stats.roi != "0.0"
-    ) separatePrice(model.stats.roi.toFloat()) else "-"
-    binding.includeCoinStats.txtMaxSupply.text = if (model.stats.maxSupply != "0"
-      && model.stats.maxSupply != "0.0"
-    ) separatePrice(model.stats.maxSupply.toFloat()) else "-"
-    binding.includeCoinStats.txtRank.text =
-      if (model.stats.rank != 0) model.stats.rank.toString() else "-"
-    binding.includeCoinStats.txtTotalSupply.text = if (model.stats.totalSupply != "0"
-      && model.stats.totalSupply != "0.0"
-    ) separatePrice(model.stats.totalSupply.toFloat()) else "-"
+    binding.includeCoinStats.run {
+      txtMarketCap.text = if (model.stats.marketCap != "0"
+        && model.stats.marketCap != "0.0"
+      ) separatePrice(model.stats.marketCap.toFloat()) else "-"
+      txt24HVolume.text = if (model.stats.vol24 != "0"
+        && model.stats.vol24 != "0.0"
+      ) separatePrice(model.stats.vol24.toFloat()) else "-"
+      txtCircSupply.text = if (model.stats.circSupply != "0"
+        && model.stats.circSupply != "0.0"
+      ) separatePrice(model.stats.circSupply.toFloat()) else "-"
+      txtROI.text = if (model.stats.roi != "0"
+        && model.stats.roi != "0.0"
+      ) separatePrice(model.stats.roi.toFloat()) else "-"
+      txtMaxSupply.text = if (model.stats.maxSupply != "0"
+        && model.stats.maxSupply != "0.0"
+      ) separatePrice(model.stats.maxSupply.toFloat()) else "-"
+      txtRank.text =
+        if (model.stats.rank != 0) model.stats.rank.toString() else "-"
+      txtTotalSupply.text = if (model.stats.totalSupply != "0"
+        && model.stats.totalSupply != "0.0"
+      ) separatePrice(model.stats.totalSupply.toFloat()) else "-"
+    }
   }
 
   private fun initNewsList() {

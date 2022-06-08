@@ -12,7 +12,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.PieData
@@ -22,9 +22,9 @@ import com.google.android.material.snackbar.Snackbar
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.FragmentPortfolioBinding
-import ir.tdaapp.tooka.databinding.ItemPortfolioBalanceCoinBinding
+import ir.tdaapp.tooka.databinding.ItemPortfolioBalanceBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
-import ir.tdaapp.tooka.models.adapters.PortfolioCoinsViewHolder
+import ir.tdaapp.tooka.models.adapters.PortfolioBalanceViewHolder
 import ir.tdaapp.tooka.models.adapters.TookaAdapter
 import ir.tdaapp.tooka.models.components.TookaSnackBar
 import ir.tdaapp.tooka.models.dataclasses.PortfolioInfo
@@ -53,7 +53,6 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
   lateinit var adapter: TookaAdapter<PortfolioInfo.Balance>
 
   private var isAlreadyCreated = false
-  private var wallets = arrayListOf<String>()
 
   private val viewModel: PortfolioViewModel by inject()
 
@@ -148,10 +147,10 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
         binding.noPortfolio.visibility = View.GONE
       adapter.models = it.balances as ArrayList<PortfolioInfo.Balance>
 
-      val gridManager =
-        GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-      binding.portfolioCoinsList.layoutManager = gridManager
-      binding.portfolioCoinsList.adapter = adapter
+      binding.portfolioCoinsList.run {
+        layoutManager = LinearLayoutManager(requireContext())
+        adapter = this@PortfolioFragment.adapter
+      }
 
       showPieChart(it)
 
@@ -221,8 +220,8 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
   fun initPortfolioCoins() {
     adapter = object: TookaAdapter<PortfolioInfo.Balance>() {
       override fun getViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        PortfolioCoinsViewHolder(
-          ItemPortfolioBalanceCoinBinding.inflate(
+        PortfolioBalanceViewHolder(
+          ItemPortfolioBalanceBinding.inflate(
             layoutInflater,
             parent,
             false
@@ -272,6 +271,10 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
           }
           UNKNOWN_ERROR -> {
             message = getString(R.string.unknown_error_desc)
+            icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
+          }
+          WALLET_EMPTY -> {
+            message = getString(R.string.wallet_empty_or_hard)
             icon = R.drawable.ic_white_sentiment_very_dissatisfied_24
           }
         }
@@ -350,29 +353,7 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
   override fun onMenuItemClick(item: MenuItem?): Boolean {
     when (item?.itemId) {
       R.id.wallets -> {
-//        launch {
-//          viewModel.getWallets(getUserId())
-//        }
-//        lottieLoadingDialog(1, id = "wallet_loading") {
-//          withAnimation(R.raw.wallet)
-//          withTitle {
-//            fontRes = R.font.medium
-//            text = getString(R.string.please_wait)
-//          }
-//          withContent {
-//            fontRes = R.font.regular
-//            text = getString(R.string.loading_wallets)
-//          }
-//          onDismiss {
-//
-//          }
-//        }
-//
-//        viewModel.wallets.observe(viewLifecycleOwner) {
-//          dismissLottieDialog("wallet_loading")
-//          wallets = it as ArrayList<String>
-//        }
-        val dialog = WalletsBottomSheetDialog(emptyList())
+        val dialog = WalletsBottomSheetDialog()
         dialog.show(requireActivity().supportFragmentManager, WalletsBottomSheetDialog.TAG)
       }
       R.id.add -> {

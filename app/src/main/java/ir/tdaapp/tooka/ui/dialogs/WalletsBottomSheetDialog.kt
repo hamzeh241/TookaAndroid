@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
-class WalletsBottomSheetDialog(private val wallets: List<String>): BottomSheetDialogFragment(),
+class WalletsBottomSheetDialog: BottomSheetDialogFragment(),
   CoroutineScope {
 
   companion object {

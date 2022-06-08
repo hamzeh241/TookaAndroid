@@ -35,6 +35,7 @@ class AutomaticBottomSheetViewModel(private val api: ApiService): ViewModel() {
     NO_ARGS,
     NOT_FOUND,
     DATABASE_ERROR,
+    WALLET_EMPTY,
     SERVER_ERROR,
     UNKNOWN_ERROR
   }
@@ -90,6 +91,7 @@ class AutomaticBottomSheetViewModel(private val api: ApiService): ViewModel() {
           -3 -> _error.postValue(PortfolioErrors.INVALID_ARGS)
           -4 -> _error.postValue(PortfolioErrors.DATABASE_ERROR)
           -5 -> _error.postValue(PortfolioErrors.SERVER_ERROR)
+          -6 -> _error.postValue(PortfolioErrors.WALLET_EMPTY)
           else -> _error.postValue(PortfolioErrors.UNKNOWN_ERROR)
         }
       }

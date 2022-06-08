@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="@dimen/size48"
+    android:layout_height="@dimen/size48"
+    android:gravity="center"
+    android:background="@drawable/market_coins_background"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginStart="16dp"
+    android:id="@+id/linearLayout5"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+      android:id="@+id/imgCoin"
+      android:layout_width="@dimen/size32"
+      android:layout_height="@dimen/size32"
+      android:theme="@style/ShapeAppearance.MyTheme.CircleMediumComponent" />
+  </LinearLayout>
+
+  <TextView
+    android:text="Tron"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtCoinName"
+    app:layout_constraintStart_toEndOf="@+id/linearLayout5"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="16dp"
+    android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+    app:layout_constraintBottom_toTopOf="@+id/txtCapital"
+    app:layout_constraintEnd_toStartOf="@+id/txtPriceTMN"
+    android:layout_marginEnd="16dp"
+    android:lines="1"
+    android:singleLine="true" />
+
+  <TextView
+    android:text="1254.1 TRX"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtCapital"
+    app:layout_constraintTop_toBottomOf="@+id/txtCoinName"
+    app:layout_constraintStart_toEndOf="@+id/linearLayout5"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    app:layout_constraintBottom_toBottomOf="@+id/linearLayout5"
+    android:textAppearance="@style/TextAppearance.MyTheme.Caption"
+    android:singleLine="true"
+    android:lines="1" />
+
+  <TextView
+    android:text="1,568,256,749 TMN"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtPriceTMN"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginEnd="16dp"
+    android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+    app:layout_constraintBottom_toBottomOf="@+id/txtCoinName"
+    app:layout_constraintTop_toTopOf="@+id/txtCoinName" />
+
+  <TextView
+    android:text="36,547 US$"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtPriceUSD"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/txtPriceTMN"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="8dp"
+    app:layout_constraintBottom_toBottomOf="@+id/linearLayout5"
+    android:textAppearance="@style/TextAppearance.MyTheme.Caption"
+    app:layout_constraintStart_toStartOf="@+id/txtPriceTMN" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

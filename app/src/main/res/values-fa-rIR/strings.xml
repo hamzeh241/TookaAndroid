@@ -150,4 +150,6 @@
   <string name="loading_wallets">در حال جمع آوری کیف پول های شما هستیم...</string>
   <string name="grid_view">نمایش جدولی</string>
   <string name="linear_view">نمایش خطی</string>
+  <string name="history">تاریخچه</string>
+  <string name="wallet_empty_or_hard">کیف پول شما یا خالی است یا از نوع هارد ولت است که توکا آنرا پشتیبانی نمی کند</string>
 </resources>

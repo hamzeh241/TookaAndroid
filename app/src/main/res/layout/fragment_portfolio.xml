@@ -82,20 +82,41 @@
 
         </LinearLayout>
 
-        <TextView
-          android:text="@string/my_capital"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:id="@+id/textView14"
-          android:layout_marginTop="@dimen/margin8"
-          android:layout_marginStart="@dimen/margin16"
-          android:textAppearance="@style/TextAppearance.MyTheme.Body1" />
+        <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+          <TextView
+            android:text="@string/my_capital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView14"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_marginStart="@dimen/margin16"
+            android:textAppearance="@style/TextAppearance.MyTheme.Body1" />
+
+          <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+          <TextView
+            android:text="@string/history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.HyperlinkTextView"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_marginEnd="@dimen/margin16"
+            android:padding="4dp"
+            android:id="@+id/textView22"
+            android:visibility="gone" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:id="@+id/portfolioCoinsList"
-          android:padding="4dp" />
+          android:id="@+id/portfolioCoinsList" />
       </LinearLayout>
 
     </LinearLayout>
@@ -111,8 +132,8 @@
     android:layout_below="@id/toolbar">
 
     <com.airbnb.lottie.LottieAnimationView
-      android:layout_width="@dimen/size80"
-      android:layout_height="@dimen/size80"
+      android:layout_width="100dp"
+      android:layout_height="100dp"
       app:lottie_rawRes="@raw/wallet"
       app:lottie_autoPlay="true"
       app:lottie_loop="true"

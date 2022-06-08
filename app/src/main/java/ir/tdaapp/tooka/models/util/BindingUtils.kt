@@ -49,6 +49,12 @@ fun getCorrectNumberFormat(input: String, c: Context): String = when (getCurrent
   else -> toEnglishNumbers(input)
 }
 
+fun getCorrectNumberFormat(input: Float, c: Context): String =
+  input.toString().let {
+    getCorrectNumberFormat(it, c)
+  }
+
+
 fun View.addSpringAnimation() {
   val scaleXAnim = SpringAnimation(this, DynamicAnimation.SCALE_X, 0.90f)
   val scaleYAnim = SpringAnimation(this, DynamicAnimation.SCALE_Y, 0.90f)
@@ -196,7 +202,7 @@ fun EditText.disableKeyboard() = this.apply {
 }
 
 fun TextView.setPrice(price: Number) {
-  text = StringBuilder(getCorrectNumberFormat(separatePrice(price),context)).toString()
+  text = StringBuilder(getCorrectNumberFormat(separatePrice(price), context)).toString()
 }
 
 fun TextView.setCoinName(model: Coin) {

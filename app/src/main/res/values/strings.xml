@@ -174,6 +174,8 @@
   <string name="loading_wallets">We are loading your wallets...</string>
   <string name="grid_view">Grid View</string>
   <string name="linear_view">Linear View</string>
+  <string name="history">History</string>
+  <string name="wallet_empty_or_hard">Your wallet is either empty or is a hard wallet which Tooka does not support</string>
 
 
 </resources>
