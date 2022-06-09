@@ -11,7 +11,8 @@
     app:strokeColor="@color/black_900"
     app:strokeWidth="1dp"
     android:layout_margin="@dimen/margin16"
-    app:cardBackgroundColor="?colorSurface">
+    app:cardBackgroundColor="?colorSurface"
+    android:visibility="gone">
 
     <LinearLayout
       android:layout_width="match_parent"
@@ -81,7 +82,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/margin8">
+    android:layout_marginBottom="@dimen/margin8"
+    android:layout_marginTop="@dimen/margin16">
 
     <TextView
       android:text="@string/related_news"
@@ -104,7 +106,8 @@
 
   <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="96dp">
+    android:layout_height="96dp"
+    android:id="@+id/relatedNewsSubroot">
 
     <ir.tdaapp.tooka.models.components.TookaRecyclerView
       android:id="@+id/relatedNewsList"
@@ -150,13 +153,14 @@
 
   <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="112dp">
+    android:layout_height="112dp"
+    android:id="@+id/relatedCoinsSubRoot">
 
-  <ir.tdaapp.tooka.models.components.TookaRecyclerView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/relatedCoinsList"
-    android:visibility="gone"/>
+    <ir.tdaapp.tooka.models.components.TookaRecyclerView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/relatedCoinsList"
+      android:visibility="gone" />
 
     <com.airbnb.lottie.LottieAnimationView
       android:id="@+id/coinLoading"

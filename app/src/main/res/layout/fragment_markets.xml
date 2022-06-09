@@ -17,8 +17,7 @@
       android:id="@+id/toolbar"
       android:gravity="end"
       android:minHeight="?attr/actionBarSize"
-      android:theme="?attr/actionBarTheme"
-      app:menu="@menu/markets_toolbar_items" />
+      android:theme="?attr/actionBarTheme" />
 
     <include
       android:id="@+id/includeMarketsSort"

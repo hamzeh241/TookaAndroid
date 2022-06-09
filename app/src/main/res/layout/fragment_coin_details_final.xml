@@ -47,12 +47,11 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_candlestick_chart"
         android:id="@+id/imgToggleChart"
-        app:tint="?colorOnSurface"
         app:layout_constraintEnd_toStartOf="@+id/imgFavorite"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginEnd="16dp"
-        android:tint="?colorOnSurface" />
+        app:tint="?colorOnSurface" />
 
       <ImageButton
         android:layout_width="wrap_content"
@@ -63,7 +62,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginEnd="16dp"
-        android:tint="?colorOnSurface" />
+        app:tint="?colorOnSurface" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.appcompat.widget.Toolbar>

@@ -21,10 +21,14 @@ import ir.tdaapp.tooka.ui.dialogs.AppLanguageBottomSheetDialog.Language.ENGLISH
 import ir.tdaapp.tooka.ui.dialogs.AppLanguageBottomSheetDialog.Language.PERSIAN
 import ir.tdaapp.tooka.ui.dialogs.AppThemeBottomSheetDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
-import java.util.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 class SettingsFragment: BaseFragment(), View.OnClickListener,
-  AppThemeBottomSheetDialog.AppThemeBottomSheetCallback {
+  AppThemeBottomSheetDialog.AppThemeBottomSheetCallback, CoroutineScope {
 
   private lateinit var binding: FragmentSettingsBinding
   private lateinit var langPrefs: LanguagePreferences
@@ -56,7 +60,7 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
     super.onViewCreated(view, savedInstanceState)
     binding.toolbar.title = getString(R.string.app_name_translatable)
 
-    langPrefs = LanguagePreferences()
+    langPrefs = LanguagePreferences(requireContext())
     initListeners()
     initObservables()
     if ((requireActivity() as MainActivity).userPrefs.hasAccount()) {
@@ -75,13 +79,14 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
   }
 
   private fun initObservables() {
-    (requireActivity().application as App).preferenceHelper.isDarkThemeLive.observe(
-      viewLifecycleOwner
-    ) { isDarkTheme ->
-      isDarkTheme?.let {
-        isNightMode(it)
-      }
-    }
+//    (requireActivity().application as App).preferenceHelper.isDarkThemeLive.observe(
+//      viewLifecycleOwner
+//    ) { isDarkTheme ->
+//      isDarkTheme?.let {
+//        isNightMode(it)
+//      }
+//    }
+    isNightMode((requireActivity().application as App).themePreference.isNightMode())
   }
 
   override fun onClick(v: View?) {
@@ -102,10 +107,20 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
       }
       R.id.vg_change_lang -> {
         val en: (Dialog)->Unit = {
-          (requireActivity() as MainActivity).updateLocale(Locale("en"))
+          launch(Dispatchers.Main) {
+            (requireActivity().application as App).langPreferences.add("en")
+            delay(300)
+            requireActivity().finishAffinity()
+            System.exit(0)
+          }
         }
         val fa: (Dialog)->Unit = {
-          (requireActivity() as MainActivity).updateLocale(Locale("fa"))
+          launch(Dispatchers.Main) {
+            (requireActivity().application as App).langPreferences.add("fa")
+            delay(300)
+            requireActivity().finishAffinity()
+            System.exit(0)
+          }
         }
         val dialog = AppLanguageBottomSheetDialog {
           var onClick: (Dialog)->Unit = {}
@@ -152,11 +167,80 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
   }
 
   override fun onLightModeClicked() {
-    (requireActivity().application as App).preferenceHelper.isDarkTheme = false
+//    (requireActivity().application as App).preferenceHelper.isDarkTheme = false
+//    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//    (requireActivity() as MainActivity).delegate.applyDayNight()
+    lottieConfirmationDialog {
+      type = LottieDialogType.DIALOG
+      withTitle {
+        textRes = R.string.are_you_sure
+        styleRes = R.style.TextAppearance_MyTheme_Body1
+      }
+      withAnimation {
+        fileRes = R.raw.btc_eth
+      }
+      withContent {
+        textRes = R.string.theme_change_content
+        styleRes = R.style.TextAppearance_MyTheme_Body2
+      }
+      withPositiveButton {
+        textRes = R.string.yes
+        iconRes = R.drawable.ic_baseline_check_24
+        onClick {
+          launch(Dispatchers.Main) {
+            (requireActivity().application as App).themePreference.add(false)
+            delay(300)
+            requireActivity().finishAffinity()
+            System.exit(0)
+          }
+        }
+      }
+      withNegativeButton {
+        textRes = R.string.no
+        iconRes = R.drawable.ic_baseline_close_24
+        onClick {
+          dismissLottieDialog()
+        }
+      }
+    }
   }
 
   override fun onDarkModeClicked() {
-    (requireActivity().application as App).preferenceHelper.isDarkTheme = true
+//    (requireActivity().application as App).preferenceHelper.isDarkTheme = true
+
+    lottieConfirmationDialog {
+      type = LottieDialogType.DIALOG
+      withTitle {
+        textRes = R.string.are_you_sure
+        styleRes = R.style.TextAppearance_MyTheme_Body1
+      }
+      withAnimation {
+        fileRes = R.raw.btc_eth
+      }
+      withContent {
+        textRes = R.string.theme_change_content
+        styleRes = R.style.TextAppearance_MyTheme_Body2
+      }
+      withPositiveButton {
+        textRes = R.string.yes
+        iconRes = R.drawable.ic_baseline_check_24
+        onClick {
+          launch(Dispatchers.Main) {
+            (requireActivity().application as App).themePreference.add(true)
+            delay(300)
+            requireActivity().finishAffinity()
+            System.exit(0)
+          }
+        }
+      }
+      withNegativeButton {
+        textRes = R.string.no
+        iconRes = R.drawable.ic_baseline_close_24
+        onClick {
+          dismissLottieDialog()
+        }
+      }
+    }
   }
 
   private fun isNightMode(boolean: Boolean) {
@@ -168,4 +252,7 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
       binding.includeAppSettings.txtTheme.text = getString(R.string.light)
     }
   }
+
+  override val coroutineContext: CoroutineContext
+    get() = Dispatchers.IO
 }

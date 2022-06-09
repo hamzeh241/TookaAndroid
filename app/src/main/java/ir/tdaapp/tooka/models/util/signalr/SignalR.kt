@@ -5,6 +5,7 @@ import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
+import timber.log.Timber
 import java.util.*
 
 object SignalR {
@@ -34,15 +35,18 @@ object SignalR {
    * @see OnSignalRCallback Interface waziate connection
    */
   fun connect(callback: OnSignalRCallback) {
-    if (hubConnection.connectionState == HubConnectionState.CONNECTED){
+    if (hubConnection.connectionState == HubConnectionState.CONNECTED) {
       callback.onConnected()
       return
     }
+    Timber.i("SignalR Connecting")
     callback.onConnecting()
     hubConnection.start().subscribe({
       callback.onConnected()
       start(callback)
+      Timber.i("SignalR Connected")
     }, {
+      Timber.i("SignalR Disconnected")
       callback.onDisconnected()
     })
 

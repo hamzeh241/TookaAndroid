@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.lifecycle.lifecycleScope
@@ -75,14 +76,16 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
 
   private var detailVisibility = false
     set(value) {
-      if (value) {
-        binding.contentCoinLoading.visibility = View.GONE
-        binding.scrollCoinDetails.visibility = View.VISIBLE
-        binding.includeCoinChart.timeFramesList.visibility = View.VISIBLE
-      } else {
-        binding.contentCoinLoading.visibility = View.VISIBLE
-        binding.scrollCoinDetails.visibility = View.GONE
-        binding.includeCoinChart.timeFramesList.visibility = View.GONE
+      with(binding) {
+        if (value) {
+          contentCoinLoading.visibility = View.GONE
+          scrollCoinDetails.visibility = View.VISIBLE
+          includeCoinChart.timeFramesList.visibility = View.VISIBLE
+        } else {
+          contentCoinLoading.visibility = View.VISIBLE
+          scrollCoinDetails.visibility = View.GONE
+          includeCoinChart.timeFramesList.visibility = View.GONE
+        }
       }
 
       field = value
@@ -304,6 +307,7 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
       if (clicked.isSelected)
         return@TimeFramesAdapter
 
+      priceDetailsVisibility = true
       chartLoading = true
       binding.includeCoinChart.timeFramesList.isEnabled = false
 
@@ -381,6 +385,14 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
         }
         newsAdapter.differ.submitList(it)
         binding.includeCoinMisc.relatedNewsList.visibility = View.VISIBLE
+      } else {
+        val emptyState = emptyStateViewHorizontal(lottieRawRes = R.raw.bitcoin)
+        emptyState.layoutParams =
+          RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.MATCH_PARENT
+          )
+        binding.includeCoinMisc.relatedNewsSubroot.addView(emptyState)
       }
     }
     viewModel.otherCoins.observe(viewLifecycleOwner) {
@@ -390,6 +402,14 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
       if (it.size > 0) {
         coinAdapter.differ.submitList(it)
         binding.includeCoinMisc.relatedCoinsList.visibility = View.VISIBLE
+      } else {
+        val emptyState = emptyStateViewHorizontal(lottieRawRes = R.raw.bitcoin)
+        emptyState.layoutParams =
+          RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.MATCH_PARENT
+          )
+        binding.includeCoinMisc.relatedCoinsSubRoot.addView(emptyState)
       }
     }
     viewModel.chartData.observe(viewLifecycleOwner) {
@@ -591,7 +611,7 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
         }
       }
       R.id.imgToggleChart -> {
-        binding.includeCoinChart.cardCandleDetails.visibility = View.GONE
+        priceDetailsVisibility = true
         var selectedTimeFrame: TimeFrameModel? = null
         for (i in timeFrameAdapter.differ.currentList) {
           if (i.isSelected) {

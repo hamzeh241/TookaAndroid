@@ -62,6 +62,8 @@ dependencies {
     implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
     //endregion
 
+    implementation 'com.flurry.android:analytics:13.3.0@aar'
+
 //    implementation 'androidx.recyclerview:recyclerview:-selection:1.1.0'
 
     implementation 'com.google.android.gms:play-services-vision:20.1.3'

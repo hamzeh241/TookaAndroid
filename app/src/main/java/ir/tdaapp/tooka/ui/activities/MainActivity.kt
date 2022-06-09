@@ -2,13 +2,11 @@ package ir.tdaapp.tooka
 
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Process
 import android.transition.Slide
 import android.transition.TransitionManager
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -21,7 +19,6 @@ import ir.tdaapp.tooka.models.viewmodels.MainActivityViewModel
 import ir.tdaapp.tooka.models.viewmodels.SharedViewModel
 import ir.tdaapp.tooka.ui.activities.base.BaseActivity
 import org.koin.android.ext.android.inject
-import timber.log.Timber
 import java.util.*
 
 class MainActivity: BaseActivity(), NavigationBarView.OnItemSelectedListener,
@@ -68,6 +65,15 @@ class MainActivity: BaseActivity(), NavigationBarView.OnItemSelectedListener,
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
+//    (application as App).preferenceHelper.nightModeLive.observe(this) { nightMode ->
+//      nightMode?.let {
+//        delegate.localNightMode = it
+//      }
+//    }
+
+//    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//    delegate.applyDayNight()
+
     val navHostFragment = supportFragmentManager.findFragmentById(
       R.id.fragmentContainerView
     ) as NavHostFragment
@@ -79,14 +85,9 @@ class MainActivity: BaseActivity(), NavigationBarView.OnItemSelectedListener,
       setOf(R.id.home, R.id.markets, R.id.portfolio, R.id.news, R.id.settings)
     )
 
-    (application as App).preferenceHelper.nightModeLive.observe(this) { nightMode ->
-      nightMode?.let {
-        delegate.localNightMode = it
-      }
-    }
-    lifecycleScope.launchWhenCreated {
-      viewModel.subscribeToLivePrice()
-    }
+//    lifecycleScope.launchWhenCreated {
+//      viewModel.subscribeToLivePrice()
+//    }
     userPrefs = UserPreferences(this)
 
     binding.bottomNav.setOnItemReselectedListener(this)
@@ -94,9 +95,8 @@ class MainActivity: BaseActivity(), NavigationBarView.OnItemSelectedListener,
 
   override fun onDestroy() {
     super.onDestroy()
-    Timber.i("OnDestroy")
     finishAffinity()
-    Process.killProcess(Process.myPid())
+    System.exit(0)
   }
 
   /**
@@ -235,7 +235,7 @@ class MainActivity: BaseActivity(), NavigationBarView.OnItemSelectedListener,
   }
 
   override fun onConnected() {
-    viewModel.subscribeToLivePrice()
+//    viewModel.subscribeToLivePrice()
   }
 
   /**

@@ -3,6 +3,7 @@ package ir.tdaapp.tooka.ui.fragments
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.*
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.Toolbar
@@ -23,7 +24,6 @@ import ir.tdaapp.tooka.models.dataclasses.LivePriceListResponse
 import ir.tdaapp.tooka.models.dataclasses.News
 import ir.tdaapp.tooka.models.util.*
 import ir.tdaapp.tooka.models.viewmodels.HomeViewModel
-import ir.tdaapp.tooka.models.viewmodels.SharedViewModel
 import ir.tdaapp.tooka.ui.dialogs.NewsDetailsDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.CoroutineScope
@@ -51,7 +51,6 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
   private lateinit var importantNewsAdapter: ImportantNewsAdapter
 
   private val viewModel: HomeViewModel by inject()
-  private val sharedViewModel: SharedViewModel by inject()
 
   override val coroutineContext: CoroutineContext
     get() = Dispatchers.IO
@@ -139,15 +138,25 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
 
         gainersLosersAdapter.differ.submitList(it.gainersLosers)
         showGainersList()
-      }
 
-      if (it.watchlist.size > 0) {
-        watchlistAdapter.differ.submitList(it.watchlist)
-        showWatchlist()
-      } else homeBinding.includeWatchlist.apply {
-        noWatchlistRoot.visibility = View.VISIBLE
-        watchlistList.visibility = View.GONE
-        breakingNewsLoading.visibility = View.GONE
+        if (it.watchlist.size > 0) {
+          watchlistAdapter.differ.submitList(it.watchlist)
+          showWatchlist()
+        } else homeBinding.includeWatchlist.apply {
+          val emptyView =
+            emptyStateViewHorizontal(
+              R.string.no_watchlist,
+              lottieRawRes = R.raw.bitcoin
+            )
+          emptyView.layoutParams = RelativeLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+          )
+          watchlistSubRoot.addView(emptyView)
+//          noWatchlistRoot.visibility = View.VISIBLE
+          watchlistList.visibility = View.GONE
+          breakingNewsLoading.visibility = View.GONE
+        }
       }
     }
     viewModel.error.observe(viewLifecycleOwner, {
@@ -191,10 +200,6 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
         }.root)
         show()
       }
-    })
-
-    sharedViewModel.error.observe(viewLifecycleOwner, {
-
     })
   }
 

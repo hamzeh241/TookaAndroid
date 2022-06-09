@@ -99,6 +99,8 @@
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_news_details.xml" value="0.21621621621621623" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_qr_code_scanner.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_wallets_bottom_sheet.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/empty_state.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/empty_state_horizontal.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_alert_list.xml" value="0.33" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_all_news.xml" value="0.21621621621621623" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_coin_details.xml" value="0.3216216216216216" />
@@ -122,7 +124,7 @@
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_alert.xml" value="0.5" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_alternate_coins.xml" value="0.3216216216216216" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_breaking_crypto_news.xml" value="0.31351351351351353" />
-        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_coins_list.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_coins_list.xml" value="0.5" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_home_important_news.xml" value="0.5" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_important_news.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_market_coins_flat.xml" value="0.3216216216216216" />

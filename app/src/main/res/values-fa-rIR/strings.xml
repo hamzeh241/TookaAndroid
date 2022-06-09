@@ -127,7 +127,7 @@
   <string name="specify_capital">مقدار ارز را مشخص کنید</string>
   <string name="specify_platform">یک بستر برای ارز مورد نظر انتخاب کنید</string>
   <string name="specify_wallet">آدرس کیف پول خود را وارد کنید</string>
-  <string name="no_watchlist">ارزی ندارید که زیر نظر باشد</string>
+  <string name="no_watchlist">ارزی ندارید که زیر نظر باشد :(</string>
   <string name="add_to_watchlist">افزودن ارز</string>
   <string name="scan_qr">کیوآر کد کیف پول</string>
   <string name="change_lang">تغییر زبان برنامه</string>
@@ -152,4 +152,8 @@
   <string name="linear_view">نمایش خطی</string>
   <string name="history">تاریخچه</string>
   <string name="wallet_empty_or_hard">کیف پول شما یا خالی است یا از نوع هارد ولت است که توکا آنرا پشتیبانی نمی کند</string>
+  <string name="camera_denied">توکا برای اسکن کردن آدرس کیف پول شما به مجوز دوربین نیاز دارد، می توانید در تنظیمات گوشی خود مجوز را صادر کنید</string>
+  <string name="no_watchlist_content">در صفحه بازار ها میتوانید ارز های زیر نظر خود را تعیین کنید</string>
+  <string name="nothing_here">چیزی اینجا نیست :(</string>
+  <string name="theme_change_content">برای تغییر تم ، باید اپلیکیشن بسته شود. آیا مایل به ادامه هستید؟</string>
 </resources>

@@ -18,21 +18,28 @@ class HomeViewModel(private val repository: HomeRepository): ViewModel() {
     get() = _error
 
   suspend fun getData(userId: Int, refresh: Boolean = false) {
-    if (repository.isEmpty()) {
-      repository.getData(userId).collect {
-        if (it.status) {
-          _data.postValue(it.result!!)
-          repository.addToDatabase(it.result)
-        } else _error.postValue(it.errorType)
-      }
-    } else {
-      if (!refresh)
-        repository.getLocalData().collect {
-          _data.postValue(it)
-          callData(userId)
-        }
-      else
-        callData(userId)
+//    if (repository.isEmpty()) {
+//      repository.getData(userId).collect {
+//        if (it.status) {
+//          _data.postValue(it.result!!)
+//          repository.addToDatabase(it.result)
+//        } else _error.postValue(it.errorType)
+//      }
+//    } else {
+//      if (!refresh)
+//        repository.getLocalData().collect {
+//          _data.postValue(it)
+//          callData(userId)
+//        }
+//      else
+//        callData(userId)
+//    }
+
+    repository.getData(userId).collect {
+      if (it.status) {
+        _data.postValue(it.result!!)
+//        repository.addToDatabase(it.result)
+      } else _error.postValue(it.errorType)
     }
   }
 

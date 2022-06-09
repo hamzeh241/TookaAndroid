@@ -6,7 +6,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
   single { HomeViewModel(get()) }
   single { MarketsViewModel(get()) }
-  single { MainActivityViewModel() }
+  single { MainActivityViewModel(get()) }
   single { LoginActivityViewModel(get()) }
   single { PortfolioViewModel(get()) }
   single { NewsViewModel(get()) }

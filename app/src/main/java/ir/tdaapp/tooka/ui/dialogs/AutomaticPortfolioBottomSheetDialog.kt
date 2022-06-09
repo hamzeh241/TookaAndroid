@@ -1,5 +1,7 @@
 package ir.tdaapp.tooka.ui.dialogs
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +10,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +21,7 @@ import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.DialogAutomaticBottomSheetBinding
 import ir.tdaapp.tooka.databinding.ItemPlatformBinding
+import ir.tdaapp.tooka.databinding.ToastLayoutBinding
 import ir.tdaapp.tooka.models.adapters.PlatformsViewHolder
 import ir.tdaapp.tooka.models.adapters.TookaAdapter
 import ir.tdaapp.tooka.models.dataclasses.AutoWalletModel
@@ -31,10 +37,12 @@ import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
+
 class AutomaticPortfolioBottomSheetDialog: BottomSheetDialogFragment(), CoroutineScope {
 
   companion object {
     const val TAG = "AutomaticPortfolioBottomSheetDialog"
+    private const val PERMISSION_REQUEST_CODE = 100
   }
 
   interface AutomaticPortfolioCallback {
@@ -59,6 +67,7 @@ class AutomaticPortfolioBottomSheetDialog: BottomSheetDialogFragment(), Coroutin
   private var selectedCoin: Coin? = null
   private var selectedPlatform: Platform? = null
 
+
   val viewModel: AutomaticBottomSheetViewModel by inject()
 
   override fun onCreateView(
@@ -70,6 +79,31 @@ class AutomaticPortfolioBottomSheetDialog: BottomSheetDialogFragment(), Coroutin
     return binding.root
   }
 
+  override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<out String>,
+    grantResults: IntArray
+  ) {
+    when (requestCode) {
+      PERMISSION_REQUEST_CODE -> if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        Toast.makeText(requireContext().applicationContext, "Permission Granted", Toast.LENGTH_SHORT).show()
+        val dialog = QrCodeScannerDialog{
+          binding.edtWallet.setText(it)
+        }
+        dialog.show(requireActivity().supportFragmentManager, QrCodeScannerDialog.TAG)
+      } else {
+        Toast(requireContext()).apply {
+          setDuration(Toast.LENGTH_LONG)
+          setView(ToastLayoutBinding.inflate(layoutInflater).apply {
+            this.message.text = getString(R.string.camera_denied)
+            image.setImageResource(R.drawable.ic_white_sentiment_very_dissatisfied_24)
+          }.root)
+          show()
+        }
+      }
+    }
+  }
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     lifecycleScope.launchWhenCreated {
       withContext(Dispatchers.Main) {
@@ -79,10 +113,22 @@ class AutomaticPortfolioBottomSheetDialog: BottomSheetDialogFragment(), Coroutin
     }
 
     binding.imgQrCode.setOnClickListener {
-      val dialog = QrCodeScannerDialog {
-        binding.edtWallet.setText(it)
+      if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+        != PackageManager.PERMISSION_GRANTED
+      ) {
+        ActivityCompat.requestPermissions(
+          requireActivity(),
+          arrayOf(Manifest.permission.CAMERA),
+          PERMISSION_REQUEST_CODE
+        );
+        // Permission is not granted
+      } else {
+        // is granted
+        val dialog = QrCodeScannerDialog {
+          binding.edtWallet.setText(it)
+        }
+        dialog.show(requireActivity().supportFragmentManager, "taf")
       }
-      dialog.show(requireActivity().supportFragmentManager, "taf")
     }
 
     binding.edtWallet.doOnTextChanged { text, start, before, count ->

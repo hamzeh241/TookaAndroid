@@ -151,7 +151,7 @@
   <string name="specify_capital">Specify capital</string>
   <string name="specify_platform">Specify a platform</string>
   <string name="specify_wallet">Enter your wallet address</string>
-  <string name="no_watchlist">You don\'t have any coins in your watchlist</string>
+  <string name="no_watchlist">You don\'t have any coins in your watchlist :(</string>
   <string name="add_to_watchlist">Add to your watchlist</string>
   <string name="scan_qr">Wallet QR code</string>
   <string name="change_lang">Change Language</string>
@@ -176,6 +176,10 @@
   <string name="linear_view">Linear View</string>
   <string name="history">History</string>
   <string name="wallet_empty_or_hard">Your wallet is either empty or is a hard wallet which Tooka does not support</string>
+  <string name="camera_denied">Tooka needs camera permission to scan QR codes, you can allow it in your settings app</string>
+  <string name="no_watchlist_content">You can add coins to watchlist in Markets section</string>
+  <string name="nothing_here">There is nothing here :(</string>
+  <string name="theme_change_content">Changing the theme requires the app the close. Do you wish to continue?</string>
 
 
 </resources>

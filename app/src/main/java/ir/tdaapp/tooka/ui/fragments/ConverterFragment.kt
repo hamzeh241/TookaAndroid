@@ -223,6 +223,8 @@ class ConverterFragment: BaseFragmentSecond(), View.OnClickListener, View.OnLong
               firstCoin = coin
               setHeaderData(1, coin)
               converter = Converter(firstCoin, secondCoin)
+              val result = converter.convertFrom1(toEnglishNumbers(binding.txtCoin1Price.text.toString()))
+              binding.txtCoin2Price.text = toPersianNumbers(result.toString())
             }
           }
         }
@@ -237,6 +239,8 @@ class ConverterFragment: BaseFragmentSecond(), View.OnClickListener, View.OnLong
               secondCoin = coin
               setHeaderData(2, coin)
               converter = Converter(firstCoin, secondCoin)
+              val result = converter.convertFrom2(toEnglishNumbers(binding.txtCoin2Price.text.toString()))
+              binding.txtCoin1Price.text = toPersianNumbers(result.toString())
             }
           }
         }

@@ -51,7 +51,7 @@
             android:id="@+id/txtCoinName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+            android:textAppearance="@style/TextAppearance.MyTheme.Subtitle1"
             android:requiresFadingEdge="horizontal"
             android:fadingEdgeLength="20dp"
             android:ellipsize="marquee"
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{coin.symbol}"
-            android:textAppearance="@style/TextAppearance.MyTheme.Price2"
+            android:textAppearance="@style/TextAppearance.MyTheme.Caption"
             android:layout_marginStart="@dimen/margin4" />
         </LinearLayout>
 
@@ -71,11 +71,12 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/margin8"
           android:gravity="center_vertical">
+
           <TextView
             android:id="@+id/txtAlertPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+            android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
             android:requiresFadingEdge="horizontal"
             android:fadingEdgeLength="20dp"
             android:ellipsize="marquee"
@@ -93,7 +94,7 @@
             android:id="@+id/txtAlertDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MyTheme.Price2" />
+            android:textAppearance="@style/TextAppearance.MyTheme.Caption" />
         </LinearLayout>
 
       </LinearLayout>

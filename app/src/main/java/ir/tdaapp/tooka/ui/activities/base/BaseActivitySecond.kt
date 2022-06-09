@@ -5,13 +5,10 @@ import android.os.Bundle
 import android.transition.TransitionManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import ir.tdaapp.tooka.models.preference.LanguagePreferences
 import java.util.*
 
 
 abstract class BaseActivitySecond: AppCompatActivity() {
-
-  private val langPreference = LanguagePreferences()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

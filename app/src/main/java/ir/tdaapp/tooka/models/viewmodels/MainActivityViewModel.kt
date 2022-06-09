@@ -3,16 +3,15 @@ package ir.tdaapp.tooka.models.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.reflect.TypeToken
-import ir.tdaapp.tooka.models.dataclasses.*
+import com.microsoft.signalr.HubConnection
+import ir.tdaapp.tooka.models.dataclasses.CandleUpdateModel
+import ir.tdaapp.tooka.models.dataclasses.LivePriceListResponse
 import ir.tdaapp.tooka.models.util.GsonInstance
-import ir.tdaapp.tooka.models.util.signalr.SignalR
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 
-class MainActivityViewModel: ViewModel() {
-
-  private val hubConnection = SignalR.hubConnection
+class MainActivityViewModel(private val hubConnection: HubConnection): ViewModel() {
 
   init {
     subscribeToLivePrice()

@@ -24,7 +24,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:id="@+id/txtCoinName"
-      android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+      android:textAppearance="@style/TextAppearance.MyTheme.Subtitle1"
       android:gravity="start" />
 
     <TextView
@@ -32,7 +32,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:id="@+id/txtCoinSymbol"
-      android:textAppearance="@style/TextAppearance.MyTheme.NewsSubtitle" />
+      android:textAppearance="@style/TextAppearance.MyTheme.Caption" />
   </LinearLayout>
 
 </LinearLayout>

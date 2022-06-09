@@ -80,9 +80,18 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
     }
 
     lifecycleScope.launchWhenResumed {
-      viewModel.getAllBalances(
-        (requireActivity() as MainActivity).userPrefs.getUserId()
-      )
+      if (getUserId() > 0)
+        viewModel.getAllBalances(
+          (requireActivity() as MainActivity).userPrefs.getUserId()
+        )
+      else Toast(requireContext()).apply {
+        setDuration(Toast.LENGTH_LONG)
+        setView(ToastLayoutBinding.inflate(layoutInflater).apply {
+          this.message.text = getString(R.string.not_logged_in)
+          image.setImageResource(R.drawable.ic_white_sentiment_very_dissatisfied_24)
+        }.root)
+        show()
+      }
     }
   }
 
@@ -126,6 +135,7 @@ class PortfolioFragment: BaseFragment(), View.OnClickListener,
       setUsePercentValues(true)
       setEntryLabelTextSize(10f)
       setDrawEntryLabels(true)
+      setDrawMarkers(true)
       setData(pieData)
       invalidate()
     }

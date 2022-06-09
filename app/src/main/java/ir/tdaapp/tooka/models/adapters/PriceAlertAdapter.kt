@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.ItemAlertBinding
-import ir.tdaapp.tooka.models.dataclasses.*
+import ir.tdaapp.tooka.models.dataclasses.PriceAlert
 import ir.tdaapp.tooka.models.network.RetrofitClient
+import ir.tdaapp.tooka.models.util.getCorrectNumberFormat
 import ir.tdaapp.tooka.models.util.glideUrl
-import ir.tdaapp.tooka.models.util.toPersianNumbers
+import ir.tdaapp.tooka.models.util.separatePrice
 
 /**
  * Adaptere marbut be liste price alert ha
@@ -57,7 +58,13 @@ class PriceAlertAdapter(
     holder.binding.imgCoin glideUrl imageUrl
     holder.binding.txtCoinName.setText(item.coinName)
     holder.binding.txtCoinSymbol.setText(item.coinSymbol)
-    holder.binding.txtAlertDate.setText(item.date)
+    holder.binding.txtAlertDate.setText(
+      getCorrectNumberFormat(
+        item.date,
+        holder.binding.root.context
+      )
+    )
+
     holder.binding.txtAlertPrice.text =
       StringBuilder(item.isAscend.let {
         if (it)
@@ -66,7 +73,19 @@ class PriceAlertAdapter(
           holder.binding.root.context.getString(R.string.below)
       })
         .append(" ")
-        .append(toPersianNumbers(item.price.toInt().toString()))
+        .append(
+          if (item.isUsd) {
+            getCorrectNumberFormat(
+              item.price.toString(),
+              holder.binding.root.context
+            )
+          } else {
+            getCorrectNumberFormat(
+              separatePrice(item.price.toInt()),
+              holder.binding.root.context
+            )
+          }
+        )
         .append(" ")
         .append(item.isUsd.let {
           if (it)

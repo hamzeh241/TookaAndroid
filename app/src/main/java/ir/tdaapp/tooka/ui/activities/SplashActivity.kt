@@ -19,6 +19,15 @@ class SplashActivity: BaseActivity(), SignalR.OnSignalRCallback {
     binding = ActivitySplashBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
+//    (application as App).preferenceHelper.nightModeLive.observe(this) { nightMode ->
+//      nightMode?.let {
+//        delegate.localNightMode = it
+//      }
+//    }
+
+//    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//    delegate.applyDayNight()
+
     connection = SignalR.hubConnection
     SignalR.connect(this)
 

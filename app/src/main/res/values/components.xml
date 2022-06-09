@@ -47,6 +47,7 @@
     <item name="fontFamily">@font/medium</item>
     <item name="itemIconTint">@drawable/bottom_nav_tint</item>
     <item name="itemTextColor">@drawable/bottom_nav_tint</item>
+    <item name="android:minHeight">0dp</item>
   </style>
 
   <style name="Base.Widget.ImageButton" parent="Widget.AppCompat.ImageButton">

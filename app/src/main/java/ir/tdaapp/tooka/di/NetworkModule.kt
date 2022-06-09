@@ -2,8 +2,10 @@ package ir.tdaapp.tooka.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.microsoft.signalr.HubConnection
 import ir.tdaapp.tooka.models.network.ApiService
 import ir.tdaapp.tooka.models.network.RetrofitClient
+import ir.tdaapp.tooka.models.util.signalr.SignalR
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -19,7 +21,10 @@ val networkModule = module {
   factory { provideLogging() }
   single { provideTookaApi(get()) }
   single { provideRetrofit(get(), get()) }
+  single { provideSignalR() }
 }
+
+private fun provideSignalR(): HubConnection = SignalR.hubConnection
 
 private fun provideLogging() = HttpLoggingInterceptor()
   .setLevel(HttpLoggingInterceptor.Level.BODY)

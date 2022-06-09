@@ -3,7 +3,7 @@ package ir.tdaapp.tooka.models.preference
 import android.content.Context
 import android.content.SharedPreferences
 
-class LanguagePreferences {
+class LanguagePreferences(private val context: Context) {
 
   companion object {
     const val TAG = "LanguagePreferences"
@@ -12,7 +12,7 @@ class LanguagePreferences {
     const val LANG_KEY = "TOOKA_LANG_KEY"
   }
 
-  fun add(context: Context, lang: String) {
+  fun add(lang: String) {
     val editor: SharedPreferences.Editor =
       context.getSharedPreferences(UserPreferences.PREFERENCE_KEY, Context.MODE_PRIVATE)
         .edit()
@@ -21,7 +21,7 @@ class LanguagePreferences {
     editor.apply()
   }
 
-  fun getLang(context: Context): String {
+  fun getLang(): String {
     val editor: SharedPreferences = context.getSharedPreferences(
       PREFERENCE_KEY,
       Context.MODE_PRIVATE

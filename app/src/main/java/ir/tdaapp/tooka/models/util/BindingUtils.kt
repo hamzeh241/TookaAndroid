@@ -12,16 +12,21 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
+import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
+import androidx.fragment.app.Fragment
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import ir.tdaapp.tooka.R
+import ir.tdaapp.tooka.databinding.EmptyStateBinding
+import ir.tdaapp.tooka.databinding.EmptyStateHorizontalBinding
 import ir.tdaapp.tooka.models.components.TookaCandlestickChart
 import ir.tdaapp.tooka.models.components.TookaLineChart
 import ir.tdaapp.tooka.models.dataclasses.Coin
@@ -41,6 +46,68 @@ infix fun ImageView.glideUrl(url: String) {
     .load(url)
     .placeholder(R.drawable.ic_baseline_circle_24)
     .into(this)
+}
+
+fun Fragment.emptyStateViewVertical(
+  @StringRes title: Int,
+  @StringRes content: Int? = null,
+  @RawRes lottieRawRes: Int? = null,
+  titleConfig: (TextView)->Unit = {},
+  contentConfig: (TextView)->Unit = {},
+  animationConfig: (LottieAnimationView)->Unit = {},
+): View {
+  val binding = EmptyStateBinding.inflate(layoutInflater)
+  binding.emptyStateTitle.text = getString(title)
+
+  binding.emptyStateTitle.apply(titleConfig)
+  binding.emptyStateContent.apply(contentConfig)
+  binding.emptyStateAnimation.apply(animationConfig)
+
+  if (content != null) {
+    binding.emptyStateContent.text = getString(content)
+  } else {
+    binding.emptyStateContent.visibility = View.GONE
+  }
+
+  if (lottieRawRes != null) {
+    binding.emptyStateAnimation.setAnimation(lottieRawRes)
+    binding.emptyStateAnimation.playAnimation()
+  } else {
+    binding.emptyStateAnimation.visibility = View.GONE
+  }
+
+  return binding.root
+}
+
+fun Fragment.emptyStateViewHorizontal(
+  @StringRes title: Int = R.string.nothing_here,
+  @StringRes content: Int? = null,
+  @RawRes lottieRawRes: Int? = null,
+  titleConfig: (TextView)->Unit = {},
+  contentConfig: (TextView)->Unit = {},
+  animationConfig: (LottieAnimationView)->Unit = {},
+): View {
+  val binding = EmptyStateHorizontalBinding.inflate(layoutInflater)
+  binding.emptyStateTitle.text = getString(title)
+
+  binding.emptyStateTitle.apply(titleConfig)
+  binding.emptyStateContent.apply(contentConfig)
+  binding.emptyStateAnimation.apply(animationConfig)
+
+  if (content != null) {
+    binding.emptyStateContent.text = getString(content)
+  } else {
+    binding.emptyStateContent.visibility = View.GONE
+  }
+
+  if (lottieRawRes != null) {
+    binding.emptyStateAnimation.setAnimation(lottieRawRes)
+    binding.emptyStateAnimation.playAnimation()
+  } else {
+    binding.emptyStateAnimation.visibility = View.GONE
+  }
+
+  return binding.root
 }
 
 fun getCorrectNumberFormat(input: String, c: Context): String = when (getCurrentLocale(c)) {
