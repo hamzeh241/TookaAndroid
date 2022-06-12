@@ -73,6 +73,7 @@
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/activity_test.xml" value="0.33" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/component_custom_text_view.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/concept_fragment_coin_details.xml" value="0.25" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_compare_stats.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_content_coins_misc.xml" value="0.33" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_content_coins_price.xml" value="0.4399260628465804" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/content_fragment_content_coins_price_second.xml" value="0.5" />
@@ -98,14 +99,17 @@
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_manual_bottom_sheet.xml" value="0.33" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_news_details.xml" value="0.21621621621621623" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_qr_code_scanner.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_sort_bottom_sheet.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/dialog_wallets_bottom_sheet.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/empty_state.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/empty_state_horizontal.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_alert_list.xml" value="0.33" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_all_news.xml" value="0.21621621621621623" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_breaking_news.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_coin_details.xml" value="0.3216216216216216" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_coin_details_final.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_coins_list.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_compare.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_content_coin_details.xml" value="0.25" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_content_price_alert.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/fragment_converter.xml" value="0.3216216216216216" />
@@ -134,6 +138,8 @@
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_portfolio_coin.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_second_coins_list.xml" value="0.67" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_second_top_coin.xml" value="0.5" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_slider_news.xml" value="0.31351351351351353" />
+        <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_sort_bottom_sheet.xml" value="0.31351351351351353" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_sort_option.xml" value="0.5" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_top_coin.xml" value="0.33" />
         <entry key="..\:/StudioProjects/TookaAndroid/app/src/main/res/layout/item_wallet.xml" value="0.31351351351351353" />

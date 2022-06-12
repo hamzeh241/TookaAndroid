@@ -56,6 +56,11 @@ class MarketsViewModel(private val repository: MarketsRepository): ViewModel() {
     viewType.value = ViewType.Linear
   }
 
+  fun setSortOptions(options:List<SortModel>){
+    _sortList.value = options
+    setSelected(options.firstOrNull{ it.isSelected }!!)
+  }
+
   suspend fun getSortOptions() {
     val options = repository.getSortOptions()
     if (options.status) {

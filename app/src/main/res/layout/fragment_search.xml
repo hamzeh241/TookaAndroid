@@ -24,19 +24,20 @@
       tools:layout_editor_absoluteY="5dp">
 
       <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/edtSearch"
         android:layout_weight="1"
         android:layout_marginStart="@dimen/margin8"
-        android:background="@color/white"
+        android:background="?colorSurface"
         android:singleLine="true"
         android:maxLines="1"
         android:hint="@string/search_here"
-        android:textAppearance="@style/TextAppearance.MyTheme.NewsTitle"
-        android:layout_marginEnd="@dimen/margin16" />
+        android:textAppearance="@style/TextAppearance.MyTheme.Subtitle1"
+        android:layout_marginEnd="@dimen/margin16"
+        android:textColor="?colorOnSurface" />
 
       <ImageButton
         android:layout_width="wrap_content"

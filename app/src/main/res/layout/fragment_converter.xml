@@ -56,14 +56,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtCoin1Name"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline6" />
+            android:textAppearance="@style/TextAppearance.MyTheme.Body1" />
 
           <TextView
             android:text="BTC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtCoin1Symbol"
-            android:textAppearance="@style/TextAppearance.MyTheme.NewsDetails"
+            android:textAppearance="@style/TextAppearance.MyTheme.Caption"
             android:textColor="@color/white_900" />
         </LinearLayout>
       </LinearLayout>
@@ -74,8 +74,8 @@
         android:layout_height="match_parent"
         android:id="@+id/txtCoin1Price"
         android:layout_marginEnd="@dimen/margin16"
-        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
-        android:textColor="@color/white_900"
+        android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+        android:textColor="?subtitleTextColor"
         android:layout_weight="1"
         android:gravity="center_vertical|end" />
     </LinearLayout>
@@ -118,14 +118,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtCoin2Name"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline6" />
+            android:textAppearance="@style/TextAppearance.MyTheme.Body1" />
 
           <TextView
             android:text="BTC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtCoin2Symbol"
-            android:textAppearance="@style/TextAppearance.MyTheme.NewsDetails"
+            android:textAppearance="@style/TextAppearance.MyTheme.Caption"
             android:textColor="@color/white_900" />
         </LinearLayout>
       </LinearLayout>
@@ -135,8 +135,8 @@
         android:layout_height="match_parent"
         android:id="@+id/txtCoin2Price"
         android:layout_marginEnd="@dimen/margin16"
-        android:textAppearance="@style/TextAppearance.MyTheme.ToolbarTitle"
-        android:textColor="@color/white_900"
+        android:textAppearance="@style/TextAppearance.MyTheme.Subtitle2"
+        android:textColor="?subtitleTextColor"
         android:layout_weight="1"
         android:gravity="center_vertical|end" />
     </LinearLayout>

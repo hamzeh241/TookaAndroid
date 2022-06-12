@@ -24,6 +24,7 @@ val viewModelModule = module {
   factory { PriceAlertListViewModel(get()) }
   factory { CoinsListViewModel(get()) }
   factory { AllNewsViewModel(get()) }
+  factory { BreakingNewsViewModel(get()) }
   factory { NewsDetailsViewModel(get()) }
   factory { SearchViewModel(get()) }
 }

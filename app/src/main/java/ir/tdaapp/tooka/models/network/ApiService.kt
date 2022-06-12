@@ -142,4 +142,7 @@ interface ApiService {
 
   @GET("news/allnews")
   suspend fun allNews(@Query("page") page: Int = 0): Response<ResponseModel<List<News>>>
+
+  @GET("news/breakingnews")
+  suspend fun breakingNews(): Response<ResponseModel<List<News>>>
 }

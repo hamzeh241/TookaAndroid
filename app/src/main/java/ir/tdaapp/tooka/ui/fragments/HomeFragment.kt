@@ -104,7 +104,7 @@ class HomeFragment: BaseFragment(), View.OnClickListener, Toolbar.OnMenuItemClic
 
   private fun initSwipeRefresh() = homeBinding.swipeRefreshLayout.setOnRefreshListener {
     launch {
-      viewModel.getData(getUserId(), refresh = true)
+      viewModel.getData(getUserId())
     }
   }
 

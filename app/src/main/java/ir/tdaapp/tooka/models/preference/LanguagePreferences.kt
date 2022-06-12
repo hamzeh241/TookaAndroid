@@ -12,11 +12,11 @@ class LanguagePreferences(private val context: Context) {
     const val LANG_KEY = "TOOKA_LANG_KEY"
   }
 
-  fun add(lang: String) {
-    val editor: SharedPreferences.Editor =
-      context.getSharedPreferences(UserPreferences.PREFERENCE_KEY, Context.MODE_PRIVATE)
-        .edit()
-    editor.clear()
+  fun add(lang: String, callback: (SharedPreferences, String)->Unit) {
+    val preference = context.getSharedPreferences(PREFERENCE_KEY, Context.MODE_PRIVATE)
+    val editor: SharedPreferences.Editor = preference.edit()
+
+    preference.registerOnSharedPreferenceChangeListener(callback)
     editor.putString(LANG_KEY, lang)
     editor.apply()
   }

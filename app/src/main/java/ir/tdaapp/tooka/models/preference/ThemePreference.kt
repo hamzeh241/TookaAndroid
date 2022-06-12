@@ -10,10 +10,12 @@ class ThemePreference(private val context: Context) {
     const val THEME_KEY = "TOOKA_THEME_KEY"
   }
 
-  fun add(isNight: Boolean): Boolean {
+  fun add(isNight: Boolean,callback:(SharedPreferences,String) -> Unit): Boolean {
     val editor: SharedPreferences.Editor =
       context.getSharedPreferences(PREFERENCE_KEY, Context.MODE_PRIVATE)
         .edit()
+
+    context.getSharedPreferences(PREFERENCE_KEY, Context.MODE_PRIVATE).registerOnSharedPreferenceChangeListener(callback)
     editor.clear()
     editor.putBoolean(THEME_KEY, isNight)
     return editor.commit()

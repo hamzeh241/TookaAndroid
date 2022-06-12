@@ -17,11 +17,9 @@ import ir.tdaapp.tooka.databinding.FragmentMarketsBinding
 import ir.tdaapp.tooka.models.adapters.MarketsAdapter
 import ir.tdaapp.tooka.models.components.TookaSnackBar
 import ir.tdaapp.tooka.models.dataclasses.LivePriceListResponse
-import ir.tdaapp.tooka.models.util.TookaSwipeCallback
-import ir.tdaapp.tooka.models.util.VIEW_TYPE_GRID
-import ir.tdaapp.tooka.models.util.VIEW_TYPE_LINEAR
-import ir.tdaapp.tooka.models.util.getName
+import ir.tdaapp.tooka.models.util.*
 import ir.tdaapp.tooka.models.viewmodels.MarketsViewModel
+import ir.tdaapp.tooka.ui.dialogs.MarketsSortBottomSheetDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.*
 import org.greenrobot.eventbus.EventBus
@@ -65,6 +63,8 @@ class MarketsFragment: BaseFragment(), View.OnClickListener, CoroutineScope {
       initSwipeGesture()
       initSwipeRefreshLayout()
       initObservables()
+      binding.includeMarketsSort.viewTypeLayout.setOnClickListener(this)
+      binding.includeMarketsSort.sortBy.setOnClickListener(this)
     }
 
     binding.toolbar.title = getString(R.string.markets)
@@ -80,10 +80,16 @@ class MarketsFragment: BaseFragment(), View.OnClickListener, CoroutineScope {
       }
 
       adapter.differ.submitList(it)
+      binding.includeMarketsCoinList.marketCoinsList.scrollToPosition(0)
     }
 
     viewModel.selectedSort.observe(viewLifecycleOwner) {
       Timber.i("observe sort list")
+      binding.includeMarketsSort.txtSort.text = when(getCurrentLocale(requireContext())) {
+        "fa" -> it.nameFa
+        else -> it.nameEn
+      }
+
       binding.swipeRefreshLayout.isRefreshing = true
       launch {
         viewModel.getCoins(
@@ -213,29 +219,34 @@ class MarketsFragment: BaseFragment(), View.OnClickListener, CoroutineScope {
   override fun onClick(v: View?) {
     when (v?.id) {
       R.id.viewTypeLayout -> {
-        val decor = DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL)
-        decor.setDrawable(resources.getDrawable(R.drawable.divider_item_decoration))
         if (viewModel.viewType.value!! == MarketsViewModel.ViewType.Linear) {
           viewModel.viewType.value = MarketsViewModel.ViewType.Grid
-          binding.includeMarketsSort.imgToggle.setImageResource(R.drawable.ic_grid_view_black_24dp)
-          binding.includeMarketsCoinList.marketCoinsList.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            removeItemDecoration(decor)
-          }
-          launch {
-            adapter.changeViewType(VIEW_TYPE_LINEAR)
-          }
-        } else {
-          viewModel.viewType.value = MarketsViewModel.ViewType.Linear
           binding.includeMarketsSort.imgToggle.setImageResource(R.drawable.ic_view_stream_black_24dp)
           binding.includeMarketsCoinList.marketCoinsList.apply {
             layoutManager =
               GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-            addItemDecoration(decor)
           }
           launch {
             adapter.changeViewType(VIEW_TYPE_GRID)
           }
+        } else {
+          viewModel.viewType.value = MarketsViewModel.ViewType.Linear
+          binding.includeMarketsSort.imgToggle.setImageResource(R.drawable.ic_grid_view_black_24dp)
+          binding.includeMarketsCoinList.marketCoinsList.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+          }
+          launch {
+            adapter.changeViewType(VIEW_TYPE_LINEAR)
+          }
+        }
+      }
+      R.id.sortBy -> {
+        if (viewModel.sortList.value != null) {
+          val dialog = MarketsSortBottomSheetDialog(viewModel.sortList.value!!) {
+            viewModel.setSortOptions(it)
+          }
+
+          dialog.show(requireActivity().supportFragmentManager, MarketsSortBottomSheetDialog.TAG)
         }
       }
     }

@@ -126,10 +126,12 @@ class MarketsAdapter(val action: CoinCallback):
       holder.binding as ItemMarketCoinsGridBinding
 
       holder.binding.run {
-        txtCoinName.text = when (getCurrentLocale(root.context)) {
-          "fa" -> data.persianName ?: data.name
-          else -> data.name
-        }
+        txtCoinName.text = formatSymbol(
+          when (getCurrentLocale(root.context)) {
+            "fa" -> data.persianName ?: data.name
+            else -> data.name
+          }, data.symbol
+        )
 
         txtPriceTMN.text =
           formatPrice(
@@ -146,10 +148,27 @@ class MarketsAdapter(val action: CoinCallback):
             root.context.getString(R.string.dollars)
           )
 
-        txtCoinPercentage.text = getCorrectNumberFormat(
-          data.percentage.toString(),
-          root.context
-        )
+        txtCoinPercentage.text =
+          StringBuilder(
+            getCorrectNumberFormat(
+              data.percentage.toString(),
+              root.context
+            )
+          ).append(" %").toString()
+
+        if (data.percentage > 0) {
+          txtCoinPercentage.setTextColor(root.resources.getColor(R.color.green_400))
+          imgAscend.setColorFilter(root.resources.getColor(R.color.green_400))
+          imgAscend.setImageResource(R.drawable.ic_ascend)
+        } else if (data.percentage < 0) {
+          txtCoinPercentage.setTextColor(root.resources.getColor(R.color.red_600))
+          imgAscend.setColorFilter(root.resources.getColor(R.color.red_600))
+          imgAscend.setImageResource(R.drawable.ic_descend)
+        } else {
+          txtCoinPercentage.setTextColor(root.resources.getColor(R.color.white_900))
+          imgAscend.setColorFilter(root.resources.getColor(R.color.white_900))
+          imgAscend.setImageResource(R.drawable.ic_remove)
+        }
 
         val imageUrl = RetrofitClient.COIN_IMAGES + data.icon
 

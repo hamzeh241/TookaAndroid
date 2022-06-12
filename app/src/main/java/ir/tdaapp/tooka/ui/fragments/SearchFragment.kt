@@ -12,13 +12,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
-import ir.tdaapp.tooka.models.adapters.MarketsAdapter
-import ir.tdaapp.tooka.models.adapters.NewsAdapter
 import ir.tdaapp.tooka.databinding.FragmentSearchBinding
 import ir.tdaapp.tooka.databinding.ToastLayoutBinding
+import ir.tdaapp.tooka.models.adapters.MarketsAdapter
+import ir.tdaapp.tooka.models.adapters.NewsAdapter
+import ir.tdaapp.tooka.models.dataclasses.News
 import ir.tdaapp.tooka.models.util.InputManagerHelper
 import ir.tdaapp.tooka.models.util.NetworkErrors
+import ir.tdaapp.tooka.models.util.getName
+import ir.tdaapp.tooka.models.util.openWebpage
 import ir.tdaapp.tooka.models.viewmodels.SearchViewModel
+import ir.tdaapp.tooka.ui.dialogs.NewsDetailsDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +53,6 @@ class SearchFragment: BaseFragment(), CoroutineScope {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    (requireActivity() as MainActivity).bottomNavVisibility = false
     initToolbar()
     initAdapters()
     initRecyclerViews()
@@ -62,6 +65,11 @@ class SearchFragment: BaseFragment(), CoroutineScope {
     manager = InputManagerHelper.getManager(requireContext())
 //    manager.showSoftInput(binding.edtSearch, InputMethodManager.SHOW_IMPLICIT);
     manager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+  }
+
+  override fun onResume() {
+    super.onResume()
+    (requireActivity() as MainActivity).bottomNavVisibility = false
   }
 
   private fun initSearchBar() = binding.edtSearch.setOnKeyListener(object: View.OnKeyListener {
@@ -94,10 +102,38 @@ class SearchFragment: BaseFragment(), CoroutineScope {
 
   private fun initAdapters() {
     coinAdapter = MarketsAdapter { clicked, position ->
-
+      findNavController().navigate(
+        SearchFragmentDirections.actionSearchFragmentToCoinDetailsFragment(
+          clicked.id,
+          "asdasd",
+          getName(requireContext(), clicked),
+          clicked.icon
+        )
+      )
     }
     newsAdapter = NewsAdapter { clicked, position ->
+      newsClicked(clicked)
+    }
+  }
 
+  private fun newsClicked(clicked: News) {
+    when (clicked.newsKind) {
+      News.EXTERNAL_NEWS -> {
+        openWebpage(requireActivity(), clicked.url!!)
+      }
+      News.INTERNAL_NEWS -> {
+        findNavController().navigate(
+          SearchFragmentDirections.actionSearchFragmentToNewsDetailsFragment(
+            clicked.id
+          )
+        )
+      }
+      News.SHORT_NEWS -> {
+        NewsDetailsDialog(clicked.id).show(
+          requireActivity().supportFragmentManager,
+          NewsDetailsDialog.TAG
+        )
+      }
     }
   }
 

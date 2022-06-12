@@ -30,7 +30,7 @@
         android:text="@string/dollars"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textColor="#818181"
         android:layout_marginStart="@dimen/margin16"
         android:layout_marginTop="@dimen/margin8"
@@ -41,7 +41,7 @@
         android:text="@string/toomans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textColor="#818181"
         android:layout_marginStart="@dimen/margin16"
         android:layout_marginTop="@dimen/margin4"
@@ -52,7 +52,7 @@
         android:text="@string/vol_24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textColor="#818181"
         android:layout_marginStart="@dimen/margin16"
         android:layout_marginTop="@dimen/margin4"
@@ -63,7 +63,7 @@
         android:text="@string/market_cap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textColor="#818181"
         android:layout_marginStart="@dimen/margin16"
         android:layout_marginTop="@dimen/margin4"
@@ -74,7 +74,7 @@
         android:text="@string/max_supply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textColor="#818181"
         android:layout_marginStart="@dimen/margin16"
         android:layout_marginTop="@dimen/margin4"
@@ -85,7 +85,7 @@
         android:text="@string/circulating_supply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textColor="#818181"
         android:layout_marginStart="@dimen/margin16"
         android:layout_marginTop="@dimen/margin4"
@@ -96,7 +96,7 @@
         android:text="@string/total_supply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textColor="#818181"
         android:layout_marginStart="@dimen/margin16"
         android:layout_marginTop="@dimen/margin4"
@@ -107,7 +107,7 @@
         android:text="@string/rank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textColor="#818181"
         android:layout_marginStart="@dimen/margin16"
         android:layout_marginTop="@dimen/margin4"
@@ -141,7 +141,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:id="@+id/txtCoin1Name"
-          android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+          android:textAppearance="@style/TextAppearance.MyTheme.Body1"
           android:textSize="16sp"
           android:gravity="center"
           android:layout_marginStart="@dimen/margin8" />
@@ -156,7 +156,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin8"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:layout_marginEnd="@dimen/margin8"
         android:textSize="12sp" />
 
@@ -169,7 +169,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:layout_marginEnd="@dimen/margin8"
         android:textSize="12sp" />
 
@@ -182,7 +182,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:layout_marginEnd="@dimen/margin8"
         android:textSize="12sp" />
 
@@ -195,7 +195,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:layout_marginEnd="@dimen/margin8"
         android:textSize="12sp" />
 
@@ -208,7 +208,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:layout_marginEnd="@dimen/margin8"
         android:textSize="12sp" />
 
@@ -221,7 +221,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:layout_marginEnd="@dimen/margin8"
         android:textSize="12sp" />
 
@@ -234,7 +234,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:layout_marginEnd="@dimen/margin8"
         android:textSize="12sp" />
 
@@ -247,7 +247,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:layout_marginEnd="@dimen/margin8"
         android:textSize="12sp" />
     </LinearLayout>
@@ -278,7 +278,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:id="@+id/txtCoin2Name"
-          android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+          android:textAppearance="@style/TextAppearance.MyTheme.Body1"
           android:textSize="16sp"
           android:gravity="center"
           android:layout_marginStart="@dimen/margin8" />
@@ -294,7 +294,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin8"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="12sp" />
 
       <TextView
@@ -307,7 +307,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="12sp" />
 
       <TextView
@@ -320,7 +320,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="12sp" />
 
       <TextView
@@ -333,7 +333,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="12sp" />
 
       <TextView
@@ -346,7 +346,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="12sp" />
 
       <TextView
@@ -359,7 +359,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="12sp" />
 
       <TextView
@@ -372,7 +372,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="12sp" />
 
       <TextView
@@ -385,7 +385,7 @@
         android:layout_marginStart="@dimen/margin8"
         android:layout_marginTop="@dimen/margin4"
         android:layout_marginBottom="@dimen/margin4"
-        android:textAppearance="@style/TextAppearance.MyTheme.Price1"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body2"
         android:textSize="12sp" />
 
     </LinearLayout>

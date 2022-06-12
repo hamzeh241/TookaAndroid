@@ -77,7 +77,14 @@
   <fragment
     android:id="@+id/searchFragment"
     android:name="ir.tdaapp.tooka.ui.fragments.SearchFragment"
-    android:label="SearchFragment" />
+    android:label="SearchFragment" >
+    <action
+      android:id="@+id/action_searchFragment_to_coinDetailsFragment"
+      app:destination="@id/coinDetailsFragment" />
+    <action
+      android:id="@+id/action_searchFragment_to_newsDetailsFragment"
+      app:destination="@id/newsDetailsFragment" />
+  </fragment>
   <fragment
     android:id="@+id/compareFragment"
     android:name="ir.tdaapp.tooka.ui.fragments.CompareFragment"

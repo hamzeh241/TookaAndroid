@@ -13,9 +13,7 @@ import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.FragmentConverterBinding
 import ir.tdaapp.tooka.models.dataclasses.Coin
 import ir.tdaapp.tooka.models.network.RetrofitClient
-import ir.tdaapp.tooka.models.util.getCurrentLocale
-import ir.tdaapp.tooka.models.util.toEnglishNumbers
-import ir.tdaapp.tooka.models.util.toPersianNumbers
+import ir.tdaapp.tooka.models.util.*
 import ir.tdaapp.tooka.models.viewmodels.ConverterViewModel
 import ir.tdaapp.tooka.ui.dialogs.CoinsListBottomSheetDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragmentSecond
@@ -109,6 +107,7 @@ class ConverterFragment: BaseFragmentSecond(), View.OnClickListener, View.OnLong
     }
 
     setNumbersClickListener()
+    setNumbersText()
 
     binding.firstCoin.setOnClickListener(this)
     binding.secondCoin.setOnClickListener(this)
@@ -129,6 +128,19 @@ class ConverterFragment: BaseFragmentSecond(), View.OnClickListener, View.OnLong
         }
       }
     }
+  }
+
+  private fun setNumbersText() = with(binding) {
+    txt0.text = getCorrectNumberFormat("0",requireContext())
+    txt1.text = getCorrectNumberFormat("1",requireContext())
+    txt2.text = getCorrectNumberFormat("2",requireContext())
+    txt3.text = getCorrectNumberFormat("3",requireContext())
+    txt4.text = getCorrectNumberFormat("4",requireContext())
+    txt5.text = getCorrectNumberFormat("5",requireContext())
+    txt6.text = getCorrectNumberFormat("6",requireContext())
+    txt7.text = getCorrectNumberFormat("7",requireContext())
+    txt8.text = getCorrectNumberFormat("8",requireContext())
+    txt9.text = getCorrectNumberFormat("9",requireContext())
   }
 
   override fun initObservables() {
@@ -161,12 +173,12 @@ class ConverterFragment: BaseFragmentSecond(), View.OnClickListener, View.OnLong
 
   fun setSelected(position: Int) {
     if (position == 1) {
-      binding.firstCoinLayout.setBackgroundColor(resources.getColor(R.color.white_100))
-      binding.secondCoinLayout.setBackgroundColor(resources.getColor(R.color.white))
+      binding.firstCoinLayout.setBackgroundColor(getAttributeColor(requireContext(),R.attr.colorSecondaryVariant))
+      binding.secondCoinLayout.setBackgroundColor(getAttributeColor(requireContext(),R.attr.colorSecondary))
       isFirstSelected = true
     } else {
-      binding.secondCoinLayout.setBackgroundColor(resources.getColor(R.color.white_100))
-      binding.firstCoinLayout.setBackgroundColor(resources.getColor(R.color.white))
+      binding.secondCoinLayout.setBackgroundColor(getAttributeColor(requireContext(),R.attr.colorSecondaryVariant))
+      binding.firstCoinLayout.setBackgroundColor(getAttributeColor(requireContext(),R.attr.colorSecondary))
       isFirstSelected = false
     }
   }

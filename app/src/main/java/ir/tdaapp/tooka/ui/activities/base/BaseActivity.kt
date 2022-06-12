@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import ir.tdaapp.tooka.models.preference.LanguagePreferences
 import ir.tdaapp.tooka.models.preference.ThemePreference
 import ir.tdaapp.tooka.models.util.LocaleChanger
 import java.util.*
@@ -19,10 +18,10 @@ open class BaseActivity: AppCompatActivity() {
   lateinit var themePreferences: ThemePreference
 
   override fun attachBaseContext(newBase: Context) {
-    val helper = LanguagePreferences(newBase)
-    val localeToSwitchTo = Locale(helper.getLang())
+//    val helper = LanguagePreferences(newBase)
+    val localeToSwitchTo = Locale("fa")
     val localeUpdatedContext = LocaleChanger.updateLocale(newBase, localeToSwitchTo)
-    super.attachBaseContext(localeUpdatedContext);
+    super.attachBaseContext(localeUpdatedContext)
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {

@@ -171,7 +171,7 @@ class NewsFragment: BaseFragment(), CoroutineScope, View.OnClickListener {
   override fun onClick(v: View?) {
     when (v?.id) {
       R.id.txtBreakingSeeMore -> {
-
+        findNavController().navigate(NewsFragmentDirections.actionNewsFragmentToBreakingNewsFragment())
       }
       R.id.txtCryptoNewsSeeMore -> {
         findNavController().navigate(NewsFragmentDirections.actionNewsFragmentToAllNewsFragment())

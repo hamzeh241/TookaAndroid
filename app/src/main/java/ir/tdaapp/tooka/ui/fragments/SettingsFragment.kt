@@ -15,6 +15,7 @@ import ir.tdaapp.tooka.MainActivity
 import ir.tdaapp.tooka.R
 import ir.tdaapp.tooka.databinding.FragmentSettingsBinding
 import ir.tdaapp.tooka.models.preference.LanguagePreferences
+import ir.tdaapp.tooka.models.preference.ThemePreference
 import ir.tdaapp.tooka.models.util.toast
 import ir.tdaapp.tooka.ui.dialogs.AppLanguageBottomSheetDialog
 import ir.tdaapp.tooka.ui.dialogs.AppLanguageBottomSheetDialog.Language.ENGLISH
@@ -23,8 +24,6 @@ import ir.tdaapp.tooka.ui.dialogs.AppThemeBottomSheetDialog
 import ir.tdaapp.tooka.ui.fragments.base.BaseFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class SettingsFragment: BaseFragment(), View.OnClickListener,
@@ -107,19 +106,20 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
       }
       R.id.vg_change_lang -> {
         val en: (Dialog)->Unit = {
-          launch(Dispatchers.Main) {
-            (requireActivity().application as App).langPreferences.add("en")
-            delay(300)
-            requireActivity().finishAffinity()
-            System.exit(0)
+          (requireActivity().application as App).langPreferences.add("en") { prefs, s ->
+            if (s.equals(LanguagePreferences.LANG_KEY)) {
+              requireActivity().finishAffinity()
+              System.exit(0)
+            }
           }
         }
         val fa: (Dialog)->Unit = {
-          launch(Dispatchers.Main) {
-            (requireActivity().application as App).langPreferences.add("fa")
-            delay(300)
-            requireActivity().finishAffinity()
-            System.exit(0)
+          (requireActivity().application as App).langPreferences.add("fa") { prefs, s ->
+            if (s.equals(LanguagePreferences.LANG_KEY)) {
+
+              requireActivity().finishAffinity()
+              System.exit(0)
+            }
           }
         }
         val dialog = AppLanguageBottomSheetDialog {
@@ -187,11 +187,11 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
         textRes = R.string.yes
         iconRes = R.drawable.ic_baseline_check_24
         onClick {
-          launch(Dispatchers.Main) {
-            (requireActivity().application as App).themePreference.add(false)
-            delay(300)
-            requireActivity().finishAffinity()
-            System.exit(0)
+          (requireActivity().application as App).themePreference.add(false) { sharedPreferences, s ->
+            if (s.equals(ThemePreference.THEME_KEY)) {
+              requireActivity().finishAffinity()
+//              System.exit(0)
+            }
           }
         }
       }
@@ -225,11 +225,11 @@ class SettingsFragment: BaseFragment(), View.OnClickListener,
         textRes = R.string.yes
         iconRes = R.drawable.ic_baseline_check_24
         onClick {
-          launch(Dispatchers.Main) {
-            (requireActivity().application as App).themePreference.add(true)
-            delay(300)
-            requireActivity().finishAffinity()
-            System.exit(0)
+          (requireActivity().application as App).themePreference.add(true) { sharedPreferences, s ->
+            if (s.equals(ThemePreference.THEME_KEY)) {
+              requireActivity().finishAffinity()
+//              System.exit(0)
+            }
           }
         }
       }

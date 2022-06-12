@@ -20,6 +20,9 @@
     <action
       android:id="@+id/action_newsFragment_to_allNewsFragment"
       app:destination="@id/allNewsFragment" />
+    <action
+      android:id="@+id/action_newsFragment_to_breakingNewsFragment"
+      app:destination="@id/breakingNewsFragment" />
   </fragment>
   <fragment
     android:id="@+id/newsDetailsFragment2"
@@ -43,6 +46,14 @@
     android:label="AllNewsFragment" >
     <action
       android:id="@+id/action_allNewsFragment_to_newsDetailsFragment2"
+      app:destination="@id/newsDetailsFragment2" />
+  </fragment>
+  <fragment
+    android:id="@+id/breakingNewsFragment"
+    android:name="ir.tdaapp.tooka.ui.fragments.BreakingNewsFragment"
+    android:label="BreakingNewsFragment" >
+    <action
+      android:id="@+id/action_breakingNewsFragment_to_newsDetailsFragment2"
       app:destination="@id/newsDetailsFragment2" />
   </fragment>
 </navigation>

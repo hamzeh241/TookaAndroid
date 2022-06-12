@@ -378,11 +378,11 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
     }
     viewModel.relatedNews.observe(viewLifecycleOwner) {
       binding.contentCoinLoading.visibility = View.GONE
+      binding.includeCoinMisc.loading.apply {
+        pauseAnimation()
+        visibility = View.GONE
+      }
       if (it.size > 0) {
-        binding.includeCoinMisc.loading.apply {
-          pauseAnimation()
-          visibility = View.GONE
-        }
         newsAdapter.differ.submitList(it)
         binding.includeCoinMisc.relatedNewsList.visibility = View.VISIBLE
       } else {
@@ -696,11 +696,11 @@ class CoinDetailsFragment: BaseFragment(), View.OnClickListener, CoroutineScope 
       else R.drawable.neutral_background
     )
 
-    binding.imgFavorite.apply {
-      if (model.isWatchlist) setImageResource(R.drawable.ic_baseline_visibility_off_24) else setImageResource(
-        R.drawable.ic_baseline_visibility_24
-      )
-    }
+//    binding.imgFavorite.apply {
+//      if (model.isWatchlist) setImageResource(R.drawable.ic_baseline_visibility_off_24) else setImageResource(
+//        R.drawable.ic_baseline_visibility_24
+//      )
+//    }
 
 
 //    Glide.with(this)
